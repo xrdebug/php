@@ -3,7 +3,7 @@
 $finder = PhpCsFixer\Finder::create()
     ->notPath('_resources')
     ->in(__DIR__);
-$header = file_get_contents('.header');
+$header = file_get_contents(__DIR__ . '/.header');
 
 return PhpCsFixer\Config::create()
     ->setRules([
