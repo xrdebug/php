@@ -30,6 +30,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
     $header = file_get_contents(__DIR__ . '/.header');
     $parameters->set(Option::SETS, [
+        SetList::PSR_12,
         SetList::CLEAN_CODE,
         SetList::COMMON,
     ]);
