@@ -84,17 +84,19 @@ use Symplify\EasyCodingStandard\ValueObject\Option;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
+    $headerFile = __DIR__ . '/.header';
     $parameters = $containerConfigurator->parameters();
-    $header = file_get_contents(__DIR__ . '/.header');
     $parameters->set(Option::SETS, [
         SetList::COMMON,
     ]);
     $services = $containerConfigurator->services();
-    $services->set(HeaderCommentFixer::class)
-        ->call('configure', [[
-            'header' => $header,
-            'location' => 'after_open',
-        ]]);
+    if(file_exists($headerFile)) {
+        $services->set(HeaderCommentFixer::class)
+            ->call('configure', [[
+                'header' => file_get_contents($headerFile),
+                'location' => 'after_open',
+            ]]);
+    }
     $services->set(EncodingFixer::class);
     $services->set(FullOpeningTagFixer::class);
     $services->set(BlankLineAfterNamespaceFixer::class);
