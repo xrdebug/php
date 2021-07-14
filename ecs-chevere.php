@@ -90,7 +90,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         SetList::COMMON,
     ]);
     $services = $containerConfigurator->services();
-    if(file_exists($headerFile)) {
+    if (file_exists($headerFile)) {
         $services->set(HeaderCommentFixer::class)
             ->call('configure', [[
                 'header' => file_get_contents($headerFile),
@@ -110,7 +110,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(LowercaseKeywordsFixer::class);
     $services->set(MethodArgumentSpaceFixer::class)
         ->call('configure', [[
-            'ensure_fully_multiline' => true,
+            'on_multiline' => 'ensure_fully_multiline',
         ]]);
     $services->set(NoBreakCommentFixer::class);
     $services->set(NoClosingTagFixer::class);
@@ -128,7 +128,6 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     // $services->set(SwitchCaseSemicolonToColonFixer::class); broken for php 8.0
     $services->set(SwitchCaseSpaceFixer::class);
     $services->set(VisibilityRequiredFixer::class);
-    $services = $containerConfigurator->services();
     $services->set(LowercaseCastFixer::class);
     $services->set(ShortScalarCastFixer::class);
     $services->set(BlankLineAfterOpeningTagFixer::class);
@@ -197,12 +196,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(RequireCombinedAssignmentOperatorSniff::class);
     $services->set(NoExtraBlankLinesFixer::class)
         ->call('configure', [[
-            'curly_brace_block',
-            'extra',
-            'parenthesis_brace_block',
-            'square_brace_block',
-            'throw',
-            'use',
+            'tokens' => [
+                'curly_brace_block',
+                'extra',
+                'parenthesis_brace_block',
+                'square_brace_block',
+                'throw',
+                'use',
+            ]
         ]]);
     $parameters = $containerConfigurator->parameters();
     $parameters->set(Option::SKIP, [
