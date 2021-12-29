@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>XR Dump</title>
+    <script>
+    var es = new EventSource("dump");
+    es.addEventListener("message", function (event) {
+        var data = JSON.parse(event.data),
+        template = document.querySelector('#element'),
+        el = template.content.cloneNode(true);
+        el.querySelector('.status').textContent = (new Date()).toTimeString().split(' ')[0];
+        el.querySelector('.body-raw').innerHTML = data.message;
+        el.querySelector('.body-filepath').textContent = data.filePath;
+        document.body.prepend(el);
+    });
+    </script>
+    <link href="style.css" media="all" rel="stylesheet"/>
+</head>
+<body>
+    <template id="element">
+        <div class="message">
+            <div class="status">%time%</div>
+            <div class="body">
+                <div class="body-raw">%message%</div>
+                <div class="body-filepath">%filePath%</div>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
