@@ -72,7 +72,7 @@ composer require --dev chevere/xr
 Use `xr($var1, $var2,...)` to dump any *variable* from your code.
 
 ```php
-xr('Hola, mundo!', $var);
+xr($var, 'Hola, mundo!');
 ```
 
 ### Topic
@@ -80,7 +80,7 @@ xr('Hola, mundo!', $var);
 Add a topic `t:` for message context.
 
 ```php
-xr(t: 'Epic win', 'Hola, mundo!', $var);
+xr($var, t: 'Epic win', 'Hola, mundo!');
 ```
 
 ### Flair
@@ -88,7 +88,7 @@ xr(t: 'Epic win', 'Hola, mundo!', $var);
 Add flairs `f:` for message tags.
 
 ```php
-xr(t: 'Epic win', f: '😎', 'Hola, mundo!', $var);
+xr($var, t: 'Epic win', f: '😎', 'Hola, mundo!');
 ```
 
 ### Action
