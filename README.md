@@ -2,7 +2,10 @@
 
 > 🔔 Subscribe to the [newsletter](https://newsletter.chevereto.com/subscription?f=gTmksA6763vPCG763763kYCOTgWu6Kx4BPohVDY97aHddrqis6B763cHay8dhtmMKlI6r3vUfGREZmSvDNNGj3MlrRJV7A) to don't miss any update regarding Chevere.
 
-<img alt="XR" src="icon.svg" width="50%">
+<p align="center">
+    <img alt="XR" src="icon.svg" width="50%">
+    <img alt="XR tiempos!" src=".screen/xr-tiempos.png">
+</p>
 
 ![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 
