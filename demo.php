@@ -14,10 +14,14 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 xr(['Hola, mundo!', new stdClass()]);
+sleep(1);
 xr(f: '🤔');
 xr(t: 'Win');
+sleep(1);
 xr(
     getrusage(),
     f: '😎',
     t: 'Epic win!'
 );
+sleep(1);
+xr($_SERVER);
