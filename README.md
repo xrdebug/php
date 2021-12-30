@@ -40,15 +40,21 @@ The server will be available at [http://localhost:9666](http://localhost:9666)
 ## Sending messages
 
 * POST parameters
-  * `body` - The message raw body (HTML).
+  * `file_path` - The message raw body (HTML).
   * `file_path` - The file path where the message was emitted.
   * `file_line` - The file line where the message was emitted.
+  * `file_display` - The file + line.
+  * `file_display_short` - The file basename + line.
+  * `flair` - Flairs (emojis/symbols)
+  * `action` - Trigger special event.
+  * `topic` - Topic as message context.
 
 ```plain
 POST http://localhost:9666/message
     body=Hola, mundo
     file_path=/var/www/file.php
     file_line=123
+    ...
 ```
 
 ## XR Helpers
@@ -92,4 +98,3 @@ Pass an action `a:` to trigger special events:
 | Action `a:` | Effect          | Example            |
 | ----------- | --------------- | ------------------ |
 | `pause`     | Pause execution | `xr(a: XR_PAUSE);` |
-
