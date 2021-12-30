@@ -80,7 +80,7 @@ xr($var, 'Hola, mundo!');
 Add a topic `t:` for message context.
 
 ```php
-xr($var, t: 'Epic win', 'Hola, mundo!');
+xr($var, 'Hola, mundo!', t: 'Epic win');
 ```
 
 ### Flair
@@ -88,7 +88,7 @@ xr($var, t: 'Epic win', 'Hola, mundo!');
 Add flairs `f:` for message tags.
 
 ```php
-xr($var, t: 'Epic win', f: '😎', 'Hola, mundo!');
+xr($var, 'Hola, mundo!', t: 'Epic win', f: '😎');
 ```
 
 ### Action
