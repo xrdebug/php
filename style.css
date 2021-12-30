@@ -13,9 +13,27 @@ html, body {
     margin: 0;
     padding: 0;
 }
+body {
+    padding-top: 3.25rem;
+}
+header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    font-weight: bold;
+    line-height: 1;
+    font-size: 1.5rem;
+    background: rgba(255,255,255,.8);
+    backdrop-filter: blur(2rem);
+    padding: 0.875rem 1.75rem;
+    outline: 0;
+}
+header, .message {
+    border-bottom: 1px solid #ecf0f1;
+}
 .message {
     padding: 0.875rem;
-    border-bottom: 1px solid #ecf0f1;
     grid-template-columns: auto auto 1fr;
     align-items: flex-start;
     display: grid;
