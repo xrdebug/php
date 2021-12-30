@@ -9,21 +9,40 @@
         var data = JSON.parse(event.data),
         template = document.querySelector('#element'),
         el = template.content.cloneNode(true);
-        el.querySelector('.status').textContent = (new Date()).toTimeString().split(' ')[0];
+        el.querySelector('.time').textContent = (new Date()).toTimeString().split(' ')[0];
+        el.querySelector('.topic').textContent = data.topic;
+        el.querySelector('.flair').textContent = data.flair;
         el.querySelector('.body-raw').innerHTML = data.message;
-        el.querySelector('.body-filepath').textContent = data.filePath;
+        var bodyFileDisplay = el.querySelector('.body-file-display');
+        bodyFileDisplay.textContent = data.file_display_short;
+        bodyFileDisplay.setAttribute('title', data.file_display);
         document.body.prepend(el);
+        el = document.querySelector('.message');
+        el.dataset.flair = data.flair;
+        el.dataset.topic = data.topic;
+    });
+    document.addEventListener('click', event => {
+        var el = event.target;
+        if (el !== document.querySelector('.body-file-display')) {
+            return
+        }
+        navigator.clipboard.writeText(el.getAttribute('title'));
     });
     </script>
     <link href="style.css" media="all" rel="stylesheet"/>
 </head>
 <body>
     <template id="element">
-        <div class="message">
-            <div class="status">%time%</div>
+        <div class="message" data-flair="" data-topic="">
+            <div class="status">
+                <div class="time">%time%</div>
+            </div>
             <div class="body">
-                <div class="body-raw">%message%</div>
-                <div class="body-filepath">%filePath%</div>
+                <div><span class="topic hide-if-empty line-heigth-1 ">%topic%</span><span class="flair hide-if-empty line-heigth-1 ">%flair%</span></div>
+                <div class="body-raw hide-if-empty">%message%</div>
+                <div class="body-file">
+                    <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
+                </div>
             </div>
         </div>
     </template>

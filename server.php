@@ -38,12 +38,31 @@ $http = new React\Http\HttpServer($loop, function (ServerRequestInterface $reque
             if ($request->getMethod() !== 'POST') {
                 return new Response(405);
             }
-            $parsedBody = $request->getParsedBody() ?? [];
-            $message = $parsedBody['body'] ?? '';
-            $filePath = $parsedBody['filePath'] ?? '';
-            if ($message !== '') {
-                $data = ['message' => $message, 'filePath' => $filePath];
-                $channel->writeMessage(json_encode($data));
+            $body = $request->getParsedBody() ?? [];
+            $message = $body['body'] ?? '';
+            $flair = $body['flair'] ?? '';
+            $topic = $body['topic'] ?? '';
+            if (($message . $flair . $topic) !== '') {
+                $file = $body['file_path'] ?? '';
+                $line = $body['file_line'] ?? '';
+                $fileDisplay = $file;
+                $fileDisplayShort = basename($file);
+                if ($line !== '') {
+                    $fileDisplay .= ':' . $line;
+                    $fileDisplayShort .= ':' . $line;
+                }
+                $channel->writeMessage(
+                    json_encode([
+                        'message' => $message,
+                        'file_path' => $file,
+                        'file_line' => $line,
+                        'file_display' => $fileDisplay,
+                        'file_display_short' => $fileDisplayShort,
+                        'flair' => $flair,
+                        'action' => $body['action'] ?? '',
+                        'topic' => $topic,
+                    ])
+                );
             }
 
             return new Response(
@@ -52,19 +71,15 @@ $http = new React\Http\HttpServer($loop, function (ServerRequestInterface $reque
             );
         case '/dump':
             $stream = new ThroughStream();
-
             $id = $request->getHeaderLine('Last-Event-ID');
             $loop->futureTick(function () use ($channel, $stream, $id) {
                 $channel->connect($stream, $id);
             });
-
             $serverParams = $request->getServerParams();
             $message = ['message' => 'New dump session started [' . $serverParams['REMOTE_ADDR'] . ']'];
             $channel->writeMessage(json_encode($message));
-
             $stream->on('close', function () use ($stream, $channel, $request, $serverParams) {
                 $channel->disconnect($stream);
-
                 $message = ['message' => 'Dump session end [' . $serverParams['REMOTE_ADDR'] . ']'];
                 $channel->writeMessage(json_encode($message));
             });

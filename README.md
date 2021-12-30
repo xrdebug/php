@@ -4,7 +4,7 @@
 
 ![Chevere](LOGO.svg)
 
-![Code size](https://img.shields.io/github/languages/code-size/chevere/chevere?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/chevere?style=flat-square)](LICENSE) [![Build](https://img.shields.io/github/workflow/status/chevere/chevere/CI/master?style=flat-square)](https://github.com/chevere/chevere/actions)
+![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE) [![Build](https://img.shields.io/github/workflow/status/chevere/xr/CI/master?style=flat-square)](https://github.com/chevere/xr/actions)
 
 A remote dump debugging utility.
 
@@ -40,14 +40,18 @@ The server will be available at [http://localhost:9666](http://localhost:9666)
 ## Sending messages
 
 * POST parameters
-  * `body` - The message raw body (HTML)
-  * `filePath` - The file path where the message was emitted as `file.php:15`
+  * `body` - The message raw body (HTML).
+  * `file_path` - The file path where the message was emitted.
+  * `file_line` - The file line where the message was emitted.
 
-```sh
+```plain
 POST http://localhost:9666/message
+    body=Hola, mundo
+    file_path=/var/www/file.php
+    file_line=123
 ```
 
-## Helper functions
+## XR Helpers
 
 `🚧 Work in progress`
 
@@ -57,4 +61,35 @@ POST http://localhost:9666/message
 composer require --dev chevere/xr
 ```
 
-Use `xr($var)` to send any message from your code.
+### Dump variables
+
+Use `xr($var1, $var2,...)` to dump any *variable* from your code.
+
+```php
+xr('Hola, mundo!', $var);
+```
+
+### Topic
+
+Add a topic `t:` for message context.
+
+```php
+xr(t: 'Epic win', 'Hola, mundo!', $var);
+```
+
+### Flair
+
+Add flairs `f:` for message tags.
+
+```php
+xr(t: 'Epic win', f: '😎', 'Hola, mundo!', $var);
+```
+
+### Action
+
+Pass an action `a:` to trigger special events:
+
+| Action `a:` | Effect          | Example            |
+| ----------- | --------------- | ------------------ |
+| `pause`     | Pause execution | `xr(a: XR_PAUSE);` |
+

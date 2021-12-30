@@ -23,6 +23,19 @@ if (!function_exists('xr')) {
      */
     function xr(...$vars): void
     {
+        $args = [
+            'f' => '',
+            'a' => '',
+            't' => '',
+        ];
+        foreach ($args as $name => &$value) {
+            if (array_key_exists($name, $vars)) {
+                if (is_string($vars[$name])) {
+                    $value = $vars[$name];
+                }
+                unset($vars[$name]);
+            }
+        }
         $stream = stream_for('');
         (new VarDump(
             new VarDumpHtmlFormatter(),
@@ -31,11 +44,15 @@ if (!function_exists('xr')) {
             ->withShift(1)
             ->withVars(...$vars)
             ->process(new StreamWriter($stream));
-        $message = $stream->__toString();
         $trace = debug_backtrace(0)[0];
-        $fileBasename = $trace['file'];
-        $fileLine = $trace['line'];
-        $body = ['body' => $message, 'filePath' => "$fileBasename:$fileLine"];
+        $body = [
+            'body' => $stream->__toString(),
+            'file_path' => $trace['file'] ?? '',
+            'file_line' => $trace['line'] ?? '',
+            'flair' => $args['f'],
+            'action' => $args['a'],
+            'topic' => $args['t'],
+        ];
         $bodyString = http_build_query($body);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'http://0.0.0.0:9666/message');
