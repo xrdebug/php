@@ -2,8 +2,27 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>XR Dump</title>
-    <script>
+    <title>XR</title>
+    <link href="style.css" media="all" rel="stylesheet"/>
+</head>
+<body>
+    <header contenteditable="true" id="header">XR</header>
+    <template id="element">
+        <div class="message" data-flair="" data-topic="">
+            <div class="status">
+                <div class="time">%time%</div>
+            </div>
+            <div class="body">
+                <div><span class="topic hide-if-empty line-heigth-1 ">%topic%</span><span class="flair hide-if-empty line-heigth-1 ">%flair%</span></div>
+                <div class="body-raw hide-if-empty">%message%</div>
+                <div class="body-file">
+                    <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
+                </div>
+            </div>
+        </div>
+    </template>
+</body>
+<script>
     var es = new EventSource("dump");
     es.addEventListener("message", function (event) {
         var data = JSON.parse(event.data),
@@ -21,30 +40,15 @@
         el.dataset.flair = data.flair;
         el.dataset.topic = data.topic;
     });
+    document.getElementById("header").addEventListener('input', event => {
+        document.title = event.target.textContent;
+    });
     document.addEventListener('click', event => {
         var el = event.target;
-        if (el !== document.querySelector('.body-file-display')) {
+        if (!el.classList.contains('body-file-display')) {
             return
         }
         navigator.clipboard.writeText(el.getAttribute('title'));
     });
     </script>
-    <link href="style.css" media="all" rel="stylesheet"/>
-</head>
-<body>
-    <template id="element">
-        <div class="message" data-flair="" data-topic="">
-            <div class="status">
-                <div class="time">%time%</div>
-            </div>
-            <div class="body">
-                <div><span class="topic hide-if-empty line-heigth-1 ">%topic%</span><span class="flair hide-if-empty line-heigth-1 ">%flair%</span></div>
-                <div class="body-raw hide-if-empty">%message%</div>
-                <div class="body-file">
-                    <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
-                </div>
-            </div>
-        </div>
-    </template>
-</body>
 </html>
