@@ -28,6 +28,7 @@ header {
     line-height: 1;
     font-size: 1.5rem;
     background: rgba(255, 255, 255, .8);
+    -webkit-backdrop-filter: blur(2rem);
     backdrop-filter: blur(2rem);
     padding: 0.875rem 1.75rem;
     outline: 0;
@@ -36,6 +37,18 @@ header {
 
 header, .message {
     border-bottom: 1px solid #ecf0f1;
+}
+
+@-webkit-keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideDown {
@@ -55,6 +68,7 @@ header, .message {
     grid-template-columns: auto auto 1fr;
     align-items: flex-start;
     display: grid;
+    -webkit-animation: slideDown 200ms ease-in-out;
     animation: slideDown 200ms ease-in-out;
 }
 
@@ -114,6 +128,9 @@ header, .message {
 }
 
 .user-select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 
