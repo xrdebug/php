@@ -28,6 +28,18 @@ $http = new React\Http\HttpServer($loop, function (ServerRequestInterface $reque
                 ['Content-Type' => 'text/html'],
                 file_get_contents(__DIR__ . '/index.html')
             );
+        case '/icon.svg':
+            return new Response(
+                '200',
+                ['Content-Type' => 'image/svg+xml'],
+                file_get_contents(__DIR__ . '/icon.svg')
+            );
+        case '/icon.png':
+            return new Response(
+                '200',
+                ['Content-Type' => 'image/png'],
+                file_get_contents(__DIR__ . '/icon.png')
+            );
         case '/style.css':
             return new Response(
                 '200',

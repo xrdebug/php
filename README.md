@@ -2,11 +2,11 @@
 
 > 🔔 Subscribe to the [newsletter](https://newsletter.chevereto.com/subscription?f=gTmksA6763vPCG763763kYCOTgWu6Kx4BPohVDY97aHddrqis6B763cHay8dhtmMKlI6r3vUfGREZmSvDNNGj3MlrRJV7A) to don't miss any update regarding Chevere.
 
-![Chevere](LOGO.svg)
+<img alt="XR" src="icon.svg" width="50%">
 
-![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE) [![Build](https://img.shields.io/github/workflow/status/chevere/xr/CI/master?style=flat-square)](https://github.com/chevere/xr/actions)
+![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 
-A remote dump debugging utility.
+Chevere Remote (XR) dump debugging utility built on top of ReactPHP.
 
 ## Status
 
