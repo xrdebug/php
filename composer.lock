@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b6b1bac2afc41dbedc8e9e8ad21b1c7",
+    "content-hash": "9f65ce6747760fed538713ba2f48a94f",
     "packages": [
         {
             "name": "adhocore/cli",
@@ -134,16 +134,16 @@
         },
         {
             "name": "chevere/chevere",
-            "version": "0.1.x-dev",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chevere/chevere.git",
-                "reference": "29b9c5db9ed168511dcfc1ee763109e35ad0fb02"
+                "reference": "b0f051015085f4ed799f95be1350126b00c384b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chevere/chevere/zipball/29b9c5db9ed168511dcfc1ee763109e35ad0fb02",
-                "reference": "29b9c5db9ed168511dcfc1ee763109e35ad0fb02",
+                "url": "https://api.github.com/repos/chevere/chevere/zipball/b0f051015085f4ed799f95be1350126b00c384b9",
+                "reference": "b0f051015085f4ed799f95be1350126b00c384b9",
                 "shasum": ""
             },
             "require": {
@@ -174,7 +174,6 @@
                 "rector/rector": "^0.11.49",
                 "symplify/easy-coding-standard": "^9.4"
             },
-            "default-branch": true,
             "bin": [
                 "bin/chevere"
             ],
@@ -217,9 +216,9 @@
             "homepage": "https://chevere.org",
             "support": {
                 "issues": "https://github.com/chevere/chevere/issues",
-                "source": "https://github.com/chevere/chevere/tree/0.1"
+                "source": "https://github.com/chevere/chevere/tree/0.1.0"
             },
-            "time": "2021-12-29T21:02:16+00:00"
+            "time": "2021-12-27T20:29:19+00:00"
         },
         {
             "name": "clue/sse-react",
@@ -4529,7 +4528,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "chevere/chevere": 20,
         "clue/sse-react": 20
     },
     "prefer-stable": false,

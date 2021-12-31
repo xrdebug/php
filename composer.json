@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "^0.1.x-dev",
+        "chevere/chevere": "^0.1",
         "clue/sse-react": "dev-master"
     },
     "require-dev": {
