@@ -16,11 +16,15 @@ require __DIR__ . '/vendor/autoload.php';
 use Clue\React\Sse\BufferedChannel;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
+use React\Http\Middleware\LimitConcurrentRequestsMiddleware;
+use React\Http\Middleware\RequestBodyBufferMiddleware;
+use React\Http\Middleware\RequestBodyParserMiddleware;
+use React\Http\Middleware\StreamingRequestMiddleware;
 use React\Stream\ThroughStream;
 
 $loop = React\EventLoop\Loop::get();
 $channel = new BufferedChannel();
-$http = new React\Http\HttpServer($loop, function (ServerRequestInterface $request) use ($channel, $loop) {
+$handler = function (ServerRequestInterface $request) use ($channel, $loop) {
     switch ($request->getUri()->getPath()) {
         case '/':
             return new Response(
@@ -104,7 +108,15 @@ $http = new React\Http\HttpServer($loop, function (ServerRequestInterface $reque
         default:
             return new Response(404);
     }
-});
+};
+$http = new React\Http\HttpServer(
+    $loop,
+    new StreamingRequestMiddleware(),
+    new LimitConcurrentRequestsMiddleware(100),
+    new RequestBodyBufferMiddleware(8 * 1024 * 1024),
+    new RequestBodyParserMiddleware(100 * 1024, 1),
+    $handler
+);
 $socket = new \React\Socket\SocketServer(
     uri: '0.0.0.0:' . ($argv[1] ?? '0'),
     context: [],
