@@ -10,14 +10,19 @@
     <link rel="mask-icon" href="icon.svg" color="#000">
 </head>
 <body>
-    <header contenteditable="true" id="header">XR Session</header>
-    <template id="element">
+    <header>
+        <div contenteditable="true" class="header-title">XR Session</div>
+        <div class="header-filter">
+            <span class="topic user-select-none cursor-pointer hide-if-empty"></span><span class="flair user-select-none cursor-pointer hide-if-empty"></span>
+        </div>
+    </header>
+    <template id="message">
         <div class="message" data-flair="" data-topic="">
             <div class="status">
                 <div class="time">%time%</div>
             </div>
             <div class="body">
-                <div><span class="topic hide-if-empty line-heigth-1 ">%topic%</span><span class="flair hide-if-empty line-heigth-1 ">%flair%</span></div>
+                <div><span class="topic user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="flair user-select-none cursor-pointer hide-if-empty">%flair%</span></div>
                 <div class="body-raw hide-if-empty">%message%</div>
                 <div class="body-file">
                     <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
@@ -27,10 +32,14 @@
     </template>
 </body>
 <script>
-    var es = new EventSource("dump");
-    es.addEventListener("message", function (event) {
+    var filter = {
+        topic: '',
+        flair: '',
+    };
+    var es = new EventSource('dump');
+    es.addEventListener('message', function (event) {
         var data = JSON.parse(event.data),
-        template = document.querySelector('#element'),
+        template = document.querySelector('#message'),
         el = template.content.cloneNode(true);
         el.querySelector('.time').textContent = (new Date()).toTimeString().split(' ')[0];
         el.querySelector('.topic').textContent = data.topic;
@@ -44,15 +53,45 @@
         el.dataset.flair = data.flair;
         el.dataset.topic = data.topic;
     });
-    document.getElementById("header").addEventListener('input', event => {
+    document.querySelector('.header-title').addEventListener('input', event => {
         document.title = event.target.textContent;
     });
     document.addEventListener('click', event => {
         var el = event.target;
-        if (!el.classList.contains('body-file-display')) {
-            return
+        if (el.classList.contains('body-file-display')) {
+            navigator.clipboard.writeText(el.getAttribute('title'));
         }
-        navigator.clipboard.writeText(el.getAttribute('title'));
+        if(el.classList.contains('topic') || el.classList.contains('flair')) {
+            var filterQuery = '',
+                hasFilter = false,
+                message = el.closest('.message'),
+                header = el.closest('header'),
+                resetFilter = header !== null,
+                subject = el.classList.contains('topic')
+                    ? 'topic'
+                    : 'flair';
+            if(message && filter[subject]  === message.dataset[subject]) {
+                return;
+            }
+            filter[subject] = message
+                ? message.dataset[subject]
+                : '';
+            for(filterSubject in filter) {
+                if(filter[filterSubject] === '') {
+                    continue;
+                }
+                resetFilter = false;
+                filterQuery += '[data-' +  filterSubject + '="' + filter[filterSubject] + '"]';
+            }
+            document.querySelectorAll('.message')
+                .forEach(function(target) {
+                    var method = filterQuery === '' || target.matches(filterQuery) ? 'remove' : 'add';
+                    target.classList[method]('hidden');
+                });
+            document.querySelector('.header-filter .' + subject).textContent = message
+                ? filter[subject]
+                : '';
+        }
     });
     </script>
 </html>
