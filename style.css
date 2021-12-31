@@ -1,5 +1,6 @@
 :root {
-    --headerHeight: 3.7rem;
+    --borderSize: 0.1rem; 
+    --headerHeight: calc(3.7rem + var(--borderSize));
     --fontSize: 16px;
     --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+)
 }
@@ -89,7 +90,7 @@ header > div {
 }
 
 header, .message {
-    border-bottom: 1px solid var(--colorBorder);
+    border-bottom: var(--borderSize) solid var(--colorBorder);
 }
 
 @-webkit-keyframes slideDown {
@@ -145,7 +146,7 @@ header, .message {
     background: var(--buttonTopicBackground);
     padding: 0.4rem 0.8rem;
     border-radius: 0.25rem;
-    border: 0.1rem solid var(--buttonTopicBorder);
+    border: var(--borderSize) solid var(--buttonTopicBorder);
     margin-right: 0.25rem;
     font-size: 0.9rem;
 }
@@ -168,7 +169,7 @@ header, .message {
 }
 
 .body-file-display:hover:after {
-    margin-left: 0.1rem;
+    margin-left: var(--borderSize);
     width: 0.8rem;
     height: 0.8rem;
     display: inline-block;
