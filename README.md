@@ -40,16 +40,23 @@ php server.php 9666
 
 The server will be available at [http://localhost:9666](http://localhost:9666)
 
+## Demo
+
+Open the debugger and then run:
+
+```php
+php demo.php
+```
+
 ## Sending messages
 
 * POST parameters
-  * `file_path` - The message raw body (HTML).
-  * `file_path` - The file path where the message was emitted.
-  * `file_line` - The file line where the message was emitted.
+  * `body` - The message raw body (HTML).
+  * `file_path` - The file path.
+  * `file_line` - The file line.
   * `file_display` - The file + line.
   * `file_display_short` - The file basename + line.
-  * `flair` - Flairs (emojis/symbols)
-  * `action` - Trigger special event.
+  * `flair` - Flair (emojis/symbols)
   * `topic` - Topic as message context.
 
 ```plain
@@ -62,7 +69,7 @@ POST http://localhost:9666/message
 
 ## XR Helpers
 
-`🚧 Work in progress`
+`🚧 Min stability dev`
 
 * Add `chevere/xr` as a dev dependency in your project:
 
@@ -95,6 +102,8 @@ xr($var, 'Hola, mundo!', t: 'Epic win', f: '😎');
 ```
 
 ### Action
+
+`🚧 Not implemented`
 
 Pass an action `a:` to trigger special events:
 

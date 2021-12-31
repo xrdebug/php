@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 use Chevere\Components\VarDump\Formatters\VarDumpHtmlFormatter;
 use Chevere\Components\VarDump\VarDump;
+use function Chevere\Components\Writer\streamFor;
 use Chevere\Components\Writer\StreamWriter;
 use Chevere\Xr\Components\VarDump\Outputters\VarDumpHtmlOutputter;
-use function RingCentral\Psr7\stream_for;
 
 if (!function_exists('xr')) {
     /**
-     * Dumps information about one or more variables to XR
+     * Dumps information about one or more variables to XR.
      */
     function xr(...$vars): void
     {
@@ -36,7 +36,7 @@ if (!function_exists('xr')) {
                 unset($vars[$name]);
             }
         }
-        $stream = stream_for('');
+        $stream = streamFor('php://temp', 'r+');
         (new VarDump(
             new VarDumpHtmlFormatter(),
             new VarDumpHtmlOutputter()
