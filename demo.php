@@ -64,7 +64,7 @@ sleep(4);
 xr(
     feat: 'Copy the file path by clicking on ' . basename(__FILE__) . ':' . (string) (__LINE__ + 2) . ' here below.',
     t: 'how-to',
-    f: '👻'
+    f: '📎'
 );
 sleep(4);
 xr(
