@@ -35,12 +35,15 @@
     var filter = {
         topic: '',
         flair: '',
-    };
-    var filterOperator = {
+    },
+    filterOperator = {
         topic: '=',
         flair: '*=',
-    }
-    var es = new EventSource('dump');
+    },
+    filterCSSIndex,
+    styleEl = document.createElement('style');
+    es = new EventSource('dump');
+    document.head.appendChild(styleEl);
     es.addEventListener('message', function (event) {
         var data = JSON.parse(event.data),
         template = document.querySelector('#message'),
@@ -87,11 +90,13 @@
                 resetFilter = false;
                 filterQuery += '[data-' +  filterSubject + filterOperator[filterSubject] + '"' + filter[filterSubject] + '"]';
             }
-            document.querySelectorAll('.message')
-                .forEach(function(target) {
-                    var method = filterQuery === '' || target.matches(filterQuery) ? 'remove' : 'add';
-                    target.classList[method]('hidden');
-                });
+            if(typeof filterCSSIndex === 'number') {
+                styleEl.sheet.removeRule(filterCSSIndex);
+            }
+            filterCSSIndex = filterQuery === ''
+                ? null
+                : filterCSSIndex = styleEl.sheet
+                    .insertRule('.message:not(' + filterQuery + ') { display: none; }');
             document.querySelector('.header-filter .' + subject).textContent = message
                 ? filter[subject]
                 : '';
