@@ -1,5 +1,5 @@
 :root {
-    --borderSize: 0.1rem; 
+    --borderSize: 0.1rem;
     --headerHeight: calc(3.7rem + var(--borderSize));
     --fontSize: 16px;
     --marginEl: 0.25rem;
@@ -7,8 +7,8 @@
     --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+);
     --dumpText: #ecf0f1;
     --dumpBackground: hsl(210, 49%, 15%);
-    --traceBackgroundOdd: hsl(210, 29%, 24%);
-    --traceBackgroundEven: hsl(210, 29%, 29%);
+    --traceBackgroundOdd: hsl(210, 29%, 29%);
+    --traceBackgroundEven: hsl(210, 29%, 24%);
 }
 
 @media (prefers-color-scheme: light) {
@@ -18,11 +18,11 @@
         --headerBackground: hsl(210deg 29% 97% / 80%);
         --colorBorderRGB: 189, 195, 199;
         --buttonTopicText: #24292f;
-        --buttonTopicBackground: hsl(210deg 29% 97%);
+        --buttonTopicBackground: hsl(210deg 29% 96%);
         --dumpText: var(--bodyText);
-        --dumpBackground: hsl(210deg 29% 97%);
-        --traceBackgroundOdd: hsl(210deg 29% 93%);
-        --traceBackgroundEven: var(--dumpBackground);
+        --dumpBackground: hsl(210deg 29% 96%);
+        --traceBackgroundOdd: var(--dumpBackground);
+        --traceBackgroundEven: hsl(210deg 29% 93%);
     }
 }
 
@@ -38,8 +38,8 @@
         --dumpBackground: #132537;
         --dumpText: var(--bodyText);
         --dumpBackground: hsl(207, 20%, 11%);
-        --traceBackgroundOdd: hsl(207, 20%, 8%);
-        --traceBackgroundEven: var(--dumpBackground);
+        --traceBackgroundOdd: var(--dumpBackground);
+        --traceBackgroundEven: hsl(207, 20%, 8%);
     }
 }
 
@@ -82,7 +82,7 @@ header {
     display: grid;
 }
 
-header > div {
+header>div {
     display: inline-block;
 }
 
@@ -99,7 +99,7 @@ header > div {
     transform: translateY(-50%);
 }
 
-.header-filter > span {
+.header-filter>span {
     margin-bottom: 0;
 }
 
@@ -165,6 +165,7 @@ header, .message {
     margin-right: var(--marginEl);
     font-size: 0.9rem;
 }
+
 .topic:hover {
     border-color: rgba(var(--colorBorderRGB), 1);
 }
@@ -266,7 +267,8 @@ header, .message {
     color: var(--dumpText);
     background: var(--dumpBackground);
 }
-.dump > pre {
+
+.dump>pre {
     margin: 0;
 }
 
@@ -274,9 +276,11 @@ header, .message {
     margin-bottom: var(--marginEl);
     overflow: hidden;
     border-radius: var(--borderRadiusBox);
+    display: flex;
+    flex-direction: column-reverse;
 }
 
-pre + .backtrace {
+pre+.backtrace {
     margin-top: var(--marginEl);
 }
 

@@ -18,8 +18,6 @@ use Chevere\Interfaces\VarDump\VarDumpFormatterInterface;
 
 final class VarDumpHtmlOutputter extends VarDumpAbstractOutputter
 {
-    public const STYLE = '';
-
     public function tearDown(): void
     {
         $this->writer()->write('</pre>');
@@ -27,11 +25,8 @@ final class VarDumpHtmlOutputter extends VarDumpAbstractOutputter
 
     public function prepare(): void
     {
-        $this->writer()->write(
-            implode('', [
-                '<pre style="' . self::STYLE . '">',
-            ])
-        );
+        $this->caller = '';
+        $this->writer()->write('<pre>');
     }
 
     public function writeCallerFile(VarDumpFormatterInterface $formatter): void

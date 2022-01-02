@@ -26,6 +26,7 @@ if (!function_exists('xr')) {
     function xr(...$vars): void
     {
         $backtrace = debug_backtrace();
+        $caller = $backtrace[0];
         $defaultArgs = [
             'f' => '',
             't' => '',
@@ -60,11 +61,10 @@ if (!function_exists('xr')) {
             $traceFormatter = new ThrowableTraceFormatter($backtrace, new ThrowableHandlerHtmlFormatter());
             $body .= '<div class="backtrace">' . $traceFormatter->toString() . '</div>';
         }
-        $trace = $backtrace[0];
         $data = [
             'body' => $body,
-            'file_path' => $trace['file'] ?? '',
-            'file_line' => $trace['line'] ?? '',
+            'file_path' => $caller['file'] ?? '',
+            'file_line' => $caller['line'] ?? '',
             'flair' => $args['f'],
             'topic' => $args['t'],
         ];
