@@ -87,7 +87,7 @@ xr($var, 'Hola, mundo!');
 
 ### Topic
 
-Add a topic `t:` for message context.
+Add a topic passing `t:`.
 
 ```php
 xr($var, 'Hola, mundo!', t: 'Epic win');
@@ -95,18 +95,16 @@ xr($var, 'Hola, mundo!', t: 'Epic win');
 
 ### Flair
 
-Add flairs `f:` for message tags.
+Add a flair passing `f:`.
 
 ```php
 xr($var, 'Hola, mundo!', t: 'Epic win', f: '😎');
 ```
 
-### Action
+### Backtrace
 
-`🚧 Not implemented`
+Pass `b: 1` to dump debug backtrace.
 
-Pass an action `a:` to trigger special events:
-
-| Action `a:` | Effect          | Example            |
-| ----------- | --------------- | ------------------ |
-| `pause`     | Pause execution | `xr(a: XR_PAUSE);` |
+```php
+xr($var, 'Hola, mundo!', t: 'Epic win', f: '😎', b: 1);
+```

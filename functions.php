@@ -11,6 +11,8 @@
 
 declare(strict_types=1);
 
+use Chevere\Components\ThrowableHandler\Formatters\ThrowableHandlerHtmlFormatter;
+use Chevere\Components\ThrowableHandler\ThrowableTraceFormatter;
 use Chevere\Components\VarDump\Formatters\VarDumpHtmlFormatter;
 use Chevere\Components\VarDump\VarDump;
 use function Chevere\Components\Writer\streamFor;
@@ -23,10 +25,19 @@ if (!function_exists('xr')) {
      */
     function xr(...$vars): void
     {
-        $args = [
+        $backtrace = debug_backtrace();
+        $defaultArgs = [
             'f' => '',
-            'a' => '',
             't' => '',
+            'b' => false,
+            'p' => false,
+        ];
+        $args = array_merge($defaultArgs, $vars);
+        $args = [
+            'f' => (string) $args['f'],
+            't' => (string) $args['t'],
+            'b' => (bool) $args['b'],
+            'p' => (bool) $args['p'],
         ];
         foreach ($args as $name => &$value) {
             if (array_key_exists($name, $vars)) {
@@ -44,16 +55,20 @@ if (!function_exists('xr')) {
             ->withShift(1)
             ->withVars(...$vars)
             ->process(new StreamWriter($stream));
-        $trace = debug_backtrace(0)[0];
-        $body = [
-            'body' => $stream->__toString(),
+        $body = $stream->__toString();
+        if ($args['b']) {
+            $traceFormatter = new ThrowableTraceFormatter($backtrace, new ThrowableHandlerHtmlFormatter());
+            $body .= '<div class="backtrace">' . $traceFormatter->toString() . '</div>';
+        }
+        $trace = $backtrace[0];
+        $data = [
+            'body' => $body,
             'file_path' => $trace['file'] ?? '',
             'file_line' => $trace['line'] ?? '',
             'flair' => $args['f'],
-            'action' => $args['a'],
             'topic' => $args['t'],
         ];
-        $bodyString = http_build_query($body);
+        $bodyString = http_build_query($data);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'http://0.0.0.0:9666/message');
         curl_setopt($ch, CURLOPT_POST, 1);

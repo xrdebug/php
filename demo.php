@@ -15,38 +15,40 @@ use function Chevere\Components\Message\message;
 
 require __DIR__ . '/vendor/autoload.php';
 
-xr(greet: 'Hola, mundo!', t: 'hello-world', f: '😊');
+xr(
+    greet: '🇨🇱 Hola, mundo!',
+    t: 'hello-world',
+    f: '😊',
+);
 sleep(2);
 xr(
-    explain: [
+    👉: [
         1 => 'chevere/xr is a debugger which',
-        2 => 'runs a message server!'
+        2 => 'runs a PHP message server!'
     ],
     t: 'hello-world',
-    f: '🤓'
+    f: '🐘'
 );
 sleep(4);
+$message = message('Did you heard about %package%?')
+    ->code('%package%', 'spatie/ray');
 xr(
-    message('Did you heard about %inspiration%?')
-        ->code('%inspiration%', 'spatie/ray'),
+    inspiration: $message,
+    message: $message->toString(),
     t: 'hello-world',
-    f: '🕶'
+    f: '😎',
+    b: true
 );
 sleep(4);
 xr(
-    tagline: new class() {
+    ✨: new class() {
         public array $ohhh = [
-            'XR is another take on the spatie/ray concept...',
-            '...But built on top of 👏ReactPHP.'
+            'XR is another take on the server debug concept',
+            'built on top of 👏 ReactPHP.'
         ];
     },
-    t: '5 ☆ Jumbitos',
-    f: '🐘🐘🐘🐘🐘'
-);
-sleep(4);
-xr(
-    read: '^^^ This is how you use the XR debugger.',
-    t: 'how-to',
+    t: 'hello-world',
+    f: '✨🐘'
 );
 sleep(4);
 xr(
@@ -74,12 +76,6 @@ xr(
 );
 sleep(4);
 xr(
-    feat: 'Open a new window/tab to spawn a new XR Session.',
-    t: 'how-to',
-    f: '🆕'
-);
-sleep(4);
-xr(
-    bye: 'Hope you enjoy XR!',
+    bye: 'Enjoy XR!',
     f: '😊'
 );
