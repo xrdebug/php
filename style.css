@@ -3,7 +3,12 @@
     --headerHeight: calc(3.7rem + var(--borderSize));
     --fontSize: 16px;
     --marginEl: 0.25rem;
-    --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+)
+    --borderRadiusBox: 0.375rem;
+    --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+);
+    --dumpText: #ecf0f1;
+    --dumpBackground: hsl(210, 49%, 15%);
+    --traceBackgroundOdd: hsl(210, 29%, 24%);
+    --traceBackgroundEven: hsl(210, 29%, 29%);
 }
 
 @media (prefers-color-scheme: light) {
@@ -11,10 +16,13 @@
         --bodyBackground: #FFF;
         --bodyText: #24292f;
         --headerBackground: hsl(210deg 29% 97% / 80%);
-        --colorBorder: #d8dee4;
+        --colorBorderRGB: 189, 195, 199;
         --buttonTopicText: #24292f;
-        --buttonTopicBackground: #f6f8fa;
-        --buttonTopicBorder: #bdc3c7;
+        --buttonTopicBackground: hsl(210deg 29% 97%);
+        --dumpText: var(--bodyText);
+        --dumpBackground: hsl(210deg 29% 97%);
+        --traceBackgroundOdd: hsl(210deg 29% 93%);
+        --traceBackgroundEven: var(--dumpBackground);
     }
 }
 
@@ -23,10 +31,15 @@
         --bodyBackground: #010409;
         --bodyText: #c9d1d9;
         --headerBackground: hsl(215deg 21% 11% / 85%);
-        --colorBorder: #21262d;
+        --colorBorderRGB: 65, 74, 88;
         --buttonTopicText: #c9d1d9;
-        --buttonTopicBackground: var(--colorBorder);
-        --buttonTopicBorder: hsl(210deg 67% 96% / 10%);
+        --buttonTopicBackground: hsl(207, 20%, 11%);
+        --dumpText: #020202;
+        --dumpBackground: #132537;
+        --dumpText: var(--bodyText);
+        --dumpBackground: hsl(207, 20%, 11%);
+        --traceBackgroundOdd: hsl(207, 20%, 8%);
+        --traceBackgroundEven: var(--dumpBackground);
     }
 }
 
@@ -91,7 +104,7 @@ header > div {
 }
 
 header, .message {
-    border-bottom: var(--borderSize) solid var(--colorBorder);
+    border-bottom: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
 }
 
 @-webkit-keyframes slideDown {
@@ -137,6 +150,7 @@ header, .message {
 
 .status {
     width: 6rem;
+    position: -webkit-sticky;
     position: sticky;
     top: var(--headerHeight);
 }
@@ -147,9 +161,12 @@ header, .message {
     background: var(--buttonTopicBackground);
     padding: 0.4rem 0.8rem;
     border-radius: var(--marginEl);
-    border: var(--borderSize) solid var(--buttonTopicBorder);
+    border: var(--borderSize) solid rgba(var(--colorBorderRGB), 0.5);
     margin-right: var(--marginEl);
     font-size: 0.9rem;
+}
+.topic:hover {
+    border-color: rgba(var(--colorBorderRGB), 1);
 }
 
 .body-raw {
@@ -230,18 +247,33 @@ header, .message {
     opacity: 0;
 }
 
-.backtrace {
-    margin-bottom: var(--marginEl);
-    border-radius: 4px;
-    overflow: hidden;
-    font: 14px 'Fira Code Retina', 'Operator Mono', Inconsolata, Consolas, monospace, sans-serif;
-    line-height: 1.2;
+.dump, .backtrace {
+    font-size: 0.875rem;
+    font-family: 'Fira Code Retina', 'Operator Mono', Inconsolata, Consolas, monospace, sans-serif;
     color: #ecf0f1;
+    line-height: 1.2;
+    border-radius: var(--borderRadiusBox);
     word-break: break-word;
     display: block;
-    text-align: left;
     border: none;
-    border-radius: 4px;
+    text-align: left;
+}
+
+.dump {
+    padding: 1rem;
+    margin: var(--marginEl) 0;
+    white-space: pre-wrap;
+    color: var(--dumpText);
+    background: var(--dumpBackground);
+}
+.dump > pre {
+    margin: 0;
+}
+
+.backtrace {
+    margin-bottom: var(--marginEl);
+    overflow: hidden;
+    border-radius: var(--borderRadiusBox);
 }
 
 pre + .backtrace {
@@ -249,32 +281,28 @@ pre + .backtrace {
 }
 
 .pre {
-    padding: 1px 4px;
     background-color: hsl(192, 15.2%, 93.5%);
-    border: 1px solid hsl(204, 8.2%, 76.1%);
+    border: var(--borderSize) solid hsl(204, 8.2%, 76.1%);
     font-family: "Fira Code Retina", "Operator Mono", Inconsolata, Consolas,
         monospace, sans-serif;
     line-height: 1;
-}
-
-.pre {
     overflow: auto;
     word-wrap: break-word;
     white-space: pre-line;
     display: block;
     margin: 0;
-    padding: 10px;
-    border: 1px solid hsl(192, 15%, 84%);
+    padding: 1rem;
+    border: var(--borderSize) solid hsl(192, 15%, 84%);
     word-break: break-all;
 }
 
 .pre.pre--stack-entry {
     border: 0;
-    color: #ecf0f1;
-    background: hsl(210, 29%, 24%);
+    color: var(--dumpText);
+    background: var(--traceBackgroundOdd);
     line-height: normal;
 }
 
 .pre.pre--stack-entry.entry--even {
-    background: hsl(210, 29%, 29%);
+    background: var(--traceBackgroundEven);
 }

@@ -55,7 +55,7 @@ if (!function_exists('xr')) {
             ->withShift(1)
             ->withVars(...$vars)
             ->process(new StreamWriter($stream));
-        $body = $stream->__toString();
+        $body = '<div class="dump">' . $stream->__toString() . '</div>';
         if ($args['b']) {
             $traceFormatter = new ThrowableTraceFormatter($backtrace, new ThrowableHandlerHtmlFormatter());
             $body .= '<div class="backtrace">' . $traceFormatter->toString() . '</div>';

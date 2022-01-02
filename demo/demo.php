@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use function Chevere\Components\Message\message;
 
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 xr(
     greet: '🇨🇱 Hola, mundo!',
