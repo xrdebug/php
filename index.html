@@ -36,6 +36,10 @@
         topic: '',
         flair: '',
     };
+    var filterOperator = {
+        topic: '=',
+        flair: '*=',
+    }
     var es = new EventSource('dump');
     es.addEventListener('message', function (event) {
         var data = JSON.parse(event.data),
@@ -81,7 +85,7 @@
                     continue;
                 }
                 resetFilter = false;
-                filterQuery += '[data-' +  filterSubject + '="' + filter[filterSubject] + '"]';
+                filterQuery += '[data-' +  filterSubject + filterOperator[filterSubject] + '"' + filter[filterSubject] + '"]';
             }
             document.querySelectorAll('.message')
                 .forEach(function(target) {
