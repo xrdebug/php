@@ -68,7 +68,10 @@ namespace {
             $topic = (string) $args['t'];
             $emote = (string) $args['e'];
             $flags = (int) $args['f'];
-            (new Client())->sendMessage(
+            (new Client(
+                host: getenv('XR_SERVER_HOST') ?: '0.0.0.0',
+                port: (int) (getenv('XR_SERVER_PORT') ?: 27420)
+            ))->sendMessage(
                 (new Message(
                     writer: getWriter(),
                     vars: $vars,
