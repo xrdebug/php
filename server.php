@@ -56,9 +56,9 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             }
             $body = $request->getParsedBody() ?? [];
             $message = $body['body'] ?? '';
-            $flair = $body['flair'] ?? '';
+            $emote = $body['emote'] ?? '';
             $topic = $body['topic'] ?? '';
-            if (($message . $flair . $topic) !== '') {
+            if (($message . $emote . $topic) !== '') {
                 $file = $body['file_path'] ?? '';
                 $line = $body['file_line'] ?? '';
                 $fileDisplay = $file;
@@ -74,7 +74,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                         'file_line' => $line,
                         'file_display' => $fileDisplay,
                         'file_display_short' => $fileDisplayShort,
-                        'flair' => $flair,
+                        'emote' => $emote,
                         'action' => $body['action'] ?? '',
                         'topic' => $topic,
                     ])

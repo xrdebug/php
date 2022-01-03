@@ -56,7 +56,7 @@ php demo.php
   * `file_line` - The file line.
   * `file_display` - The file + line.
   * `file_display_short` - The file basename + line.
-  * `flair` - Flair (emojis/symbols)
+  * `emote` - emote (emojis/symbols)
   * `topic` - Topic as message context.
 
 ```plain
@@ -93,18 +93,26 @@ Add a topic passing `t:`.
 xr($var, 'Hola, mundo!', t: 'Epic win');
 ```
 
-### Flair
+### Emote
 
-Add a flair passing `f:`.
+Add an emote passing `e:`.
 
 ```php
-xr($var, 'Hola, mundo!', t: 'Epic win', f: '😎');
+xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎');
 ```
 
-### Backtrace
+### Flags
 
-Pass `b: 1` to dump debug backtrace.
+Pass bitwise flags to trigger special behavior.
+
+* `f: XR_BACKTRACE` to dump debug backtrace.
 
 ```php
-xr($var, 'Hola, mundo!', t: 'Epic win', f: '😎', b: 1);
+xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_BACKTRACE);
+```
+
+* `f: XR_PAUSE` to pause debug backtrace (not implemented).
+
+```php
+xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_PAUSE);
 ```

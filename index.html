@@ -13,16 +13,16 @@
     <header>
         <div contenteditable="true" class="header-title">XR Session</div>
         <div class="header-filter">
-            <span class="topic user-select-none cursor-pointer hide-if-empty"></span><span class="flair user-select-none cursor-pointer hide-if-empty"></span>
+            <span class="topic user-select-none cursor-pointer hide-if-empty"></span><span class="emote user-select-none cursor-pointer hide-if-empty"></span>
         </div>
     </header>
     <template id="message">
-        <div class="message" data-flair="" data-topic="">
+        <div class="message" data-emote="" data-topic="">
             <div class="status">
                 <div class="time">%time%</div>
             </div>
             <div class="body">
-                <div><span class="topic user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="flair user-select-none cursor-pointer hide-if-empty">%flair%</span></div>
+                <div><span class="topic user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
                 <div class="body-raw hide-if-empty">%message%</div>
                 <div class="body-file">
                     <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
@@ -34,11 +34,11 @@
 <script>
     var filter = {
         topic: '',
-        flair: '',
+        emote: '',
     },
     filterOperator = {
         topic: '=',
-        flair: '*=',
+        emote: '*=',
     },
     filterCSSIndex,
     styleEl = document.createElement('style');
@@ -50,14 +50,14 @@
         el = template.content.cloneNode(true);
         el.querySelector('.time').textContent = (new Date()).toTimeString().split(' ')[0];
         el.querySelector('.topic').textContent = data.topic;
-        el.querySelector('.flair').textContent = data.flair;
+        el.querySelector('.emote').textContent = data.emote;
         el.querySelector('.body-raw').innerHTML = data.message;
         var bodyFileDisplay = el.querySelector('.body-file-display');
         bodyFileDisplay.textContent = data.file_display_short;
         bodyFileDisplay.setAttribute('title', data.file_display);
         document.body.prepend(el);
         el = document.querySelector('.message');
-        el.dataset.flair = data.flair;
+        el.dataset.emote = data.emote;
         el.dataset.topic = data.topic;
     });
     document.querySelector('.header-title').addEventListener('input', event => {
@@ -68,7 +68,7 @@
         if (el.classList.contains('body-file-display')) {
             navigator.clipboard.writeText(el.getAttribute('title'));
         }
-        if(el.classList.contains('topic') || el.classList.contains('flair')) {
+        if(el.classList.contains('topic') || el.classList.contains('emote')) {
             var filterQuery = '',
                 hasFilter = false,
                 message = el.closest('.message'),
@@ -76,7 +76,7 @@
                 resetFilter = header !== null,
                 subject = el.classList.contains('topic')
                     ? 'topic'
-                    : 'flair';
+                    : 'emote';
             if(message && filter[subject]  === message.dataset[subject]) {
                 return;
             }

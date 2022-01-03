@@ -138,12 +138,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chevere/chevere.git",
-                "reference": "00c88a7508686feb6606e820d9358b85bb5bd423"
+                "reference": "e6f8f884057852654462d7938cce36d1714cb777"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chevere/chevere/zipball/00c88a7508686feb6606e820d9358b85bb5bd423",
-                "reference": "00c88a7508686feb6606e820d9358b85bb5bd423",
+                "url": "https://api.github.com/repos/chevere/chevere/zipball/e6f8f884057852654462d7938cce36d1714cb777",
+                "reference": "e6f8f884057852654462d7938cce36d1714cb777",
                 "shasum": ""
             },
             "require": {
@@ -219,7 +219,7 @@
                 "issues": "https://github.com/chevere/chevere/issues",
                 "source": "https://github.com/chevere/chevere/tree/0.1"
             },
-            "time": "2022-01-02T22:14:06+00:00"
+            "time": "2022-01-03T00:24:51+00:00"
         },
         {
             "name": "clue/sse-react",

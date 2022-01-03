@@ -16,9 +16,9 @@ use function Chevere\Components\Message\message;
 require __DIR__ . '/../vendor/autoload.php';
 
 xr(
-    greet: '🇨🇱 Hola, mundo!',
+    greet: '😘 Hola, mundo!',
     t: 'hello-world',
-    f: '😊',
+    e: '😊',
 );
 sleep(2);
 xr(
@@ -27,7 +27,7 @@ xr(
         2 => 'runs a PHP message server!'
     ],
     t: 'hello-world',
-    f: '🐘'
+    e: '🐘'
 );
 sleep(4);
 $message = message('Did you heard about %package%?')
@@ -36,8 +36,8 @@ xr(
     inspiration: $message,
     message: $message->toString(),
     t: 'hello-world',
-    f: '😎',
-    b: true
+    e: '😎',
+    f: XR_BACKTRACE
 );
 sleep(4);
 xr(
@@ -48,34 +48,34 @@ xr(
         ];
     },
     t: 'hello-world',
-    f: '✨🐘'
+    e: '✨🐘'
 );
 sleep(4);
 xr(
     feat: 'Edit the title by clicking on "XR Session".',
     t: 'how-to',
-    f: '✍️'
+    e: '✍️'
 );
 sleep(4);
 xr(
-    feat: 'Filter by clicking a topic (how-to button) or flair (👻 emoji).',
+    feat: 'Filter by clicking a topic (how-to button) or emote (👻 emoji).',
     t: 'how-to',
-    f: '👻'
+    e: '👻'
 );
 sleep(4);
 xr(
     feat: 'Copy the file path by clicking on ' . basename(__FILE__) . ':' . (string) (__LINE__ + 2) . ' here below.',
     t: 'how-to',
-    f: '📎'
+    e: '📎'
 );
 sleep(4);
 xr(
     feat: 'Dark/light mode follows your system preferences.',
     t: 'how-to',
-    f: '🌚🌝'
+    e: '🌚🌝'
 );
 sleep(4);
 xr(
     bye: 'Enjoy XR!',
-    f: '😊'
+    e: '😊'
 );

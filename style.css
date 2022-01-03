@@ -1,5 +1,5 @@
 :root {
-    --borderSize: 0.1rem;
+    --borderSize: 0.0625rem;
     --headerHeight: calc(3.7rem + var(--borderSize));
     --fontSize: 16px;
     --marginEl: 0.25rem;

@@ -19,26 +19,39 @@ use function Chevere\Components\Writer\streamFor;
 use Chevere\Components\Writer\StreamWriter;
 use Chevere\Xr\Components\VarDump\Outputters\VarDumpHtmlOutputter;
 
+if (!defined('XR_BACKTRACE')) {
+    define('XR_BACKTRACE', 1);
+}
+if (!defined('XR_PAUSE')) {
+    define('XR_PAUSE', 2);
+}
 if (!function_exists('xr')) {
     /**
      * Dumps information about one or more variables to XR.
+     *
+     * ```php
+     * xr($foo, $bar,...);
+     * ```
+     *
+     * @param mixed ...$vars Variable(s) to dump
+     * @param string $t Message Topic
+     * @param string $e Message Emote
+     * @param int $f `XR_BACKTRACE | XR_PAUSE`
      */
     function xr(...$vars): void
     {
         $backtrace = debug_backtrace();
         $caller = $backtrace[0];
         $defaultArgs = [
-            'f' => '',
+            'e' => '',
             't' => '',
-            'b' => false,
-            'p' => false,
+            'f' => 0,
         ];
         $args = array_merge($defaultArgs, $vars);
         $args = [
-            'f' => (string) $args['f'],
+            'e' => (string) $args['e'],
             't' => (string) $args['t'],
-            'b' => (bool) $args['b'],
-            'p' => (bool) $args['p'],
+            'f' => (int) $args['f'],
         ];
         foreach ($args as $name => &$value) {
             if (array_key_exists($name, $vars)) {
@@ -57,7 +70,7 @@ if (!function_exists('xr')) {
             ->withVars(...$vars)
             ->process(new StreamWriter($stream));
         $body = '<div class="dump">' . $stream->__toString() . '</div>';
-        if ($args['b']) {
+        if ($args['f'] & XR_BACKTRACE) {
             $traceFormatter = new ThrowableTraceFormatter($backtrace, new ThrowableHandlerHtmlFormatter());
             $body .= '<div class="backtrace">' . $traceFormatter->toString() . '</div>';
         }
@@ -65,8 +78,9 @@ if (!function_exists('xr')) {
             'body' => $body,
             'file_path' => $caller['file'] ?? '',
             'file_line' => $caller['line'] ?? '',
-            'flair' => $args['f'],
+            'emote' => $args['e'],
             'topic' => $args['t'],
+            'pause' => (string) (bool) ($args['f'] & XR_PAUSE),
         ];
         $bodyString = http_build_query($data);
         $ch = curl_init();
