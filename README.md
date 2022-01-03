@@ -40,17 +40,27 @@ This project is under preview status.
 composer require --dev chevere/xr
 ```
 
-## Start the dump server
+## Start the server
+
+* With PHP:
 
 ```sh
 php vendor/chevere/xr/server.php 27420
+```
+
+* With Docker:
+
+```sh
+docker run -d -p 27420:27420 \
+    --name chevere-xr \
+    ghcr.io/chevere/xr:main
 ```
 
 The server will be available at [http://localhost:27420](http://localhost:27420)
 
 ## Demo
 
-Open the debugger and then run:
+Open the debugger in your web browser and run:
 
 ```php
 php demo/showtime.php
@@ -98,7 +108,7 @@ xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_BACKTRACE);
 xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_PAUSE);
 ```
 
-## Send message reference
+## Message reference
 
 ```plain
 POST http://localhost:27420/message
@@ -116,23 +126,6 @@ POST http://localhost:27420/message
 
 ## Docker
 
-### Build
-
-```sh
-docker build -t ghcr.io/chevere/xr:main . \
-    -f xr.Dockerfile
-```
-
-### Run
-
-This will spawn [http://localhost:27420](http://localhost:27420) where the port mapping is `local_port:27420`.
-
-```sh
-docker run -d -p 27420:27420 \
-    --name chevere-xr \
-    ghcr.io/chevere/xr:main
-```
-
 ### Start/Stop
 
 ```sh
@@ -141,4 +134,17 @@ docker container start chevere-xr
 
 ```sh
 docker container stop chevere-xr
+```
+
+### Remove
+
+```sh
+docker container rm chevere-xr -f
+```
+
+### Build
+
+```sh
+docker build -t ghcr.io/chevere/xr:tag . \
+    -f xr.Dockerfile
 ```
