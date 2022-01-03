@@ -1,7 +1,9 @@
 :root {
     --borderSize: 0.0625rem;
     --headerHeight: calc(3.7rem + var(--borderSize));
-    --fontSize: 16px;
+    --fontNormal: 16px;
+    --fontSubNormal: 0.9375rem;
+    --fontSmall: 0.8125rem;
     --marginEl: 0.25rem;
     --borderRadiusBox: 0.375rem;
     --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+);
@@ -73,7 +75,7 @@
 }
 
 html {
-    font-size: var(--fontSize);
+    font-size: var(--fontNormal);
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -174,11 +176,11 @@ header, .message {
     display: inline-block;
     margin-bottom: var(--marginEl);
     background: var(--buttonTopicBackground);
-    padding: 0.4rem 0.8rem;
+    padding: calc(var(--fontSmall)/2) var(--fontSmall);
     border-radius: var(--marginEl);
     border: var(--borderSize) solid rgba(var(--colorBorderRGB), 0.5);
     margin-right: var(--marginEl);
-    font-size: 0.9rem;
+    font-size: var(--fontSubNormal);
 }
 
 .topic:hover {
@@ -190,7 +192,7 @@ header, .message {
 }
 
 .body-file {
-    font-size: 0.8rem;
+    font-size: var(--fontSmall);
 }
 
 .body-file-display {
@@ -204,8 +206,8 @@ header, .message {
 
 .body-file-display:hover:after {
     margin-left: var(--borderSize);
-    width: 0.8rem;
-    height: 0.8rem;
+    width: var(--fontSmall);
+    height: var(--fontSmall);
     display: inline-block;
     position: absolute;
     content: '';
@@ -264,7 +266,7 @@ header, .message {
 }
 
 .dump, .backtrace {
-    font-size: 0.875rem;
+    font-size: var(--fontSubNormal);
     font-family: 'Fira Code Retina', 'Operator Mono', Inconsolata, Consolas, monospace, sans-serif;
     color: #ecf0f1;
     line-height: 1.2;
