@@ -113,3 +113,22 @@ POST http://localhost:27420/message
 * `file_line` - The file line.
 * `emote` - emote (emojis/symbols)
 * `topic` - Topic as message context.
+
+## Docker
+
+### Build
+
+```sh
+docker build -t ghcr.io/chevere/xr:main . \
+    -f xr.Dockerfile
+```
+
+### Run
+
+This will spawn [http://localhost:27420](http://localhost:27420) where the port mapping is `local_port:27420`.
+
+```sh
+docker run -it -p 27420:27420 \
+    --name chevere-xr \
+    ghcr.io/chevere/xr:main
+```
