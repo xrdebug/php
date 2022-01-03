@@ -46,7 +46,7 @@ composer require --dev chevere/xr
 php vendor/chevere/xr/server.php 27420
 ```
 
-The server will be available at [http://0.0.0.0:27420](http://0.0.0.0:27420)
+The server will be available at [http://localhost:27420](http://localhost:27420)
 
 ## Demo
 
@@ -92,7 +92,7 @@ Pass bitwise flags to trigger special behavior.
 xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_BACKTRACE);
 ```
 
-* `f: XR_PAUSE` to pause debug backtrace (not implemented).
+* `f: XR_PAUSE` to pause code execution (*not implemented).
 
 ```php
 xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_PAUSE);
@@ -111,7 +111,5 @@ POST http://localhost:27420/message
 * `body` - The message raw body (HTML).
 * `file_path` - The file path.
 * `file_line` - The file line.
-* `file_display` - The file + line.
-* `file_display_short` - The file basename + line.
 * `emote` - emote (emojis/symbols)
 * `topic` - Topic as message context.
