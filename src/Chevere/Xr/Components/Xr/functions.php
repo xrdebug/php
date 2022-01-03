@@ -50,22 +50,16 @@ if (!function_exists('xr')) {
         $topic = (string) $args['t'];
         $emote = (string) $args['e'];
         $flags = (int) $args['f'];
-        $message = new Message(
-            writer: new StreamWriter(streamFor('php://temp', 'r+')),
-            vars: $vars,
-            shift: 1,
+        (new Client())->sendMessage(
+            (new Message(
+                writer: new StreamWriter(streamFor('php://temp', 'r+')),
+                vars: $vars,
+                shift: 1,
+            ))
+                ->withTopic($topic)
+                ->withEmote($emote)
+                ->withFlags($flags)
         );
-        if ($topic !== '') {
-            $message = $message->withTopic($topic);
-        }
-        if ($emote !== '') {
-            $message = $message->withEmote($emote);
-        }
-        if ($flags !== 0) {
-            $message = $message->withFlags($flags);
-        }
-        (new Client())
-            ->sendMessage($message);
     }
 }
 // @codeCoverageIgnoreEnd

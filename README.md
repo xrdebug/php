@@ -9,6 +9,8 @@
 
 ![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=alert_status)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=security_rating)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=coverage)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_xr) [![CodeFactor](https://www.codefactor.io/repository/github/chevere/xr/badge)](https://www.codefactor.io/repository/github/chevere/xr) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/b956754f8ff04aaa9ca24a6e4cc21661)](https://www.codacy.com/gh/chevere/xr/dashboard) [![Maintainability](https://api.codeclimate.com/v1/badges/e096f89454df0538144f/maintainability)](https://codeclimate.com/github/chevere/xr/maintainability)
+
 Chevere Remote (XR) dump debugging utility built on top of ReactPHP.
 
 ## Status
@@ -17,25 +19,18 @@ This project is under preview status.
 
 ## Getting started
 
-* Clone this repository
-* Install the dependencies using Composer
+`🚧 Min stability dev`
+
+* Add `chevere/xr` as a dev dependency in your project:
 
 ```sh
-composer install
+composer require --dev chevere/xr
 ```
 
 ## Start the dump server
 
-If you added this package as a dependency:
-
 ```sh
 php vendor/chevere/xr/server.php 27420
-```
-
-If you cloned this repository:
-
-```sh
-php server.php 27420
 ```
 
 The server will be available at [http://0.0.0.0:27420](http://0.0.0.0:27420)
@@ -45,37 +40,10 @@ The server will be available at [http://0.0.0.0:27420](http://0.0.0.0:27420)
 Open the debugger and then run:
 
 ```php
-php demo.php
-```
-
-## Sending messages
-
-* POST parameters
-  * `body` - The message raw body (HTML).
-  * `file_path` - The file path.
-  * `file_line` - The file line.
-  * `file_display` - The file + line.
-  * `file_display_short` - The file basename + line.
-  * `emote` - emote (emojis/symbols)
-  * `topic` - Topic as message context.
-
-```plain
-POST http://localhost:27420/message
-    body=Hola, mundo
-    file_path=/var/www/file.php
-    file_line=123
-    ...
+php demo/showtime.php
 ```
 
 ## XR Helpers
-
-`🚧 Min stability dev`
-
-* Add `chevere/xr` as a dev dependency in your project:
-
-```sh
-composer require --dev chevere/xr
-```
 
 ### Dump variables
 
@@ -115,4 +83,23 @@ xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_BACKTRACE);
 
 ```php
 xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_PAUSE);
+```
+
+## Send message reference
+
+* POST parameters
+  * `body` - The message raw body (HTML).
+  * `file_path` - The file path.
+  * `file_line` - The file line.
+  * `file_display` - The file + line.
+  * `file_display_short` - The file basename + line.
+  * `emote` - emote (emojis/symbols)
+  * `topic` - Topic as message context.
+
+```plain
+POST http://localhost:27420/message
+    body=Hola, mundo
+    file_path=/var/www/file.php
+    file_line=123
+    ...
 ```
