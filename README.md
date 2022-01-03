@@ -29,16 +29,16 @@ composer install
 If you added this package as a dependency:
 
 ```sh
-php vendor/chevere/xr/server.php 9666
+php vendor/chevere/xr/server.php 27420
 ```
 
 If you cloned this repository:
 
 ```sh
-php server.php 9666
+php server.php 27420
 ```
 
-The server will be available at [http://localhost:9666](http://localhost:9666)
+The server will be available at [http://0.0.0.0:27420](http://0.0.0.0:27420)
 
 ## Demo
 
@@ -60,7 +60,7 @@ php demo.php
   * `topic` - Topic as message context.
 
 ```plain
-POST http://localhost:9666/message
+POST http://localhost:27420/message
     body=Hola, mundo
     file_path=/var/www/file.php
     file_line=123

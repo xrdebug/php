@@ -1,4 +1,6 @@
 .DS_Store
 /vendor
+/build
 /.phpunit.cache
 .phpunit.result.cache
+/.scannerwork

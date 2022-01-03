@@ -30,25 +30,25 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             return new Response(
                 '200',
                 ['Content-Type' => 'text/html'],
-                file_get_contents(__DIR__ . '/index.html')
+                file_get_contents(__DIR__ . '/asset/index.html')
             );
         case '/icon.svg':
             return new Response(
                 '200',
                 ['Content-Type' => 'image/svg+xml'],
-                file_get_contents(__DIR__ . '/icon.svg')
+                file_get_contents(__DIR__ . '/asset/icon.svg')
             );
         case '/icon.png':
             return new Response(
                 '200',
                 ['Content-Type' => 'image/png'],
-                file_get_contents(__DIR__ . '/icon.png')
+                file_get_contents(__DIR__ . '/asset/icon.png')
             );
         case '/style.css':
             return new Response(
                 '200',
                 ['Content-Type' => 'text/css'],
-                file_get_contents(__DIR__ . '/style.css')
+                file_get_contents(__DIR__ . '/asset/style.css')
             );
         case '/message':
             if ($request->getMethod() !== 'POST') {

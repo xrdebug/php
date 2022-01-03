@@ -1,6 +1,6 @@
 {
     "name": "chevere/xr",
-    "description": "Remote dump debugging utility",
+    "description": "Lightweight debug server utility built on ReactPHP.",
     "license": "AGPL-3.0-only",
     "authors": [
         {
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "files": [
-            "functions.php"
+            "src/Chevere/Xr/Components/Xr/functions.php"
         ],
         "psr-4": {
             "Chevere\\Xr\\Components\\": "src/Chevere/Xr/Components/"
