@@ -128,7 +128,17 @@ docker build -t ghcr.io/chevere/xr:main . \
 This will spawn [http://localhost:27420](http://localhost:27420) where the port mapping is `local_port:27420`.
 
 ```sh
-docker run -it -p 27420:27420 \
+docker run -d -p 27420:27420 \
     --name chevere-xr \
     ghcr.io/chevere/xr:main
+```
+
+### Start/Stop
+
+```sh
+docker container start chevere-xr
+```
+
+```sh
+docker container stop chevere-xr
 ```
