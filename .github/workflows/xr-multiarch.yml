@@ -25,6 +25,9 @@ jobs:
         env:
           fail-fast: true
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
