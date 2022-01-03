@@ -43,6 +43,30 @@
     }
 }
 
+@-webkit-keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 * {
     box-sizing: border-box;
     cursor: default;
@@ -65,6 +89,19 @@ body {
     color: var(--bodyText);
     padding-top: var(--headerHeight);
     line-height: 1;
+}
+
+pre, .pre {
+    padding: 1rem;
+    font-family: "Fira Code Retina", "Operator Mono", Inconsolata, Consolas,
+        monospace, sans-serif;
+    line-height: 1;
+    overflow: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    display: block;
+    margin: 0;
+    word-break: break-all;
 }
 
 header {
@@ -107,29 +144,7 @@ header, .message {
     border-bottom: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
 }
 
-@-webkit-keyframes slideDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
 
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-100%);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 .message {
     padding: 0.875rem;
@@ -261,7 +276,6 @@ header, .message {
 }
 
 .dump {
-    padding: 1rem;
     margin: var(--marginEl) 0;
     white-space: pre-wrap;
     color: var(--dumpText);
@@ -284,29 +298,12 @@ pre+.backtrace {
     margin-top: var(--marginEl);
 }
 
-.pre {
-    background-color: hsl(192, 15.2%, 93.5%);
-    border: var(--borderSize) solid hsl(204, 8.2%, 76.1%);
-    font-family: "Fira Code Retina", "Operator Mono", Inconsolata, Consolas,
-        monospace, sans-serif;
-    line-height: 1;
-    overflow: auto;
-    word-wrap: break-word;
-    white-space: pre-line;
-    display: block;
-    margin: 0;
-    padding: 1rem;
-    border: var(--borderSize) solid hsl(192, 15%, 84%);
-    word-break: break-all;
-}
-
-.pre.pre--stack-entry {
+.pre--stack-entry {
     border: 0;
     color: var(--dumpText);
     background: var(--traceBackgroundOdd);
-    line-height: normal;
 }
 
-.pre.pre--stack-entry.entry--even {
+.pre--stack-entry.entry--even {
     background: var(--traceBackgroundEven);
 }
