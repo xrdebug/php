@@ -17,6 +17,9 @@ namespace Chevere\Xr\Components\Xr {
     use Chevere\Interfaces\Writer\WriterInterface;
     use LogicException;
 
+    /**
+     * @codeCoverageIgnore
+     */
     function getWriter(): WriterInterface
     {
         try {
@@ -31,7 +34,8 @@ namespace {
     use Chevere\Xr\Components\Xr\Client;
     use function Chevere\Xr\Components\Xr\getWriter;
     use Chevere\Xr\Components\Xr\Message;
-
+    
+    // @codeCoverageIgnoreStart
     if (!defined('XR_BACKTRACE')) {
         define('XR_BACKTRACE', 1);
     }
@@ -39,6 +43,7 @@ namespace {
         define('XR_PAUSE', 2);
     }
     if (!function_exists('xr')) {
+        // @codeCoverageIgnoreEnd
         /**
          * Dumps information about one or more variables to XR.
          *

@@ -17,6 +17,9 @@ use Chevere\Components\Message\Message;
 use Chevere\Exceptions\Core\LogicException;
 use Chevere\Interfaces\Writer\WriterInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 final class WriterInstance
 {
     private static WriterInterface $instance;
