@@ -34,12 +34,8 @@ final class Client
     public function sendMessage(Message $message): void
     {
         try {
-            $curlError = null;
             $curlHandle = $this->getCurlHandle('message', $message->data());
             curl_exec($curlHandle);
-            if (curl_errno($curlHandle)) {
-                $curlError = curl_error($curlHandle);
-            }
         } finally {
             curl_close($curlHandle);
         }
