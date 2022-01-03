@@ -8,6 +8,7 @@
     <link rel="icon" href="icon.svg">
     <link rel="apple-touch-icon" href="icon.svg">
     <link rel="mask-icon" href="icon.svg" color="#000">
+    <style rel="stylesheet" media="all" id="filtering"></style>
 </head>
 <body>
     <header>
@@ -40,10 +41,7 @@
         topic: '=',
         emote: '*=',
     },
-    filterCSSIndex,
-    styleEl = document.createElement('style');
     es = new EventSource('dump');
-    document.head.appendChild(styleEl);
     es.addEventListener('message', function (event) {
         var data = JSON.parse(event.data),
         template = document.querySelector('#message'),
@@ -90,13 +88,9 @@
                 resetFilter = false;
                 filterQuery += '[data-' +  filterSubject + filterOperator[filterSubject] + '"' + filter[filterSubject] + '"]';
             }
-            if(typeof filterCSSIndex === 'number') {
-                styleEl.sheet.removeRule(filterCSSIndex);
-            }
-            filterCSSIndex = filterQuery === ''
-                ? null
-                : filterCSSIndex = styleEl.sheet
-                    .insertRule('.message:not(' + filterQuery + ') { display: none; }');
+            document.getElementById('filtering').innerHTML = filterQuery === ''
+                ? ''
+                : '.message:not(' + filterQuery + ') { display: none; }';
             document.querySelector('.header-filter .' + subject).textContent = message
                 ? filter[subject]
                 : '';
