@@ -60,10 +60,20 @@ The server will be available at [http://localhost:27420](http://localhost:27420)
 
 ## Demo
 
-Open the debugger in your web browser and run:
+Open the debugger and then run:
+
+* With PHP:
 
 ```php
 php demo/showtime.php
+```
+
+* With Docker:
+
+```php
+docker exec -it \
+    chevere-xr \
+    php demo/showtime.php
 ```
 
 ## XR Helpers
