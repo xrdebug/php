@@ -1,0 +1,29 @@
+dist: focal
+language: php
+php:
+  - 8.0
+  - nightly
+matrix:
+  allow_failures:
+    - php: nightly
+cache:
+  directories:
+    - "$HOME/.composer/cache"
+before_install:
+  - (phpenv config-rm xdebug.ini || exit 0)
+  - pecl install pcov
+  - composer validate
+addons:
+  sonarcloud:
+    organization: chevere
+install:
+  - composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
+  - ./cc-test-reporter after-build build/logs/clover.xml -t clover
+  - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r build/logs/clover.xml
+  - sonar-scanner
