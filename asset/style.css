@@ -130,6 +130,7 @@ header>div {
     font-size: 1.5rem;
     outline: 0;
     margin-right: 1rem;
+    min-width: 3rem;
 }
 
 .header-title, .header-filter {
