@@ -55,11 +55,6 @@ docker run -d -p 27420:27420 \
     ghcr.io/chevere/xr:main
 ```
 
-docker run -d -p 27420:27420 \
-    --name chevere-xr \
-    -e XR_SERVER_PORT=27420 \
-    ghcr.io/chevere/xr:main
-
 The server will be available at [http://localhost:27420](http://localhost:27420)
 
 ## Demo
