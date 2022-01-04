@@ -22,7 +22,7 @@ final class ClientTest extends TestCase
     {
         $client = new Client();
         $this->assertSame(
-            'http://0.0.0.0:27420/endpoint',
+            'http://localhost:27420/endpoint',
             $client->getUrl('endpoint')
         );
     }

@@ -18,8 +18,8 @@ use CurlHandle;
 final class Client
 {
     public function __construct(
+        private string $host = 'localhost',
         private int $port = 27420,
-        private string $host = '0.0.0.0'
     ) {
     }
 
@@ -28,9 +28,6 @@ final class Client
         return "http://{$this->host}:{$this->port}/{$endpoint}";
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     public function sendMessage(Message $message): void
     {
         try {
@@ -41,9 +38,6 @@ final class Client
         }
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     private function getCurlHandle(string $endpoint, array $data): CurlHandle
     {
         $curlHandle = curl_init();

@@ -138,12 +138,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chevere/chevere.git",
-                "reference": "e6f8f884057852654462d7938cce36d1714cb777"
+                "reference": "196dacc10ebd2f3848ea6df4902deddbb2b8377c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chevere/chevere/zipball/e6f8f884057852654462d7938cce36d1714cb777",
-                "reference": "e6f8f884057852654462d7938cce36d1714cb777",
+                "url": "https://api.github.com/repos/chevere/chevere/zipball/196dacc10ebd2f3848ea6df4902deddbb2b8377c",
+                "reference": "196dacc10ebd2f3848ea6df4902deddbb2b8377c",
                 "shasum": ""
             },
             "require": {
@@ -186,7 +186,6 @@
                     "src/Chevere/Components/Message/functions.php",
                     "src/Chevere/Components/Parameter/functions.php",
                     "src/Chevere/Components/Router/functions.php",
-                    "src/Chevere/Components/Sandbox/functions.php",
                     "src/Chevere/Components/Str/functions.php",
                     "src/Chevere/Components/ThrowableHandler/functions.php",
                     "src/Chevere/Components/Translator/functions.php",
@@ -219,7 +218,7 @@
                 "issues": "https://github.com/chevere/chevere/issues",
                 "source": "https://github.com/chevere/chevere/tree/0.1"
             },
-            "time": "2022-01-03T00:24:51+00:00"
+            "time": "2022-01-04T13:13:57+00:00"
         },
         {
             "name": "clue/sse-react",

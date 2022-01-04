@@ -23,7 +23,6 @@ XR is a dump server utility built on top of ReactPHP.
 * ⏸ Pause your code execution (*not implemented yet)
 * 🌚 Dark / 🌝 Light mode follows your system preferences
 * 👽 Ephemeral as it doesn't require to store any persistent data
-* 🤓 Multi-client as it broadcast dump messages to all connected clients
 * 🍒 It's HTML based, save your session for offline usage
 
 ## Status
@@ -55,6 +54,11 @@ docker run -d -p 27420:27420 \
     --name chevere-xr \
     ghcr.io/chevere/xr:main
 ```
+
+docker run -d -p 27420:27420 \
+    --name chevere-xr \
+    -e XR_SERVER_PORT=27420 \
+    ghcr.io/chevere/xr:main
 
 The server will be available at [http://localhost:27420](http://localhost:27420)
 
@@ -118,21 +122,19 @@ xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_BACKTRACE);
 xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_PAUSE);
 ```
 
-## Message reference
+## Configuration
 
-```plain
-POST http://localhost:27420/message
-    body=Hola, mundo
-    file_path=/var/www/file.php
-    file_line=123
-    ...
+Create a file named `xr.php` at the root of your project, with contents like this:
+
+```php
+<?php
+
+return [
+    'enable' => true,
+    'host' => 'localhost',
+    'port' => 27420,
+];
 ```
-
-* `body` - The message raw body (HTML).
-* `file_path` - The file path.
-* `file_line` - The file line.
-* `emote` - emote (emojis/symbols)
-* `topic` - Topic as message context.
 
 ## Docker
 
@@ -158,3 +160,21 @@ docker container rm chevere-xr -f
 docker build -t ghcr.io/chevere/xr:tag . \
     -f xr.Dockerfile
 ```
+
+## Message reference
+
+The server can receive messages from *anywhere*:
+
+```plain
+POST http://localhost:27420/message
+    body=Hola, mundo
+    file_path=/var/www/file.php
+    file_line=123
+    ...
+```
+
+* `body` - The message raw body (HTML).
+* `file_path` - The file path.
+* `file_line` - The file line.
+* `emote` - emote (emojis/symbols)
+* `topic` - Topic as message context.

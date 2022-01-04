@@ -12,6 +12,7 @@
 declare(strict_types=1);
 
 namespace Chevere\Xr\Components\Xr {
+    use function Chevere\Components\Filesystem\dirForPath;
     use function Chevere\Components\Writer\streamTemp;
     use Chevere\Components\Writer\StreamWriter;
     use Chevere\Interfaces\Writer\WriterInterface;
@@ -28,11 +29,20 @@ namespace Chevere\Xr\Components\Xr {
             return new StreamWriter(streamTemp(''));
         }
     }
+
+    function getXrInstance(): Xr
+    {
+        try {
+            return XrInstance::get();
+        } catch (LogicException $e) {
+            return new Xr(dirForPath(getcwd()));
+        }
+    }
 }
 
 namespace {
-    use Chevere\Xr\Components\Xr\Client;
     use function Chevere\Xr\Components\Xr\getWriter;
+    use function Chevere\Xr\Components\Xr\getXrInstance;
     use Chevere\Xr\Components\Xr\Message;
     
     // @codeCoverageIgnoreStart
@@ -42,8 +52,8 @@ namespace {
     if (!defined('XR_PAUSE')) {
         define('XR_PAUSE', 2);
     }
-    if (!function_exists('xr')) {
-        // @codeCoverageIgnoreEnd
+    // @codeCoverageIgnoreEnd
+    if (!function_exists('xr')) { // @codeCoverageIgnore
         /**
          * Dumps information about one or more variables to XR.
          *
@@ -58,6 +68,9 @@ namespace {
          */
         function xr(...$vars): void
         {
+            if (getXrInstance()->enable() === false) {
+                return; // @codeCoverageIgnore
+            }
             $defaultArgs = ['e' => '', 't' => '', 'f' => 0];
             $args = array_merge($defaultArgs, $vars);
             foreach (array_keys($defaultArgs) as $name) {
@@ -68,19 +81,17 @@ namespace {
             $topic = (string) $args['t'];
             $emote = (string) $args['e'];
             $flags = (int) $args['f'];
-            (new Client(
-                host: getenv('XR_SERVER_HOST') ?: '0.0.0.0',
-                port: (int) (getenv('XR_SERVER_PORT') ?: 27420)
-            ))->sendMessage(
-                (new Message(
-                    writer: getWriter(),
-                    vars: $vars,
-                    shift: 1,
-                ))
-                    ->withTopic($topic)
-                    ->withEmote($emote)
-                    ->withFlags($flags)
-            );
+            getXrInstance()->client()
+                ->sendMessage(
+                    (new Message(
+                        writer: getWriter(),
+                        vars: $vars,
+                        shift: 1,
+                    ))
+                        ->withTopic($topic)
+                        ->withEmote($emote)
+                        ->withFlags($flags)
+                );
         }
     }
 }
