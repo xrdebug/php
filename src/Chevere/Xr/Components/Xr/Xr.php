@@ -53,6 +53,7 @@ final class Xr
             }
             // @codeCoverageIgnoreStart
             catch (Throwable) {
+                // Ignore to use defaults
             }
             // @codeCoverageIgnoreEnd
         }
