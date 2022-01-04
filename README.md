@@ -44,7 +44,7 @@ composer require --dev chevere/xr
 * With PHP:
 
 ```sh
-php vendor/chevere/xr/server.php 27420
+php vendor/chevere/xr/server.php -p 27420
 ```
 
 * With Docker:
