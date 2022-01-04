@@ -4,9 +4,9 @@
 
 <p align="center">
     <img alt="XR" src="asset/icon.svg" width="50%">
-    <img alt="XR dark" src=".screen/xr-light.png">
-    <img alt="XR dark" src=".screen/xr-dark.png">
 </p>
+
+https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-a51d-f94cd6d7caec.mp4
 
 ![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 
