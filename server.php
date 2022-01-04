@@ -13,16 +13,50 @@ declare(strict_types=1);
 
 require __DIR__ . '/vendor/autoload.php';
 
+use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
+use Chevere\Components\ThrowableHandler\ThrowableHandler;
+use function Chevere\Components\ThrowableHandler\throwableHandler;
+use function Chevere\Components\Writer\streamFor;
+use Chevere\Components\Writer\StreamWriter;
+use Chevere\Components\Writer\Writers;
+use function Chevere\Components\Writer\writers;
+use Chevere\Components\Writer\WritersInstance;
 use Clue\React\Sse\BufferedChannel;
 use Psr\Http\Message\ServerRequestInterface;
+use React\EventLoop\Loop;
+use React\Http\HttpServer;
 use React\Http\Message\Response;
 use React\Http\Middleware\LimitConcurrentRequestsMiddleware;
 use React\Http\Middleware\RequestBodyBufferMiddleware;
 use React\Http\Middleware\RequestBodyParserMiddleware;
 use React\Http\Middleware\StreamingRequestMiddleware;
 use React\Stream\ThroughStream;
+use samejack\PHP\ArgvParser;
 
-$loop = React\EventLoop\Loop::get();
+new WritersInstance(
+    (new Writers())
+        ->with(
+            new StreamWriter(
+                streamFor('php://output', 'w')
+            )
+        )
+        ->withError(
+            new StreamWriter(
+                streamFor('php://stderr', 'w')
+            )
+        )
+);
+set_error_handler(ThrowableHandler::ERRORS_AS_EXCEPTIONS);
+register_shutdown_function(ThrowableHandler::FATAL_ERROR_HANDLER);
+set_exception_handler(function (Throwable $e) {
+    $handler = throwableHandler($e);
+    $docInternal = new ThrowableHandlerConsoleDocument($handler);
+    writers()->error()
+        ->write($docInternal->toString() . "\n");
+    die(255);
+});
+
+$loop = Loop::get();
 $channel = new BufferedChannel();
 $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
     switch ($request->getUri()->getPath()) {
@@ -109,7 +143,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             return new Response(404);
     }
 };
-$http = new React\Http\HttpServer(
+$http = new HttpServer(
     $loop,
     new StreamingRequestMiddleware(),
     new LimitConcurrentRequestsMiddleware(100),
@@ -117,11 +151,29 @@ $http = new React\Http\HttpServer(
     new RequestBodyParserMiddleware(100 * 1024, 1),
     $handler
 );
+$options = (new ArgvParser())->parseConfigs();
+if (array_key_exists('h', $options) || array_key_exists('help', $options)) {
+    echo implode("\n", ['-p Port (default 27420)', '-c Cert .pem file', '']);
+    die(0);
+}
+$host = '0.0.0.0';
+$port = $options['p'] ?? '0';
+$cert = $options['c'] ?? null;
+$scheme = isset($cert) ? 'tls' : 'tcp';
+$uri = "$scheme://$host:$port";
+$context = $scheme === 'tcp'
+    ? []
+    : [
+        'tls' => [
+            'local_cert' => $cert
+        ]
+    ];
 $socket = new \React\Socket\SocketServer(
-    uri: '0.0.0.0:' . ($argv[1] ?? '0'),
-    context: [],
+    uri: $uri,
+    context: $context,
     loop: $loop
 );
 $http->listen($socket);
-echo 'Server now listening on ' . $socket->getAddress() . ' [' . parse_url($socket->getAddress(), PHP_URL_PORT) . ']' . PHP_EOL;
+$socket->on('error', 'printf');
+echo 'XR debugger listening on ' . str_replace('tls:', 'https:', $socket->getAddress()) . PHP_EOL;
 $loop->run();

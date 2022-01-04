@@ -4,3 +4,4 @@
 /.phpunit.cache
 .phpunit.result.cache
 /.scannerwork
+localhost.pem

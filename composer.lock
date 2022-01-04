@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ede49cca35e818b45f62dd3a2fc42bd7",
+    "content-hash": "ad6885a123caa4ce78dff44e3291b9d7",
     "packages": [
         {
             "name": "adhocore/cli",
-            "version": "0.8.4",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/adhocore/php-cli.git",
-                "reference": "c17fdec05954b3bd2df49adff56284a511dd1083"
+                "reference": "319c7dd0092c0346d9ad03366cc13d3491b57e34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adhocore/php-cli/zipball/c17fdec05954b3bd2df49adff56284a511dd1083",
-                "reference": "c17fdec05954b3bd2df49adff56284a511dd1083",
+                "url": "https://api.github.com/repos/adhocore/php-cli/zipball/319c7dd0092c0346d9ad03366cc13d3491b57e34",
+                "reference": "319c7dd0092c0346d9ad03366cc13d3491b57e34",
                 "shasum": ""
             },
             "require": {
@@ -62,7 +62,7 @@
             ],
             "support": {
                 "issues": "https://github.com/adhocore/php-cli/issues",
-                "source": "https://github.com/adhocore/php-cli/tree/0.8.4"
+                "source": "https://github.com/adhocore/php-cli/tree/0.9.0"
             },
             "funding": [
                 {
@@ -70,7 +70,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-10-09T00:51:05+00:00"
+            "time": "2021-01-06T00:25:50+00:00"
         },
         {
             "name": "brick/math",
@@ -138,16 +138,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chevere/chevere.git",
-                "reference": "196dacc10ebd2f3848ea6df4902deddbb2b8377c"
+                "reference": "e2682d4920766e0604c13a72fc290094111d4024"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chevere/chevere/zipball/196dacc10ebd2f3848ea6df4902deddbb2b8377c",
-                "reference": "196dacc10ebd2f3848ea6df4902deddbb2b8377c",
+                "url": "https://api.github.com/repos/chevere/chevere/zipball/e2682d4920766e0604c13a72fc290094111d4024",
+                "reference": "e2682d4920766e0604c13a72fc290094111d4024",
                 "shasum": ""
             },
             "require": {
-                "adhocore/cli": "^0.8",
+                "adhocore/cli": "^0.9",
                 "ext-ctype": "*",
                 "ext-ds": "*",
                 "ext-json": "*",
@@ -218,7 +218,7 @@
                 "issues": "https://github.com/chevere/chevere/issues",
                 "source": "https://github.com/chevere/chevere/tree/0.1"
             },
-            "time": "2022-01-04T13:13:57+00:00"
+            "time": "2022-01-04T16:42:28+00:00"
         },
         {
             "name": "clue/sse-react",
@@ -2186,6 +2186,58 @@
                 "source": "https://github.com/ringcentral/psr7/tree/master"
             },
             "time": "2018-05-29T20:21:04+00:00"
+        },
+        {
+            "name": "samejack/php-argv",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/samejack/php-argv.git",
+                "reference": "0551f0f7fd38a5e9dcb316d5cc9028cdd62b21ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/samejack/php-argv/zipball/0551f0f7fd38a5e9dcb316d5cc9028cdd62b21ac",
+                "reference": "0551f0f7fd38a5e9dcb316d5cc9028cdd62b21ac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "*@stable",
+                "phpunit/phpunit": "~4.8|~5.7",
+                "squizlabs/php_codesniffer": "*@stable"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "samejack\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "SJ",
+                    "email": "sj@toright.com",
+                    "homepage": "http://blog.toright.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP CLI arguments parse.",
+            "homepage": "https://github.com/samejack/php-argv",
+            "keywords": [
+                "cli",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/samejack/php-argv/issues",
+                "source": "https://github.com/samejack/php-argv/tree/1.0.3"
+            },
+            "time": "2020-07-15T12:28:03+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
