@@ -31,18 +31,21 @@ XR is a dump server utility built on top of ReactPHP.
     <img alt="XR dark" src=".screen/xr-dark.png">
 </p>
 
-## Status
-
-This project is under preview status.
-
 ## Getting started
-
-`🚧 Min stability dev`
 
 * Add `chevere/xr` as a dev dependency in your project:
 
 ```sh
 composer require --dev chevere/xr
+```
+
+`🚧 Min stability dev`
+
+You will require to add this to your `composer.json` file.
+
+```json
+    "minimum-stability": "dev",
+    "prefer-stable": true
 ```
 
 ## Start the server
