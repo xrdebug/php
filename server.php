@@ -11,7 +11,14 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/vendor/autoload.php';
+foreach (['/', '/../../../'] as $path) {
+    $autoload = __DIR__ . $path . 'vendor/autoload.php';
+    if (stream_resolve_include_path($autoload)) {
+        require $autoload;
+
+        break;
+    }
+}
 
 use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\Components\ThrowableHandler\ThrowableHandler;

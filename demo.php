@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 use function Chevere\Components\Message\message;
 
-foreach (['/../', '/../../../../'] as $path) {
+foreach (['/', '/../../../'] as $path) {
     $autoload = __DIR__ . $path . 'vendor/autoload.php';
     if (stream_resolve_include_path($autoload)) {
         require $autoload;

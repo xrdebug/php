@@ -59,8 +59,7 @@ php vendor/chevere/xr/server.php -p 27420
 * With Docker:
 
 ```sh
-docker run -d -p 27420:27420 \
-    --name chevere-xr \
+docker run -d -p 27420:27420 --name chevere-xr \
     ghcr.io/chevere/xr:main
 ```
 
@@ -73,15 +72,14 @@ Open the debugger and then run:
 * With PHP:
 
 ```php
-php demo/showtime.php
+php demo.php
 ```
 
 * With Docker:
 
 ```php
-docker exec -it \
-    chevere-xr \
-    php demo/showtime.php
+docker exec -it chevere-xr \
+    php demo.php
 ```
 
 ## XR Helpers
