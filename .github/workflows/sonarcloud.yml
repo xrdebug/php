@@ -13,9 +13,7 @@ jobs:
       extensions: opcache, mbstring, ds, pcov
       tools: composer
       ini-values: opcache.enable_cli = 1, precision=16, default_charset='UTF-8', pcov.directory=components
-      key: cache-1614986550762
-      SONAR_SCANNER_VERSION: 4.6.2.2472
-      SONAR_SERVER_URL: "https://sonarcloud.io"
+      key: cache-1641422303519
     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
