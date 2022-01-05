@@ -173,15 +173,21 @@ header, .message {
     top: var(--headerHeight);
 }
 
-.topic {
-    display: inline-block;
+.body-filters .filter-button {
     margin-bottom: var(--marginEl);
+}
+
+.topic, .emote {
+    display: inline-block;
+}
+
+.topic {
+    font-size: var(--fontSubNormal);
     background: var(--buttonTopicBackground);
     padding: calc(var(--fontSmall)/2) var(--fontSmall);
     border-radius: var(--marginEl);
     border: var(--borderSize) solid rgba(var(--colorBorderRGB), 0.5);
     margin-right: var(--marginEl);
-    font-size: var(--fontSubNormal);
 }
 
 .topic:hover {
@@ -279,7 +285,7 @@ header, .message {
 }
 
 .dump {
-    margin: var(--marginEl) 0;
+    margin-bottom: var(--marginEl);
     white-space: pre-wrap;
     color: var(--dumpText);
     background: var(--dumpBackground);

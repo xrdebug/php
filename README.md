@@ -161,8 +161,7 @@ docker container rm chevere-xr -f
 ### Build
 
 ```sh
-docker build -t ghcr.io/chevere/xr:tag . \
-    -f xr.Dockerfile
+docker build -t ghcr.io/chevere/xr:tag .
 ```
 
 ## Message reference

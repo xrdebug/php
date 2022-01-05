@@ -14,7 +14,7 @@
     <header>
         <div contenteditable="true" class="header-title">XR Session</div>
         <div class="header-filter">
-            <span class="topic user-select-none cursor-pointer hide-if-empty"></span><span class="emote user-select-none cursor-pointer hide-if-empty"></span>
+            <span class="topic filter-button user-select-none cursor-pointer hide-if-empty"></span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty"></span>
         </div>
     </header>
     <template id="message">
@@ -23,7 +23,7 @@
                 <div class="time">%time%</div>
             </div>
             <div class="body">
-                <div><span class="topic user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
+                <div class="body-filters"><span class="topic filter-button user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
                 <div class="body-raw hide-if-empty">%message%</div>
                 <div class="body-file">
                     <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
@@ -66,7 +66,7 @@
         if (el.classList.contains('body-file-display')) {
             navigator.clipboard.writeText(el.getAttribute('title'));
         }
-        if(el.classList.contains('topic') || el.classList.contains('emote')) {
+        if(el.classList.contains('filter-button')) {
             var filterQuery = '',
                 hasFilter = false,
                 message = el.closest('.message'),
