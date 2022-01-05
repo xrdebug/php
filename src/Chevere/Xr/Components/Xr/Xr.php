@@ -45,12 +45,13 @@ final class Xr
         if ($this->configFile !== '') {
             $this->setConfigFromFile();
         }
+        $this->enable = (bool) ($this->settings['enable'] ?? false);
         $this->client = new Client(...$this->clientArgs);
     }
 
     public function enable(): bool
     {
-        return $this->settings['enable'] ?? false;
+        return $this->enable;
     }
 
     public function client(): Client
