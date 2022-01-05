@@ -68,4 +68,4 @@ jobs:
         run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
 
       - name: Run tests with phpunit
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit -c phpunit-report.xml
