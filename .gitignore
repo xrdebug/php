@@ -1,5 +1,6 @@
 .DS_Store
 /vendor
+composer.lock
 /build
 /.phpunit.cache
 .phpunit.result.cache
