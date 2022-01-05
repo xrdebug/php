@@ -34,6 +34,13 @@ final class XrTest extends TestCase
         $this->assertEquals(new Client(), $xr->client());
     }
 
+    public function testConstructWithDirNotExitst(): void
+    {
+        $xr = new Xr(dirForPath(__DIR__ . '/_not-found/'));
+        $this->assertSame(true, $xr->enable());
+        $this->assertEquals(new Client(), $xr->client());
+    }
+
     public function testConstructWithSettingsFile(): void
     {
         $configDir = dirForPath(__DIR__ . '/_resources/');

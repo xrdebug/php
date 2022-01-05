@@ -24,7 +24,9 @@ final class Xr
 
     private Client $client;
 
-    private string $configFile;
+    private array $clientArgs = [];
+
+    private string $configFile = '';
 
     private array $configNames = ['xr.php'];
 
@@ -39,25 +41,11 @@ final class Xr
     public function __construct(private DirInterface $configDir)
     {
         $this->settings = $this->defaultSettings;
-        $args = [];
         $this->configFile = $this->getConfigFile();
         if ($this->configFile !== '') {
-            try {
-                $return = filePhpReturnForPath($this->configFile)
-                    ->varType(typeArray());
-                $this->settings = array_merge($this->settings, $return);
-                $args = [
-                    'host' => $this->settings['host'] ?? $this->defaultSettings['host'],
-                    'port' => $this->settings['port'] ?? $this->defaultSettings['port'],
-                ];
-            }
-            // @codeCoverageIgnoreStart
-            catch (Throwable) {
-                // Ignore to use defaults
-            }
-            // @codeCoverageIgnoreEnd
+            $this->setConfigFromFile();
         }
-        $this->client = new Client(...$args);
+        $this->client = new Client(...$this->clientArgs);
     }
 
     public function enable(): bool
@@ -68,6 +56,24 @@ final class Xr
     public function client(): Client
     {
         return $this->client;
+    }
+
+    private function setConfigFromFile(): void
+    {
+        try {
+            $return = filePhpReturnForPath($this->configFile)
+                ->varType(typeArray());
+            $this->settings = array_merge($this->settings, $return);
+            $this->clientArgs = [
+                'host' => $this->settings['host'] ?? $this->defaultSettings['host'],
+                'port' => $this->settings['port'] ?? $this->defaultSettings['port'],
+            ];
+        }
+        // @codeCoverageIgnoreStart
+        catch (Throwable) {
+            // Ignore to use defaults
+        }
+        // @codeCoverageIgnoreEnd
     }
 
     private function getConfigFile(): string
