@@ -13,7 +13,7 @@ jobs:
       extensions: pcov
       tools: composer
       ini-values: pcov.directory=src
-      key: cache-1641225105713
+      key: cache-1641424177283
     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
