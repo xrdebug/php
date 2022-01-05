@@ -1,4 +1,4 @@
-name: CI
+name: SonarCloud
 
 on: [push]
 
@@ -8,12 +8,14 @@ jobs:
     strategy:
       matrix:
         operating-system: [ubuntu-20.04]
-        php-versions: ["8.0", "8.1"]
+        php-versions: ["8.1"]
     env:
-      extensions: pcov
+      extensions: opcache, mbstring, ds, pcov
       tools: composer
-      ini-values: pcov.directory=src
-      key: cache-1641225105713
+      ini-values: opcache.enable_cli = 1, precision=16, default_charset='UTF-8', pcov.directory=components
+      key: cache-1614986550762
+      SONAR_SCANNER_VERSION: 4.6.2.2472
+      SONAR_SERVER_URL: "https://sonarcloud.io"
     name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
@@ -68,4 +70,16 @@ jobs:
         run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
 
       - name: Run tests with phpunit
-        run: vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
+        run: vendor/bin/phpunit --coverage-clover=build/logs/clover.xml --log-junit=build/logs/junit.xml
+
+      - name: Fix paths for sonar-scanner
+        working-directory: ./build/logs
+        run: |
+          sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace@g' clover.xml
+          sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace@g' junit.xml
+
+      - name: SonarCloud scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
