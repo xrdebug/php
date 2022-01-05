@@ -9,9 +9,23 @@
             "homepage": "https://chevere.org"
         }
     ],
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "chevere/sse-react",
+                "version": "dev-master",
+                "type": "metapackage",
+                "require": {
+                    "clue/sse-react": "dev-master@dev"
+                }
+            }
+        }
+    ],
     "require": {
         "php": ">=8.0",
         "chevere/chevere": "^0.1@dev",
+        "chevere/sse-react": "dev-master@dev",
         "clue/sse-react": "dev-master@dev",
         "samejack/php-argv": "^1.0"
     },
