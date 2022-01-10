@@ -111,7 +111,7 @@ final class MessageTest extends TestCase
         $var = 'Hola, mundo!';
         $message = $this->getMessage(vars: [$var]);
         $this->assertSame('<div class="dump"><pre>
-Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:#6c6c6c">(length=12)</span></em></pre></div>', $message->data()['body']);
+Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=12)</span></em></pre></div>', $message->data()['body']);
     }
 
     public function testWithBacktraceFlag(): void
