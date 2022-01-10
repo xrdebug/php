@@ -1,8 +1,7 @@
 .DS_Store
 /vendor
-composer.lock
+/composer.lock
 /build
 /.phpunit.cache
-.phpunit.result.cache
 /.scannerwork
-localhost.pem
+/localhost.pem
