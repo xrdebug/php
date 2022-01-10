@@ -1,7 +1,6 @@
 name: Docker
 
-on:
-  workflow_dispatch:
+on: [create, workflow_dispatch]
 
 env:
   GHCR_SLUG: ghcr.io/chevere/xr
