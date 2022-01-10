@@ -1,4 +1,5 @@
 :root {
+    --fontPre: XR, monospace;
     --borderSize: 0.0625rem;
     --headerHeight: calc(3.7rem + var(--borderSize));
     --fontNormal: 16px;
@@ -43,6 +44,14 @@
         --traceBackgroundOdd: var(--dumpBackground);
         --traceBackgroundEven: hsl(207, 20%, 8%);
     }
+}
+
+/* 
+         */
+@font-face {
+    font-family: "XR";
+    src: local("Fira Code Regular"),
+        url('fonts/firacode/firacode-regular.woff') format('woff');
 }
 
 @-webkit-keyframes slideDown {
@@ -90,14 +99,13 @@ body {
     background: var(--bodyBackground);
     color: var(--bodyText);
     padding-top: var(--headerHeight);
-    line-height: 1;
+    line-height: normal;
 }
 
 pre, .pre {
     padding: 1rem;
-    font-family: "Fira Code Retina", "Operator Mono", Inconsolata, Consolas,
-        monospace, sans-serif;
-    line-height: 1;
+    font-family: var(--fontPre);
+    line-height: normal;
     overflow: auto;
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -274,9 +282,8 @@ header, .message {
 
 .dump, .backtrace {
     font-size: var(--fontSubNormal);
-    font-family: 'Fira Code Retina', 'Operator Mono', Inconsolata, Consolas, monospace, sans-serif;
     color: #ecf0f1;
-    line-height: 1.2;
+    line-height: 1.2em;
     border-radius: var(--borderRadiusBox);
     word-break: break-word;
     display: block;
