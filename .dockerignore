@@ -1,0 +1,8 @@
+.dockerignore
+.git
+.github
+.screen
+.vscode
+**/*.DS_Store
+build
+docker-bake.hcl
