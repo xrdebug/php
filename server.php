@@ -73,6 +73,12 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                 ['Content-Type' => 'text/html'],
                 file_get_contents(__DIR__ . '/asset/index.html')
             );
+        case '/app.js':
+            return new Response(
+                '200',
+                ['Content-Type' => 'text/javascript'],
+                file_get_contents(__DIR__ . '/asset/app.js')
+            );
         case '/icon.svg':
             return new Response(
                 '200',
@@ -90,6 +96,12 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                 '200',
                 ['Content-Type' => 'text/css'],
                 file_get_contents(__DIR__ . '/asset/style.css')
+            );
+        case '/fonts/firacode/firacode-regular.woff':
+            return new Response(
+                '200',
+                ['Content-Type' => 'font/woff'],
+                file_get_contents(__DIR__ . '/asset/fonts/firacode/firacode-regular.woff')
             );
         case '/message':
             if ($request->getMethod() !== 'POST') {
