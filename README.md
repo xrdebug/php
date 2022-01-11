@@ -59,8 +59,7 @@ php vendor/chevere/xr/server.php -p 27420
 * With Docker:
 
 ```sh
-docker run -d -p 27420:27420 --name chevere-xr \
-    ghcr.io/chevere/xr:main
+docker run -d -p 27420:27420 --name chevere-xr ghcr.io/chevere/xr
 ```
 
 The server will be available at [http://localhost:27420](http://localhost:27420)
@@ -126,7 +125,13 @@ xr($var, 'Hola, mundo!', t: 'Epic win', e: '😎', f: XR_PAUSE);
 
 ## Configuration
 
-Create a file named `xr.php` at the root of your project, with contents like this:
+You can optionally configure XR by creating a file named `xr.php` in your project directory.
+
+* `enable`: `bool` Controls sending messages to the server. Set true to enable, false to disable.
+* `host`: `string` The hostname/IP address where XR server is running.
+* `port`: `int` Port to connect to the `host`.
+
+The following example is a `xr.php` file with default settings.
 
 ```php
 <?php
@@ -135,6 +140,19 @@ return [
     'enable' => true,
     'host' => 'localhost',
     'port' => 27420,
+];
+```
+
+### Docker configuration
+
+When using Docker, the host should point to the internal IP of your Docker host by using `host.docker.internal`.
+
+```php
+<?php
+
+return [
+    // ...
+    'host' => 'host.docker.internal',
 ];
 ```
 
