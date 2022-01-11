@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-
 
 XR is a dump server utility built on top of ReactPHP. No extras required, debug your PHP code anywhere.
 
-<p align="center"><img alt="XR dark" src=".screen/xr-light.png"></p>
+<p align="center"><img alt="XR dark" src=".screen/xr-light-2.png"></p>
 
 ## Features
 
@@ -28,7 +28,7 @@ XR is a dump server utility built on top of ReactPHP. No extras required, debug 
 * 🍒 HTML based (save page, search, shortcuts, etc.)
 * 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying beautiful looking dumps
 
-<p align="center"><img alt="XR dark" src=".screen/xr-dark.png"></p>
+<p align="center"><img alt="XR dark" src=".screen/xr-dark-2.png"></p>
 
 ## Getting started
 
