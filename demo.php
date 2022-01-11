@@ -50,8 +50,8 @@ sleep(4);
 xr(
     ✨: new class() {
         public array $ohhh = [
-            'XR is another take on the server debug concept',
-            'built on top of 👏 ReactPHP.'
+            'XR' => 'is another take on the server debug concept',
+            'built' => 'on top of ReactPHP.'
         ];
     },
     t: 'hello-world',
