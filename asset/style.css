@@ -2,16 +2,18 @@
     --fontPre: XR, monospace;
     --borderSize: 0.0625rem;
     --headerHeight: calc(3.7rem + var(--borderSize));
-    --fontNormal: 16px;
-    --fontSubNormal: 0.9375rem;
-    --fontSmall: 0.8125rem;
+    --fontSizeNormal: 16px;
+    --fontSizeSubNormal: 0.9375rem;
+    --fontSizeSmall: 0.8125rem;
     --marginEl: 0.25rem;
     --borderRadiusBox: 0.375rem;
-    --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+);
+    --dumpFontSize: 0.90625rem;
     --dumpText: #ecf0f1;
     --dumpBackground: hsl(210, 49%, 15%);
+    --traceFontSize: var(--fontSizeSmall);
     --traceBackgroundOdd: hsl(210, 29%, 29%);
     --traceBackgroundEven: hsl(210, 29%, 24%);
+    --iconCopy: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgcm9sZT0iaW1nIgogICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNDQ4IDUxMiI+CiAgICA8cGF0aCBmaWxsPSJjdXJyZW50Q29sb3IiIGQ9Ik00MzMuOTQxIDY1Ljk0MWwtNTEuODgyLTUxLjg4MkE0OCA0OCAwIDAgMCAzNDguMTE4IDBIMTc2Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djQ4SDQ4Yy0yNi41MSAwLTQ4IDIxLjQ5LTQ4IDQ4djMyMGMwIDI2LjUxIDIxLjQ5IDQ4IDQ4IDQ4aDIyNGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4di00OGg4MGMyNi41MSAwIDQ4LTIxLjQ5IDQ4LTQ4Vjk5Ljg4MmE0OCA0OCAwIDAgMC0xNC4wNTktMzMuOTQxek0yNjYgNDY0SDU0YTYgNiAwIDAgMS02LTZWMTUwYTYgNiAwIDAgMSA2LTZoNzR2MjI0YzAgMjYuNTEgMjEuNDkgNDggNDggNDhoOTZ2NDJhNiA2IDAgMCAxLTYgNnptMTI4LTk2SDE4MmE2IDYgMCAwIDEtNi02VjU0YTYgNiAwIDAgMSA2LTZoMTA2djg4YzAgMTMuMjU1IDEwLjc0NSAyNCAyNCAyNGg4OHYyMDJhNiA2IDAgMCAxLTYgNnptNi0yNTZoLTY0VjQ4aDkuNjMyYzEuNTkxIDAgMy4xMTcuNjMyIDQuMjQzIDEuNzU3bDQ4LjM2OCA0OC4zNjhhNiA2IDAgMCAxIDEuNzU3IDQuMjQzVjExMnoiIGNsYXNzPSIiPjwvcGF0aD4KPC9zdmc+);
 }
 
 @media (prefers-color-scheme: light) {
@@ -82,7 +84,7 @@
 }
 
 html {
-    font-size: var(--fontNormal);
+    font-size: var(--fontSizeNormal);
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -188,9 +190,9 @@ header, .message {
 }
 
 .topic {
-    font-size: var(--fontSubNormal);
+    font-size: var(--fontSizeSubNormal);
     background: var(--buttonTopicBackground);
-    padding: calc(var(--fontSmall)/2) var(--fontSmall);
+    padding: calc(var(--fontSizeSmall)/2) var(--fontSizeSmall);
     border-radius: var(--marginEl);
     border: var(--borderSize) solid rgba(var(--colorBorderRGB), 0.5);
     margin-right: var(--marginEl);
@@ -205,7 +207,7 @@ header, .message {
 }
 
 .body-file {
-    font-size: var(--fontSmall);
+    font-size: var(--fontSizeSmall);
 }
 
 .body-file-display {
@@ -219,8 +221,8 @@ header, .message {
 
 .body-file-display:hover:after {
     margin-left: var(--borderSize);
-    width: var(--fontSmall);
-    height: var(--fontSmall);
+    width: var(--fontSizeSmall);
+    height: var(--fontSizeSmall);
     display: inline-block;
     position: absolute;
     content: '';
@@ -259,7 +261,7 @@ header, .message {
     user-select: all;
 }
 
-.hr {
+.body-raw .hr {
     display: block;
     height: 1px;
     color: transparent;
@@ -267,7 +269,7 @@ header, .message {
     margin-bottom: -1px;
 }
 
-.hr>span {
+.backtrace .hr>span {
     opacity: 0;
     line-height: 0;
 }
@@ -279,9 +281,6 @@ header, .message {
 }
 
 .dump, .backtrace {
-    font-size: var(--fontSubNormal);
-    color: #ecf0f1;
-    line-height: 1.2em;
     border-radius: var(--borderRadiusBox);
     word-break: break-word;
     display: block;
@@ -290,6 +289,7 @@ header, .message {
 }
 
 .dump {
+    font-size: var(--dumpFontSize);
     margin-bottom: var(--marginEl);
     white-space: pre-wrap;
     color: var(--dumpText);
@@ -301,6 +301,7 @@ header, .message {
 }
 
 .backtrace {
+    font-size: var(--traceFontSize);
     margin-bottom: var(--marginEl);
     overflow: hidden;
     border-radius: var(--borderRadiusBox);
