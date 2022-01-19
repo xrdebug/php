@@ -26,7 +26,7 @@ XR is a dump server utility built on top of ReactPHP. No extras required, debug 
 * 🌚 Dark / 🌝 Light mode follows your system preferences
 * 👽 Ephemeral as it doesn't require to store any persistent data
 * 🍒 HTML based (save page, search, shortcuts, etc.)
-* 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying beautiful looking dumps
+* 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
 
 <p align="center"><img alt="XR dark" src=".screen/xr-dark-2.png"></p>
 
