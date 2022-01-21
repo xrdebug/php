@@ -155,6 +155,16 @@ xrr('<h1>Hola, mundo!</h1>');
 
 💡 Note that `xrr` also supports: Topic `t:`, Emote `e:` and Flags `f:`.
 
+### Exception handler
+
+You can use `Chevere\Xr\registerXrThrowableHandler` to setup XR to handle throwables in your code.
+
+```php
+// True to append XR to your existing handler
+// False to use only XR exception handler
+registerXrThrowableHandler(true);
+```
+
 ## Configuration
 
 You can optionally configure XR by creating a file named `xr.php` in your project directory with the following options:
