@@ -41,6 +41,9 @@ namespace Chevere\Xr {
         }
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     function registerXrThrowableHandler(bool $callPrevious = true): void
     {
         $xrHandler = __NAMESPACE__ . '\\XrThrowableHandler';
@@ -56,6 +59,9 @@ namespace Chevere\Xr {
         });
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     function xrThrowableHandler(Throwable $throwable): void
     {
         $readFirst = new ThrowableRead($throwable);

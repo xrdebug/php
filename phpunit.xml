@@ -15,7 +15,7 @@
               processUncoveredFiles="true"
               ignoreDeprecatedCodeUnits="true">
         <include>
-            <directory suffix=".php">src/Chevere/Xr/Components/</directory>
+            <directory suffix=".php">src/Chevere/Xr/</directory>
         </include>
     </coverage>
 </phpunit>
