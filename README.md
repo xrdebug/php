@@ -70,7 +70,7 @@ Open the debugger and then run:
 * With PHP:
 
 ```php
-php demo.php
+php vendor/chevere/xr/demo.php
 ```
 
 * With Docker:
@@ -81,6 +81,8 @@ docker exec -it chevere-xr \
 ```
 
 ## XR Helpers
+
+XR comes with two helpers: `xr` (used to dump variables) and `xrr` (used to send raw message).
 
 ### Dump variables
 
@@ -142,6 +144,16 @@ xr(
     f: XR_PAUSE
 );
 ```
+
+### Send raw message
+
+Use `xrr` to send a raw message to the dump server.
+
+```php
+xrr('<h1>Hola, mundo!</h1>');
+```
+
+💡 Note that `xrr` also supports: Topic `t:`, Emote `e:` and Flags `f:`.
 
 ## Configuration
 
