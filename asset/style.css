@@ -306,7 +306,7 @@ header, .message {
     overflow: hidden;
     border-radius: var(--borderRadiusBox);
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
 }
 
 pre+.backtrace {

@@ -59,7 +59,7 @@ set_exception_handler(function (Throwable $e) {
     $handler = throwableHandler($e);
     $docInternal = new ThrowableHandlerConsoleDocument($handler);
     writers()->error()
-        ->write($docInternal->toString() . "\n");
+        ->write($docInternal->__toString() . "\n");
     die(255);
 });
 
@@ -194,5 +194,7 @@ $socket = new \React\Socket\SocketServer(
 );
 $http->listen($socket);
 $socket->on('error', 'printf');
-echo 'XR debugger listening on ' . str_replace('tls:', 'https:', $socket->getAddress()) . PHP_EOL;
+$scheme = parse_url($socket->getAddress(), PHP_URL_SCHEME);
+$httpAddress = strtr($socket->getAddress(), ['tls:' => 'https:', 'tcp:' => 'http:']);
+echo "Chevere XR debugger listening on ($scheme) $httpAddress" . PHP_EOL;
 $loop->run();

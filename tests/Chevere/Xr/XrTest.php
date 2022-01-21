@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests\Chevere\Xr;
 
 use function Chevere\Components\Filesystem\dirForPath;
-use Chevere\Xr\Components\Xr\Client;
-use Chevere\Xr\Components\Xr\Xr;
+use Chevere\Xr\Client;
+use Chevere\Xr\Xr;
 use PHPUnit\Framework\TestCase;
 
 final class XrTest extends TestCase
@@ -44,7 +44,7 @@ final class XrTest extends TestCase
     public function testConstructWithSettingsFile(): void
     {
         $configDir = dirForPath(__DIR__ . '/_resources/');
-        $return = include $configDir->path()->getChild('xr.php')->toString();
+        $return = include $configDir->path()->getChild('xr.php')->__toString();
         $xr = new Xr($configDir);
         $this->assertSame($return['enable'], $xr->enable());
         unset($return['enable']);

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Components\Xr;
+namespace Chevere\Xr;
 
 use function Chevere\Components\Filesystem\filePhpReturnForPath;
 use function Chevere\Components\Type\typeArray;
@@ -79,7 +79,7 @@ final class Xr
 
     private function getConfigFile(): string
     {
-        $configDirectory = $this->configDir->path()->toString();
+        $configDirectory = $this->configDir->path()->__toString();
         while (is_dir($configDirectory)) {
             foreach ($this->configNames as $configName) {
                 $configFullPath = $configDirectory . $configName;

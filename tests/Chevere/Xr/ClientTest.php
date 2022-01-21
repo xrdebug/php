@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\Chevere\Xr;
 
-use Chevere\Xr\Components\Xr\Client;
+use Chevere\Xr\Client;
 use PHPUnit\Framework\TestCase;
 
 final class ClientTest extends TestCase

@@ -41,7 +41,7 @@ $message = message('Did you heard about %package%?')
     ->code('%package%', 'spatie/ray');
 xr(
     inspiration: $message,
-    message: $message->toString(),
+    message: $message->__toString(),
     t: 'hello-world',
     e: '😎',
     f: XR_BACKTRACE

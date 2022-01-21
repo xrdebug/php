@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Components\Xr;
+namespace Chevere\Xr;
 
 use CurlHandle;
 

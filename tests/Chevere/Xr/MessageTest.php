@@ -16,7 +16,7 @@ namespace Chevere\Xr\Tests\Chevere\Xr;
 use function Chevere\Components\Writer\streamFor;
 use Chevere\Components\Writer\StreamWriter;
 use Chevere\Interfaces\Writer\WriterInterface;
-use Chevere\Xr\Components\Xr\Message;
+use Chevere\Xr\Message;
 use PHPUnit\Framework\TestCase;
 
 final class MessageTest extends TestCase
@@ -25,12 +25,15 @@ final class MessageTest extends TestCase
 
     private function getMessage(
         array $vars = [],
-        int $shift = 1,
+        array $backtrace = [],
         string $topic = '',
         string $emote = '',
         int $flags = 0,
     ): Message {
-        $message = new Message($this->writer, $vars, $shift);
+        if ($backtrace === []) {
+            $backtrace = debug_backtrace();
+        }
+        $message = new Message($this->writer, $vars, $backtrace);
         if ($topic !== '') {
             $message = $message->withTopic($topic);
         }
@@ -56,7 +59,14 @@ final class MessageTest extends TestCase
 
     public function testEmpty(): void
     {
-        $message = $this->getMessage();
+        $message = $this->getMessage(
+            backtrace: [
+                [
+                    'file' => __FILE__,
+                    'line' => __LINE__,
+                ],
+            ]
+        );
         $this->assertSame(
             [
                 'body' => '',
@@ -117,7 +127,7 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
     public function testWithBacktraceFlag(): void
     {
         $message = $this->getMessage(flags: XR_BACKTRACE);
-        $line = (string) (__LINE__ - 1);
+        $line = strval(__LINE__ - 1);
         $this->assertStringContainsString('<div class="backtrace">', $message->data()['body']);
         $this->assertStringContainsString(__FILE__ . ':' . $line, $message->data()['body']);
     }

@@ -11,38 +11,31 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Components\Xr;
+namespace Chevere\Xr;
 
 use Chevere\Components\ThrowableHandler\Formatters\ThrowableHandlerHtmlFormatter;
 use Chevere\Components\ThrowableHandler\ThrowableTraceFormatter;
-use Chevere\Components\VarDump\Formatters\VarDumpHtmlFormatter;
+use Chevere\Components\VarDump\Format\VarDumpHtmlFormat;
 use Chevere\Components\VarDump\VarDump;
 use Chevere\Interfaces\Writer\WriterInterface;
-use Chevere\Xr\Components\VarDump\Outputters\VarDumpHtmlOutputter;
+use Chevere\Xr\VarDump\Output\VarDumpHtmlOutput;
 
 final class Message
 {
-    private array $backtrace = [];
-    
     private array $data = [];
 
     public function __construct(
         private WriterInterface $writer,
         private array $vars,
-        private int $shift = 1
+        private array $backtrace = []
     ) {
-        $this->backtrace = debug_backtrace();
-        for ($i = 1; $i <= $this->shift; $i++) {
-            array_shift($this->backtrace);
-        }
         (new VarDump(
-            new VarDumpHtmlFormatter(),
-            new VarDumpHtmlOutputter()
+            new VarDumpHtmlFormat(),
+            new VarDumpHtmlOutput()
         ))
-            ->withShift($this->shift)
             ->withVars(...$this->vars)
             ->process($this->writer);
-        $dumpString = $this->writer->toString();
+        $dumpString = $this->writer->__toString();
         $body = $dumpString !== ''
             ? '<div class="dump">' . $dumpString . '</div>'
             : '';
@@ -80,7 +73,7 @@ final class Message
                 $new->backtrace,
                 new ThrowableHandlerHtmlFormatter()
             );
-            $new->data['body'] .= '<div class="backtrace">' . $traceFormatter->toString() . '</div>';
+            $new->data['body'] .= '<div class="backtrace">' . $traceFormatter->__toString() . '</div>';
         }
         if ($flags & XR_PAUSE) {
             $new->data['pause'] = '1';

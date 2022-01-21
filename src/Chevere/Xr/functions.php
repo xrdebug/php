@@ -11,12 +11,14 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Components\Xr {
+namespace Chevere\Xr {
     use function Chevere\Components\Filesystem\dirForPath;
+    use Chevere\Components\ThrowableHandler\ThrowableRead;
     use function Chevere\Components\Writer\streamTemp;
     use Chevere\Components\Writer\StreamWriter;
     use Chevere\Interfaces\Writer\WriterInterface;
     use LogicException;
+    use Throwable;
 
     /**
      * @codeCoverageIgnore
@@ -38,12 +40,73 @@ namespace Chevere\Xr\Components\Xr {
             return new Xr(dirForPath(getcwd()));
         }
     }
+
+    function registerXrThrowableHandler(bool $callPrevious = true): void
+    {
+        $xrHandler = __NAMESPACE__ . '\\XrThrowableHandler';
+        $previous = set_exception_handler($xrHandler);
+        if ($callPrevious === false) {
+            return;
+        }
+        set_exception_handler(function (Throwable $e) use ($xrHandler, $previous) {
+            $xrHandler($e);
+            if (is_callable($previous)) {
+                $previous($e);
+            }
+        });
+    }
+
+    function xrThrowableHandler(Throwable $throwable): void
+    {
+        $readFirst = new ThrowableRead($throwable);
+        $backtrace = $readFirst->trace();
+        $topic = substr(
+            $readFirst->className(),
+            strrpos($readFirst->className(), '\\') + 1
+        );
+        $message = '';
+        do {
+            $throwableRead = new ThrowableRead($throwable);
+            
+            $message .= $throwableRead->className() . ' thrown '
+                . $throwableRead->code() . "\n";
+            $message .= $throwable->getMessage() . ' in '
+                . $throwableRead->file() . ':' . $throwableRead->line();
+            if ($throwable->getPrevious() !== null) {
+                $message .= '<br>-->Previous: ';
+            }
+        } while ($throwable = $throwable->getPrevious());
+
+        if (getXrInstance()->enable() === false) {
+            return; // @codeCoverageIgnore
+        }
+        $emote = '⚠️';
+        $flags = XR_BACKTRACE;
+        getXrInstance()->client()
+            ->sendMessage(
+                (new Message(
+                    writer: getWriter(),
+                    vars: [$message],
+                    backtrace: $backtrace,
+                ))
+                    ->withTopic($topic)
+                    ->withEmote($emote)
+                    ->withFlags($flags)
+            );
+
+        $template = [
+            '<div class="throwable">',
+            '   <h2>%title%</h2>',
+            '   <p>%message%</p>',
+            '</div>'
+        ];
+    }
 }
 
 namespace {
-    use function Chevere\Xr\Components\Xr\getWriter;
-    use function Chevere\Xr\Components\Xr\getXrInstance;
-    use Chevere\Xr\Components\Xr\Message;
+    use function Chevere\Xr\getWriter;
+    use function Chevere\Xr\getXrInstance;
+    use Chevere\Xr\Message;
     
     // @codeCoverageIgnoreStart
     if (!defined('XR_BACKTRACE')) {
@@ -86,7 +149,7 @@ namespace {
                     (new Message(
                         writer: getWriter(),
                         vars: $vars,
-                        shift: 1,
+                        backtrace: debug_backtrace(),
                     ))
                         ->withTopic($topic)
                         ->withEmote($emote)

@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Components\VarDump\Outputters;
+namespace Chevere\Xr\VarDump\Output;
 
-use Chevere\Components\VarDump\Outputters\VarDumpAbstractOutputter;
-use Chevere\Interfaces\VarDump\VarDumpFormatterInterface;
+use Chevere\Components\VarDump\Output\VarDumpAbstractOutput;
+use Chevere\Interfaces\VarDump\VarDumpFormatInterface;
 
-final class VarDumpHtmlOutputter extends VarDumpAbstractOutputter
+final class VarDumpHtmlOutput extends VarDumpAbstractOutput
 {
     public function tearDown(): void
     {
@@ -29,7 +29,7 @@ final class VarDumpHtmlOutputter extends VarDumpAbstractOutputter
         $this->writer()->write('<pre>');
     }
 
-    public function writeCallerFile(VarDumpFormatterInterface $formatter): void
+    public function writeCallerFile(VarDumpFormatInterface $formatter): void
     {
         return;
     }
