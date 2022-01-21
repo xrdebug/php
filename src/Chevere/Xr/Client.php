@@ -31,7 +31,7 @@ final class Client
     public function sendMessage(Message $message): void
     {
         try {
-            $curlHandle = $this->getCurlHandle('message', $message->data());
+            $curlHandle = $this->getCurlHandle('message', $message->toArray());
             curl_exec($curlHandle);
         } finally {
             curl_close($curlHandle);

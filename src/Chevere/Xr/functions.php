@@ -91,8 +91,6 @@ namespace Chevere\Xr {
         getXrInstance()->client()
             ->sendMessage(
                 (new Message(
-                    writer: getWriter(),
-                    vars: [$message],
                     backtrace: $backtrace,
                 ))
                     ->withTopic($topic)
@@ -113,8 +111,8 @@ namespace {
     use function Chevere\Xr\getWriter;
     use function Chevere\Xr\getXrInstance;
     use Chevere\Xr\Message;
-    
-    // @codeCoverageIgnoreStart
+
+// @codeCoverageIgnoreStart
     if (!defined('XR_BACKTRACE')) {
         define('XR_BACKTRACE', 1);
     }
@@ -131,8 +129,8 @@ namespace {
          * ```
          *
          * @param mixed ...$vars Variable(s) to dump
-         * @param string $t Message Topic
-         * @param string $e Message Emote
+         * @param string $t Topic
+         * @param string $e Emote
          * @param int $f `XR_BACKTRACE | XR_PAUSE`
          */
         function xr(...$vars): void
@@ -147,19 +145,53 @@ namespace {
                     unset($vars[$name]);
                 }
             }
-            $topic = (string) $args['t'];
-            $emote = (string) $args['e'];
-            $flags = (int) $args['f'];
             getXrInstance()->client()
                 ->sendMessage(
                     (new Message(
-                        writer: getWriter(),
-                        vars: $vars,
                         backtrace: debug_backtrace(),
                     ))
-                        ->withTopic($topic)
-                        ->withEmote($emote)
-                        ->withFlags($flags)
+                        ->withWriter(getWriter())
+                        ->withVars(...$vars)
+                        ->withTopic(strval($args['t']))
+                        ->withEmote(strval($args['e']))
+                        ->withFlags(intval($args['f']))
+                );
+        }
+    }
+
+    if (!function_exists('xrr')) { // @codeCoverageIgnore
+        /**
+         * Send a raw message to XR.
+         *
+         * ```php
+         * xrr($message, ...);
+         * ```
+         *
+         * @param string $message Message to send
+         * @param string $t Topic
+         * @param string $e Emote
+         * @param int $f `XR_BACKTRACE | XR_PAUSE`
+         *
+         * @codeCoverageIgnore
+         */
+        function xrr(
+            string $message,
+            string $t = '',
+            string $e = '',
+            int $f = 0
+        ): void {
+            if (getXrInstance()->enable() === false) {
+                return;
+            }
+            getXrInstance()->client()
+                ->sendMessage(
+                    (new Message(
+                        backtrace: debug_backtrace(),
+                    ))
+                        ->withBody($message)
+                        ->withTopic($t)
+                        ->withEmote($e)
+                        ->withFlags($f)
                 );
         }
     }

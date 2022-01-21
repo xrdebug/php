@@ -82,7 +82,7 @@ xr(
     e: '🌚🌝'
 );
 sleep(4);
-xr(
-    bye: 'Enjoy XR!',
+xrr(
+    'Enjoy <b>chevere/xr</b>',
     e: '😊'
 );

@@ -13,39 +13,16 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\Chevere\Xr;
 
-use function Chevere\Components\Writer\streamFor;
+use function Chevere\Components\Writer\streamTemp;
 use Chevere\Components\Writer\StreamWriter;
 use Chevere\Interfaces\Writer\WriterInterface;
+use function Chevere\Xr\getWriter;
 use Chevere\Xr\Message;
 use PHPUnit\Framework\TestCase;
 
 final class MessageTest extends TestCase
 {
     private WriterInterface $writer;
-
-    private function getMessage(
-        array $vars = [],
-        array $backtrace = [],
-        string $topic = '',
-        string $emote = '',
-        int $flags = 0,
-    ): Message {
-        if ($backtrace === []) {
-            $backtrace = debug_backtrace();
-        }
-        $message = new Message($this->writer, $vars, $backtrace);
-        if ($topic !== '') {
-            $message = $message->withTopic($topic);
-        }
-        if ($emote !== '') {
-            $message = $message->withEmote($emote);
-        }
-        if ($flags !== 0) {
-            $message = $message->withFlags($flags);
-        }
-
-        return $message;
-    }
 
     private function filterArray(array $array, string ...$filterKey): array
     {
@@ -54,87 +31,145 @@ final class MessageTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->writer = new StreamWriter(streamFor('php://temp', 'r+'));
+        $this->writer = new StreamWriter(streamTemp(''));
     }
 
-    public function testEmpty(): void
+    public function testEmptyBacktrace(): void
     {
-        $message = $this->getMessage(
-            backtrace: [
-                [
-                    'file' => __FILE__,
-                    'line' => __LINE__,
-                ],
-            ]
-        );
+        $message = new Message();
+        $line = __LINE__ - 1;
+        $this->assertSame(__FILE__, $message->filePath());
+        $this->assertSame($line, $message->fileLine());
+        $this->assertInstanceOf(WriterInterface::class, $message->writer());
         $this->assertSame(
             [
                 'body' => '',
+                'file_path' => __FILE__,
+                'file_line' => strval($line),
                 'emote' => '',
                 'topic' => '',
                 'pause' => '0',
             ],
-            $this->filterArray($message->data(), 'body', 'emote', 'topic', 'pause')
+            $message->toArray()
         );
     }
 
-    public function testCaller(): void
+    public function testDeclaredBacktrace(): void
     {
-        $message = $this->getMessage();
-        $line = __LINE__ - 1;
+        $testFile = 'test';
+        $testLine = 1234;
+        $trace = [
+            [
+                'file' => $testFile,
+                'line' => $testLine,
+            ],
+        ];
+        $message = new Message($trace);
+        $this->assertSame($testFile, $message->filePath());
+        $this->assertSame($testLine, $message->fileLine());
         $this->assertSame(
             [
-                'file_path' => __FILE__,
-                'file_line' => (string) $line,
+                'file_path' => $testFile,
+                'file_line' => strval($testLine),
             ],
-            $this->filterArray($message->data(), 'file_path', 'file_line')
+            $this->filterArray($message->toArray(), 'file_path', 'file_line')
         );
     }
 
-    public function testBacktraceArray(): void
+    public function testWithBody(): void
     {
-        $message = $this->getMessage();
-        $line = __LINE__ - 1;
-        $this->assertSame(
-            [
-                'file' => __FILE__,
-                'line' => (int) $line,
-                'function' => 'getMessage',
-                'class' => __CLASS__
-            ],
-            $this->filterArray($message->backtrace()[0], 'file', 'line', 'function', 'class')
-        );
+        $message = new Message();
+        $body = 'the body';
+        $withBody = $message->withBody($body);
+        $this->assertNotSame($message, $withBody);
+        $this->assertSame($body, $withBody->body());
+        $this->assertSame($body, $withBody->toArray()['body']);
     }
 
     public function testWithTopic(): void
     {
-        $this->assertSame('Topic', $this->getMessage(topic: 'Topic')->data()['topic']);
+        $message = new Message();
+        $topic = 'Topic';
+        $withTopic = $message->withTopic($topic);
+        $this->assertNotSame($message, $withTopic);
+        $this->assertSame(
+            $topic,
+            $withTopic->topic()
+        );
+        $this->assertSame(
+            $topic,
+            $withTopic->toArray()['topic']
+        );
     }
 
     public function testWithEmote(): void
     {
-        $this->assertSame('😎', $this->getMessage(emote: '😎')->data()['emote']);
+        $message = new Message();
+        $emote = '😎';
+        $withEmote = $message->withEmote($emote);
+        $this->assertNotSame($message, $withEmote);
+        $this->assertSame(
+            $emote,
+            $withEmote->emote()
+        );
+        $this->assertSame(
+            $emote,
+            $withEmote->toArray()['emote']
+        );
     }
 
-    public function testDump(): void
+    public function testWithWriter(): void
     {
+        $message = new Message();
+        $writer = new StreamWriter(streamTemp('test'));
+        $withWriter = $message->withWriter($writer);
+        $this->assertNotSame($message, $withWriter);
+        $this->assertSame(
+            $writer,
+            $withWriter->writer()
+        );
+    }
+
+    public function testWithVars(): void
+    {
+        $message = (new Message())->withWriter(getWriter());
         $var = 'Hola, mundo!';
-        $message = $this->getMessage(vars: [$var]);
+        $length = strlen($var);
+        $withVars = $message->withVars($var);
+        $this->assertNotSame($message, $withVars);
+        $this->assertSame(
+            $var,
+            $withVars->vars()[0]
+        );
         $this->assertSame('<div class="dump"><pre>
-Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=12)</span></em></pre></div>', $message->data()['body']);
+Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre></div>', $withVars->toArray()['body']);
     }
 
     public function testWithBacktraceFlag(): void
     {
-        $message = $this->getMessage(flags: XR_BACKTRACE);
+        $message = new Message();
         $line = strval(__LINE__ - 1);
-        $this->assertStringContainsString('<div class="backtrace">', $message->data()['body']);
-        $this->assertStringContainsString(__FILE__ . ':' . $line, $message->data()['body']);
+        $this->assertFalse($message->isBacktrace());
+        $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);
+        $this->assertNotSame($message, $withBacktraceFlag);
+        $this->assertTrue($withBacktraceFlag->isBacktrace());
+        $this->assertStringContainsString(
+            '<div class="backtrace">',
+            $withBacktraceFlag->toArray()['body']
+        );
+        $this->assertStringContainsString(
+            __FILE__ . ':' . $line,
+            $withBacktraceFlag->toArray()['body']
+        );
     }
 
     public function testWithPauseFlag(): void
     {
-        $message = $this->getMessage(flags: XR_PAUSE);
-        $this->assertSame('1', $message->data()['pause']);
+        $message = new Message();
+        $this->assertFalse($message->isPause());
+        $withPauseFlag = $message->withFlags(XR_PAUSE);
+        $this->assertNotSame($message, $withPauseFlag);
+        $this->assertTrue($withPauseFlag->isPause());
+        $this->assertSame('1', $withPauseFlag->toArray()['pause']);
     }
 }
