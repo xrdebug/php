@@ -107,6 +107,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             if ($request->getMethod() !== 'POST') {
                 return new Response(405);
             }
+            $address = $request->getServerParams()['REMOTE_ADDR'];
             $body = $request->getParsedBody() ?? [];
             $message = $body['body'] ?? '';
             $emote = $body['emote'] ?? '';
@@ -132,6 +133,8 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                         'topic' => $topic,
                     ])
                 );
+                
+                echo "* [$address] $fileDisplay\n";
             }
 
             return new Response(
