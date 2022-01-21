@@ -60,50 +60,68 @@ namespace Chevere\Xr {
     }
 
     /**
+     * Handles a Throwable using XR.
+     *
+     * @param Throwable $throwable The throwable to handle
+     * @param string $extra Extra contents to append to the XR message
+     *
      * @codeCoverageIgnore
      */
-    function xrThrowableHandler(Throwable $throwable): void
+    function xrThrowableHandler(Throwable $throwable, string ...$extra): void
     {
         if (getXrInstance()->enable() === false) {
             return; // @codeCoverageIgnore
         }
         $readFirst = new ThrowableRead($throwable);
         $backtrace = $readFirst->trace();
-        $topic = substr(
-            $readFirst->className(),
-            strrpos($readFirst->className(), '\\') + 1
+        $topic = basename(
+            str_replace('\\', DIRECTORY_SEPARATOR, $readFirst->className())
         );
         $body = '<div class="throwable">';
         $template = '<div class="throwable-item">
     <h2 class="throwable-title">%title%</h2>
     <div class="throwable-code">%code%</div>
-    <p class="throwable-message">%message%</p>
-</div>';
+    <div class="throwable-message">%message%</div>
+    %extra%
+    </div>';
+        $appendExtra = implode(
+            '',
+            array_map(
+                function (string $extra): string {
+                    return $extra;
+                },
+                $extra
+            )
+        );
+        $aux = 0;
         do {
-            $throwableRead = new ThrowableRead($throwable);
-            $body .= strtr(
-                $template,
-                [
-                    '%title%' => $throwableRead->className(),
-                    '%code%' => $throwableRead->code(),
-                    '%message%' => $throwableRead->message(),
-                ]
-            );
+            $aux++;
+            $throwableRead = $aux === 1
+                ? $readFirst
+                : new ThrowableRead($throwable);
+            $translate = [
+                '%title%' => $throwableRead->className(),
+                '%code%' => $throwableRead->code(),
+                '%message%' => $throwableRead->message(),
+                '%extra%' => $aux === 1 ? $appendExtra : '',
+            ];
+            $body .= strtr($template, $translate);
         } while ($throwable = $throwable->getPrevious());
+        
         $body .= '</div>';
-
+    
         $emote = '⚠️';
         $flags = XR_BACKTRACE;
         getXrInstance()->client()
-            ->sendMessage(
-                (new Message(
-                    backtrace: $backtrace,
-                ))
-                    ->withBody($body)
-                    ->withTopic($topic)
-                    ->withEmote($emote)
-                    ->withFlags($flags)
-            );
+                ->sendMessage(
+                    (new Message(
+                        backtrace: $backtrace,
+                    ))
+                        ->withBody($body)
+                        ->withTopic($topic)
+                        ->withEmote($emote)
+                        ->withFlags($flags)
+                );
     }
 }
 
