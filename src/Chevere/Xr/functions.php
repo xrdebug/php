@@ -64,28 +64,34 @@ namespace Chevere\Xr {
      */
     function xrThrowableHandler(Throwable $throwable): void
     {
+        if (getXrInstance()->enable() === false) {
+            return; // @codeCoverageIgnore
+        }
         $readFirst = new ThrowableRead($throwable);
         $backtrace = $readFirst->trace();
         $topic = substr(
             $readFirst->className(),
             strrpos($readFirst->className(), '\\') + 1
         );
-        $message = '';
+        $body = '<div class="throwable">';
+        $template = '<div class="throwable-item">
+    <h2 class="throwable-title">%title%</h2>
+    <div class="throwable-code">%code%</div>
+    <p class="throwable-message">%message%</p>
+</div>';
         do {
             $throwableRead = new ThrowableRead($throwable);
-            
-            $message .= $throwableRead->className() . ' thrown '
-                . $throwableRead->code() . "\n";
-            $message .= $throwable->getMessage() . ' in '
-                . $throwableRead->file() . ':' . $throwableRead->line();
-            if ($throwable->getPrevious() !== null) {
-                $message .= '<br>-->Previous: ';
-            }
+            $body .= strtr(
+                $template,
+                [
+                    '%title%' => $throwableRead->className(),
+                    '%code%' => $throwableRead->code(),
+                    '%message%' => $throwableRead->message(),
+                ]
+            );
         } while ($throwable = $throwable->getPrevious());
+        $body .= '</div>';
 
-        if (getXrInstance()->enable() === false) {
-            return; // @codeCoverageIgnore
-        }
         $emote = '⚠️';
         $flags = XR_BACKTRACE;
         getXrInstance()->client()
@@ -93,17 +99,11 @@ namespace Chevere\Xr {
                 (new Message(
                     backtrace: $backtrace,
                 ))
+                    ->withBody($body)
                     ->withTopic($topic)
                     ->withEmote($emote)
                     ->withFlags($flags)
             );
-
-        $template = [
-            '<div class="throwable">',
-            '   <h2>%title%</h2>',
-            '   <p>%message%</p>',
-            '</div>'
-        ];
     }
 }
 

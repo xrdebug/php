@@ -322,3 +322,51 @@ pre+.backtrace {
 .pre--stack-entry.entry--even {
     background: var(--traceBackgroundEven);
 }
+
+.throwable-item:first-child {
+    font-size: 1em;
+    border: none;
+}
+
+.throwable-item {
+    font-size: 0.875em;
+    border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+}
+
+.throwable {
+    margin-bottom: var(--marginEl);
+}
+
+.throwable-item {
+    padding: 1em 0;
+}
+
+.throwable-item>* {
+    margin: 0;
+}
+
+.throwable-item:not(:first-child) .throwable-title:before {
+    content: '↵';
+    transform: scaleX(-1);
+    display: inline-block;
+}
+
+.throwable-code:empty {
+    display: none;
+}
+
+.throwable-code:before {
+    content: "[Code ";
+}
+
+.throwable-code:after {
+    content: "]";
+}
+
+.throwable-code {
+    margin-top: 0.5em;
+}
+
+.throwable-message {
+    margin-top: 1em;
+}
