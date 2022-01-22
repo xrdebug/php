@@ -16,7 +16,7 @@ namespace Chevere\Xr {
     use Chevere\Components\ThrowableHandler\Formatters\ThrowableHandlerHtmlFormatter;
     use Chevere\Components\ThrowableHandler\ThrowableRead;
     use Chevere\Components\ThrowableHandler\ThrowableTraceFormatter;
-use function Chevere\Components\Writer\streamTemp;
+    use function Chevere\Components\Writer\streamTemp;
     use Chevere\Components\Writer\StreamWriter;
     use Chevere\Interfaces\Writer\WriterInterface;
     use LogicException;
@@ -44,11 +44,16 @@ use function Chevere\Components\Writer\streamTemp;
     }
 
     /**
+     * Register XR throwable handler.
+     *
+     * @param bool $callPrevious True to call the previous handler.
+     * False to disable the previous handler.
+     *
      * @codeCoverageIgnore
      */
-    function registerXrThrowableHandler(bool $callPrevious = true): void
+    function registerThrowableHandler(bool $callPrevious = true): void
     {
-        $xrHandler = __NAMESPACE__ . '\\XrThrowableHandler';
+        $xrHandler = __NAMESPACE__ . '\\throwableHandler';
         $previous = set_exception_handler($xrHandler);
         if ($callPrevious === false) {
             return;
@@ -69,7 +74,7 @@ use function Chevere\Components\Writer\streamTemp;
      *
      * @codeCoverageIgnore
      */
-    function xrThrowableHandler(Throwable $throwable, string ...$extra): void
+    function throwableHandler(Throwable $throwable, string ...$extra): void
     {
         if (getXrInstance()->enable() === false) {
             return; // @codeCoverageIgnore
@@ -124,7 +129,7 @@ use function Chevere\Components\Writer\streamTemp;
             $body .= strtr($template, $translate);
         } while ($throwable = $throwable->getPrevious());
         $body .= '</div>';
-        $emote = '⧱';
+        $emote = '😰Exceptions';
         getXrInstance()->client()
             ->sendMessage(
                 (new Message(

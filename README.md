@@ -27,8 +27,13 @@ XR is a dump server utility built on top of ReactPHP. No extras required, debug 
 * 👽 Ephemeral as it doesn't require to store any persistent data
 * 🍒 HTML based (save page, search, shortcuts, etc.)
 * 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
+* 😰 Handles exceptions (hook or replace your existing handler)
 
 <p align="center"><img alt="XR dark" src=".screen/xr-dark-2.png"></p>
+
+## Contributing
+
+Feel free to contribute on [issues](https://github.com/chevere/xr/issues) and [discussions](https://github.com/chevere/xr/discussions) with your thoughts in how to improve XR.
 
 ## Getting started
 
@@ -81,8 +86,6 @@ docker exec -it chevere-xr \
 ```
 
 ## XR Helpers
-
-XR comes with two helpers: `xr` (used to dump variables) and `xrr` (used to send raw message).
 
 ### Dump variables
 
@@ -147,27 +150,62 @@ xr(
 
 ### Send raw message
 
-Use `xrr` to send a raw message to the dump server.
+Use `xrr` to send a raw message to the server.
+
+💡 Note that `xrr` also supports **Topic** `t:`, **Emote** `e:` and **Flags** `f:`.
 
 ```php
 xrr('<h1>Hola, mundo!</h1>');
 ```
 
-💡 Note that `xrr` also supports: Topic `t:`, Emote `e:` and Flags `f:`.
+### Exception handling
 
-### Exception handler
-
-You can use `Chevere\Xr\registerXrThrowableHandler` to setup XR to handle throwables in your code.
+Use `registerThrowableHandler` to enable XR to handle throwables.
 
 ```php
-// True to append XR to your existing handler
-// False to use only XR exception handler
-registerXrThrowableHandler(true);
+
+use Chevere\Xr\registerThrowableHandler;
+
+// True appends XR to your existing handler
+// False use only XR exception handler
+registerThrowableHandler(true);
+```
+
+Alternatively, you can use `throwableHandler` in any existing exception handler logic.
+
+```php
+use Chevere\Xr\throwableHandler;
+
+set_exception_handler(
+    function(Throwable $throwable) {
+        // ...
+        try {
+            throwableHandler($throwable);
+        } catch(Throwable) {
+            // Don't panic
+        }
+    }
+);
+```
+
+### Error handling
+
+You will require to handle errors as exceptions and from there use [Exception handling](#exception-handling).
+
+```php
+use use Chevere\Components\ThrowableHandler\ThrowableHandler;
+
+set_error_handler(
+    ThrowableHandler::ERRORS_AS_EXCEPTIONS
+);
+register_shutdown_function(
+    ThrowableHandler::FATAL_ERROR_HANDLER
+);
 ```
 
 ## Configuration
 
-You can optionally configure XR by creating a file named `xr.php` in your project directory with the following options:
+Optionally configure XR by creating a file named `xr.php` in your project directory with the following options:
 
 * `enable`
   * `bool` Controls sending messages to the server. Set true to enable, false to disable.
@@ -190,7 +228,7 @@ return [
 
 ### Docker configuration
 
-When using Docker, the host should point to the internal IP of your Docker host by using `host.docker.internal`.
+When using Docker (local) the host should point to the internal IP of your Docker host by using `host.docker.internal`.
 
 ```php
 <?php
@@ -203,11 +241,13 @@ return [
 
 ## Docker
 
-### Start/Stop
+### Start
 
 ```sh
 docker container start chevere-xr
 ```
+
+### Stop
 
 ```sh
 docker container stop chevere-xr
@@ -227,7 +267,7 @@ docker build -t ghcr.io/chevere/xr:tag .
 
 ## Message reference
 
-The server can receive messages from *anywhere*:
+The XR dump server can receive messages from *anywhere*:
 
 ```plain
 POST http://localhost:27420/message
