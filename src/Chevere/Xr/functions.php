@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Xr {
     use function Chevere\Components\Filesystem\dirForPath;
-    use Chevere\Components\ThrowableHandler\Formatters\ThrowableHandlerHtmlFormatter;
-    use Chevere\Components\ThrowableHandler\ThrowableRead;
-    use Chevere\Components\ThrowableHandler\ThrowableTraceFormatter;
     use function Chevere\Components\Writer\streamTemp;
     use Chevere\Components\Writer\StreamWriter;
     use Chevere\Interfaces\Writer\WriterInterface;
@@ -74,70 +71,20 @@ namespace Chevere\Xr {
      *
      * @codeCoverageIgnore
      */
-    function throwableHandler(Throwable $throwable, string ...$extra): void
+    function throwableHandler(Throwable $throwable, string $extra = ''): void
     {
         if (getXrInstance()->enable() === false) {
             return; // @codeCoverageIgnore
         }
-        $readFirst = new ThrowableRead($throwable);
-        $backtrace = $readFirst->trace();
-        $formatter = new ThrowableHandlerHtmlFormatter();
-        $topic = basename(
-            str_replace('\\', DIRECTORY_SEPARATOR, $readFirst->className())
-        );
-        $body = '<div class="throwable">';
-        $template = '<div class="throwable-item">
-<h2 class="throwable-title">%title%</h2>
-<div class="throwable-code">%code%</div>
-<div class="throwable-message">%message%</div>
-%extra%
-<div class="throwable-backtrace backtrace">%trace%</div>
-</div>';
-        $appendExtra = implode(
-            '',
-            array_map(
-                function (string $extra): string {
-                    return $extra;
-                },
-                $extra
-            )
-        );
-        $aux = 0;
-        do {
-            $aux++;
-            if ($aux === 1) {
-                $throwableRead = $readFirst;
-                $trace = $backtrace;
-            } else {
-                $throwableRead = new ThrowableRead($throwable);
-                $trace = [
-                [
-                    'function' => '{main}',
-                    'file' => $throwableRead->file(),
-                    'line' => $throwableRead->line(),
-                ]
-            ];
-            }
-            $traceFormatter = new ThrowableTraceFormatter($trace, $formatter);
-            $translate = [
-                '%title%' => $throwableRead->className(),
-                '%code%' => $throwableRead->code(),
-                '%message%' => $throwableRead->message(),
-                '%extra%' => $aux === 1 ? $appendExtra : '',
-                '%trace%' => $traceFormatter->__toString(),
-            ];
-            $body .= strtr($template, $translate);
-        } while ($throwable = $throwable->getPrevious());
-        $body .= '</div>';
-        $emote = '😰Exceptions';
+        $parser = new ThrowableParser($throwable, $extra);
         getXrInstance()->client()
             ->sendMessage(
                 (new Message(
-                    backtrace: $backtrace,
+                    backtrace: $parser->throwableRead()->trace(),
                 ))
-                    ->withBody($body)
-                    ->withTopic($topic)
-                    ->withEmote($emote)
+                    ->withBody($parser->body())
+                    ->withTopic($parser->topic())
+                    ->withEmote($parser->emote())
             );
     }
 }
@@ -196,13 +143,13 @@ namespace {
 
     if (!function_exists('xrr')) { // @codeCoverageIgnore
         /**
-         * Send a raw message to XR.
+         * Send a raw html message to XR.
          *
          * ```php
-         * xrr($message, ...);
+         * xrr($html, ...);
          * ```
          *
-         * @param string $message Message to send
+         * @param string $html Message to send
          * @param string $t Topic
          * @param string $e Emote
          * @param int $f `XR_BACKTRACE | XR_PAUSE`
@@ -210,7 +157,7 @@ namespace {
          * @codeCoverageIgnore
          */
         function xrr(
-            string $message,
+            string $html,
             string $t = '',
             string $e = '',
             int $f = 0
@@ -223,7 +170,7 @@ namespace {
                     (new Message(
                         backtrace: debug_backtrace(),
                     ))
-                        ->withBody($message)
+                        ->withBody($html)
                         ->withTopic($t)
                         ->withEmote($e)
                         ->withFlags($f)
