@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\Xr {
     use function Chevere\Components\Filesystem\dirForPath;
+    use Chevere\Components\ThrowableHandler\Formatters\ThrowableHandlerHtmlFormatter;
     use Chevere\Components\ThrowableHandler\ThrowableRead;
-    use function Chevere\Components\Writer\streamTemp;
+    use Chevere\Components\ThrowableHandler\ThrowableTraceFormatter;
+use function Chevere\Components\Writer\streamTemp;
     use Chevere\Components\Writer\StreamWriter;
     use Chevere\Interfaces\Writer\WriterInterface;
     use LogicException;
@@ -74,16 +76,18 @@ namespace Chevere\Xr {
         }
         $readFirst = new ThrowableRead($throwable);
         $backtrace = $readFirst->trace();
+        $formatter = new ThrowableHandlerHtmlFormatter();
         $topic = basename(
             str_replace('\\', DIRECTORY_SEPARATOR, $readFirst->className())
         );
         $body = '<div class="throwable">';
         $template = '<div class="throwable-item">
-    <h2 class="throwable-title">%title%</h2>
-    <div class="throwable-code">%code%</div>
-    <div class="throwable-message">%message%</div>
-    %extra%
-    </div>';
+<h2 class="throwable-title">%title%</h2>
+<div class="throwable-code">%code%</div>
+<div class="throwable-message">%message%</div>
+%extra%
+<div class="throwable-backtrace backtrace">%trace%</div>
+</div>';
         $appendExtra = implode(
             '',
             array_map(
@@ -96,32 +100,40 @@ namespace Chevere\Xr {
         $aux = 0;
         do {
             $aux++;
-            $throwableRead = $aux === 1
-                ? $readFirst
-                : new ThrowableRead($throwable);
+            if ($aux === 1) {
+                $throwableRead = $readFirst;
+                $trace = $backtrace;
+            } else {
+                $throwableRead = new ThrowableRead($throwable);
+                $trace = [
+                [
+                    'function' => '{main}',
+                    'file' => $throwableRead->file(),
+                    'line' => $throwableRead->line(),
+                ]
+            ];
+            }
+            $traceFormatter = new ThrowableTraceFormatter($trace, $formatter);
             $translate = [
                 '%title%' => $throwableRead->className(),
                 '%code%' => $throwableRead->code(),
                 '%message%' => $throwableRead->message(),
                 '%extra%' => $aux === 1 ? $appendExtra : '',
+                '%trace%' => $traceFormatter->__toString(),
             ];
             $body .= strtr($template, $translate);
         } while ($throwable = $throwable->getPrevious());
-        
         $body .= '</div>';
-    
-        $emote = '⚠️';
-        $flags = XR_BACKTRACE;
+        $emote = '⧱';
         getXrInstance()->client()
-                ->sendMessage(
-                    (new Message(
-                        backtrace: $backtrace,
-                    ))
-                        ->withBody($body)
-                        ->withTopic($topic)
-                        ->withEmote($emote)
-                        ->withFlags($flags)
-                );
+            ->sendMessage(
+                (new Message(
+                    backtrace: $backtrace,
+                ))
+                    ->withBody($body)
+                    ->withTopic($topic)
+                    ->withEmote($emote)
+            );
     }
 }
 

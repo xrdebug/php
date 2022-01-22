@@ -18,8 +18,8 @@ es.addEventListener('message', function (event) {
     var bodyFileDisplay = el.querySelector('.body-file-display');
     bodyFileDisplay.textContent = data.file_display_short;
     bodyFileDisplay.setAttribute('title', data.file_display);
-    document.body.prepend(el);
-    el = document.querySelector('.message');
+    document.getElementById("messages").prepend(el);
+    el = document.querySelector('.message:first-child');
     el.dataset.emote = data.emote;
     el.dataset.topic = data.topic;
 });
