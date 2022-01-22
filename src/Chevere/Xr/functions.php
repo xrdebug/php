@@ -26,7 +26,7 @@ namespace Chevere\Xr {
     {
         try {
             return WriterInstance::get();
-        } catch (LogicException $e) {
+        } catch (LogicException) {
             return new StreamWriter(streamTemp(''));
         }
     }
@@ -35,7 +35,7 @@ namespace Chevere\Xr {
     {
         try {
             return XrInstance::get();
-        } catch (LogicException $e) {
+        } catch (LogicException) {
             return new Xr(dirForPath(getcwd()));
         }
     }
@@ -50,21 +50,22 @@ namespace Chevere\Xr {
      */
     function registerThrowableHandler(bool $callPrevious = true): void
     {
+        /** @var callable $xrHandler */
         $xrHandler = __NAMESPACE__ . '\\throwableHandler';
         $previous = set_exception_handler($xrHandler);
-        if ($callPrevious === false) {
+        if ($callPrevious === false || $previous === null) {
             return;
         }
-        set_exception_handler(function (Throwable $e) use ($xrHandler, $previous) {
-            $xrHandler($e);
-            if (is_callable($previous)) {
-                $previous($e);
+        set_exception_handler(
+            function (Throwable $throwable) use ($xrHandler, $previous) {
+                $xrHandler($throwable);
+                $previous($throwable);
             }
-        });
+        );
     }
 
     /**
-     * Handles a Throwable using XR.
+     * Handle a Throwable using XR.
      *
      * @param Throwable $throwable The throwable to handle
      * @param string $extra Extra contents to append to the XR message
