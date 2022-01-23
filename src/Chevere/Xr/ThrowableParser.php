@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Components\ThrowableHandler\Formatters\ThrowableHandlerHtmlFormatter;
+use Chevere\Components\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
 use Chevere\Components\ThrowableHandler\ThrowableRead;
-use Chevere\Components\ThrowableHandler\ThrowableTraceFormatter;
-use Chevere\Interfaces\ThrowableHandler\ThrowableHandlerFormatterInterface;
+use Chevere\Components\ThrowableHandler\ThrowableTraceFormat;
+use Chevere\Interfaces\ThrowableHandler\ThrowableHandlerFormatInterface;
 use Chevere\Interfaces\ThrowableHandler\ThrowableReadInterface;
 use Throwable;
 
@@ -28,7 +28,7 @@ class ThrowableParser
 
     private string $emote = '⚠️Throwable';
 
-    private ThrowableHandlerFormatterInterface $format;
+    private ThrowableHandlerFormatInterface $format;
 
     private int $index = 0;
 
@@ -51,7 +51,7 @@ class ThrowableParser
         private string $extra = '',
     ) {
         $this->throwableRead = new ThrowableRead($throwable);
-        $this->format = new ThrowableHandlerHtmlFormatter();
+        $this->format = new ThrowableHandlerHtmlFormat();
         $this->topic = basename(
             str_replace(
                 '\\',
@@ -106,7 +106,7 @@ class ThrowableParser
                 ]
             ];
         }
-        $traceFormatter = new ThrowableTraceFormatter(
+        $traceFormatter = new ThrowableTraceFormat(
             $trace,
             $this->format
         );
