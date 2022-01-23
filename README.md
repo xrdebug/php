@@ -8,26 +8,27 @@ https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-
 
 🦄 [View demo](https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-a51d-f94cd6d7caec.mp4)
 
-![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![AGPL-3.0-only](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
+![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![Apache-2.0](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=alert_status)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=security_rating)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=coverage)](https://sonarcloud.io/dashboard?id=chevere_xr) [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_xr) [![CodeFactor](https://www.codefactor.io/repository/github/chevere/xr/badge)](https://www.codefactor.io/repository/github/chevere/xr) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://www.codacy.com/gh/chevere/xr/dashboard)
 
-XR is a dump server utility built on top of ReactPHP. No extras required, debug your PHP code anywhere.
+XR is a dump server utility for PHP. No extras required, debug your PHP code anywhere.
 
 <p align="center"><img alt="XR dark" src=".screen/xr-light-2.png"></p>
 
 ## Features
 
-* ✨ Dump single or multiple arguments
+* ✨ Dump multiple arguments
 * 😊 One-click server run on top of PHP (no extras required)
 * 👻 Filter messages by [Topics](#topic) and [Emotes](#emote)
-* 📟 Dump backtrace (if you need it)
+* 📟 Dump [backtrace](#flags) (if you need it)
 * ⏸ Pause your code execution (*not implemented yet)
 * 🌚 Dark / 🌝 Light mode follows your system preferences
 * 👽 Ephemeral as it doesn't require to store any persistent data
 * 🍒 HTML based (save page, search, shortcuts, etc.)
 * 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
-* 😰 Handles exceptions (hook or replace your existing handler)
+* 🥰 Experience a colorful, typed and easy to read dump variable design
+* 😅 Handle exceptions (hook or replace your existing handler)
 
 <p align="center"><img alt="XR dark" src=".screen/xr-dark-2.png"></p>
 
@@ -152,10 +153,13 @@ xr(
 
 Use `xrr` to send a raw message to the server.
 
-💡 Note that `xrr` also supports **Topic** `t:`, **Emote** `e:` and **Flags** `f:`.
+💡 Note that `xrr` also supports [topic](#topic) `t`, [emote](#emote) `e` and [flags](#flags) `f` arguments.
 
 ```php
-xrr('<h1>Hola, mundo!</h1>');
+xrr(
+    '<h1>Hola, mundo!</h1>',
+    t: 'Greet'
+);
 ```
 
 ### Exception handling
@@ -282,3 +286,11 @@ POST http://localhost:27420/message
 * `file_line` - The file line.
 * `emote` - emote (emojis/symbols)
 * `topic` - Topic as message context.
+
+## License
+
+Copyright 2022 [Rodolfo Berrios A.](https://rodolfoberrios.com/)
+
+XR is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
