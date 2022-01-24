@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use function Chevere\Components\Filesystem\filePhpReturnForPath;
-use function Chevere\Components\Type\typeArray;
-use Chevere\Interfaces\Filesystem\DirInterface;
+use function Chevere\Filesystem\filePhpReturnForPath;
+use Chevere\Filesystem\Interfaces\DirInterface;
+use function Chevere\Type\typeArray;
 use Throwable;
 
 final class Xr

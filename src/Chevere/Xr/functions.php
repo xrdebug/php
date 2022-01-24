@@ -12,10 +12,10 @@
 declare(strict_types=1);
 
 namespace Chevere\Xr {
-    use function Chevere\Components\Filesystem\dirForPath;
-    use function Chevere\Components\Writer\streamTemp;
-    use Chevere\Components\Writer\StreamWriter;
-    use Chevere\Interfaces\Writer\WriterInterface;
+    use function Chevere\Filesystem\dirForPath;
+    use Chevere\Writer\Interfaces\WriterInterface;
+    use function Chevere\Writer\streamTemp;
+    use Chevere\Writer\StreamWriter;
     use LogicException;
     use Throwable;
 

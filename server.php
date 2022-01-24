@@ -20,14 +20,14 @@ foreach (['/', '/../../../'] as $path) {
     }
 }
 
-use Chevere\Components\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
-use Chevere\Components\ThrowableHandler\ThrowableHandler;
-use function Chevere\Components\ThrowableHandler\throwableHandler;
-use function Chevere\Components\Writer\streamFor;
-use Chevere\Components\Writer\StreamWriter;
-use Chevere\Components\Writer\Writers;
-use function Chevere\Components\Writer\writers;
-use Chevere\Components\Writer\WritersInstance;
+use Chevere\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
+use Chevere\ThrowableHandler\ThrowableHandler;
+use function Chevere\ThrowableHandler\throwableHandler;
+use function Chevere\Writer\streamFor;
+use Chevere\Writer\StreamWriter;
+use Chevere\Writer\Writers;
+use function Chevere\Writer\writers;
+use Chevere\Writer\WritersInstance;
 use Clue\React\Sse\BufferedChannel;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\Loop;

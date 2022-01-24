@@ -197,7 +197,7 @@ set_exception_handler(
 You will require to handle errors as exceptions and from there use [Exception handling](#exception-handling).
 
 ```php
-use use Chevere\Components\ThrowableHandler\ThrowableHandler;
+use use Chevere\ThrowableHandler\ThrowableHandler;
 
 set_error_handler(
     ThrowableHandler::ERRORS_AS_EXCEPTIONS

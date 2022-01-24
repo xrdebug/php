@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\Chevere\Xr;
 
-use function Chevere\Components\Message\message;
-use Chevere\Exceptions\Core\TypeException;
+use function Chevere\Message\message;
+use Chevere\Throwable\Errors\TypeError;
 use Chevere\Xr\ThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -23,8 +23,8 @@ final class ThrowableParserTest extends TestCase
 {
     public function testTopLevel(): void
     {
-        $exception = new Exception('foo');
-        $parser = new ThrowableParser($exception, '');
+        $throwable = new Exception('foo');
+        $parser = new ThrowableParser($throwable, '');
         $this->assertSame(Exception::class, $parser->topic());
         $this->assertSame(
             Exception::class,
@@ -36,11 +36,11 @@ final class ThrowableParserTest extends TestCase
     
     public function testNamespaced(): void
     {
-        $exception = new TypeException(message: message('foo'));
-        $parser = new ThrowableParser($exception, '');
-        $this->assertSame('TypeException', $parser->topic());
+        $throwable = new TypeError(message: message('foo'));
+        $parser = new ThrowableParser($throwable, '');
+        $this->assertSame('TypeError', $parser->topic());
         $this->assertSame(
-            TypeException::class,
+            TypeError::class,
             $parser->throwableRead()->className()
         );
         $this->assertStringContainsString(ThrowableParser::class, $parser->body());
@@ -48,16 +48,16 @@ final class ThrowableParserTest extends TestCase
 
     public function testWithPrevious(): void
     {
-        $exception = new Exception('foo', previous: new Exception('bar'));
-        $parser = new ThrowableParser($exception, '');
+        $throwable = new Exception('foo', previous: new Exception('bar'));
+        $parser = new ThrowableParser($throwable, '');
         $this->assertStringContainsString(ThrowableParser::class, $parser->body());
     }
 
     public function testWithExtra(): void
     {
         $extra = 'EXTRA EXTRA! TODD SMELLS';
-        $exception = new Exception('foo');
-        $parser = new ThrowableParser($exception, $extra);
+        $throwable = new Exception('foo');
+        $parser = new ThrowableParser($throwable, $extra);
         $this->assertStringContainsString($extra, $parser->body());
     }
 }

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\Chevere\Xr;
 
-use function Chevere\Components\Writer\streamTemp;
-use Chevere\Components\Writer\StreamWriter;
-use Chevere\Interfaces\Writer\WriterInterface;
+use Chevere\Writer\Interfaces\WriterInterface;
+use function Chevere\Writer\streamTemp;
+use Chevere\Writer\StreamWriter;
 use function Chevere\Xr\getWriter;
 use Chevere\Xr\Message;
 use PHPUnit\Framework\TestCase;

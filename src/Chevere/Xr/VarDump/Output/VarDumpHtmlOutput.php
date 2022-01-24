@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\VarDump\Output;
 
-use Chevere\Components\VarDump\Outputs\VarDumpAbstractOutput;
-use Chevere\Interfaces\VarDump\VarDumpFormatInterface;
+use Chevere\VarDump\Interfaces\VarDumpFormatInterface;
+use Chevere\VarDump\Outputs\VarDumpAbstractOutput;
 
 final class VarDumpHtmlOutput extends VarDumpAbstractOutput
 {

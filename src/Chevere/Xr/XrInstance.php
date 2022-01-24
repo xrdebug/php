@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Components\Message\Message;
-use Chevere\Exceptions\Core\LogicException;
+use Chevere\Message\Message;
+use Chevere\Throwable\Exceptions\LogicException;
 
 /**
  * @codeCoverageIgnore

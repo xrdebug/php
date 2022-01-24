@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-use function Chevere\Components\Message\message;
+use function Chevere\Message\message;
 
 foreach (['/', '/../../../'] as $path) {
     $autoload = __DIR__ . $path . 'vendor/autoload.php';

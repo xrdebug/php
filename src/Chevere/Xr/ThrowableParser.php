@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Components\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
-use Chevere\Components\ThrowableHandler\ThrowableRead;
-use Chevere\Components\ThrowableHandler\ThrowableTraceFormat;
-use Chevere\Interfaces\ThrowableHandler\ThrowableHandlerFormatInterface;
-use Chevere\Interfaces\ThrowableHandler\ThrowableReadInterface;
+use Chevere\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
+use Chevere\ThrowableHandler\Interfaces\ThrowableHandlerFormatInterface;
+use Chevere\ThrowableHandler\Interfaces\ThrowableReadInterface;
+use Chevere\ThrowableHandler\ThrowableRead;
+use Chevere\Trace\TraceFormat;
 use Throwable;
 
 class ThrowableParser
@@ -106,7 +106,7 @@ class ThrowableParser
                 ]
             ];
         }
-        $traceFormatter = new ThrowableTraceFormat(
+        $traceFormatter = new TraceFormat(
             $trace,
             $this->format
         );

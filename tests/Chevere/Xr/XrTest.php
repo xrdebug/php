@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\Chevere\Xr;
 
-use function Chevere\Components\Filesystem\dirForPath;
+use function Chevere\Filesystem\dirForPath;
 use Chevere\Xr\Client;
 use Chevere\Xr\Xr;
 use PHPUnit\Framework\TestCase;

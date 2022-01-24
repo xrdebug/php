@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Components\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
-use Chevere\Components\ThrowableHandler\ThrowableTraceFormat;
-use Chevere\Components\VarDump\Formats\VarDumpHtmlFormat;
-use Chevere\Components\VarDump\VarDump;
-use Chevere\Components\Writer\NullWriter;
-use Chevere\Interfaces\Common\ToArrayInterface;
-use Chevere\Interfaces\VarDump\VarDumpInterface;
-use Chevere\Interfaces\Writer\WriterInterface;
+use Chevere\Common\Interfaces\ToArrayInterface;
+use Chevere\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
+use Chevere\Trace\TraceFormat;
+use Chevere\VarDump\Formats\VarDumpHtmlFormat;
+use Chevere\VarDump\Interfaces\VarDumpInterface;
+use Chevere\VarDump\VarDump;
+use Chevere\Writer\Interfaces\WriterInterface;
+use Chevere\Writer\NullWriter;
 use Chevere\Xr\VarDump\Output\VarDumpHtmlOutput;
 
 final class Message implements ToArrayInterface
@@ -188,7 +188,7 @@ final class Message implements ToArrayInterface
     private function handleBacktrace(): void
     {
         if ($this->isBacktrace) {
-            $traceFormatter = new ThrowableTraceFormat(
+            $traceFormatter = new TraceFormat(
                 $this->backtrace,
                 new ThrowableHandlerHtmlFormat()
             );
