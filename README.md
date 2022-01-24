@@ -18,16 +18,19 @@ XR is a dump server utility for PHP. No extras required, debug your PHP code any
 
 ## Features
 
+* 🥰 Experience a colorful, typed and easy to read dump variable display
 * ✨ Dump multiple arguments
 * 😊 One-click server run on top of PHP (no extras required)
 * 👻 Filter messages by [Topics](#topic) and [Emotes](#emote)
-* 📟 Dump [backtrace](#flags) (if you need it)
-* ⏸ Pause your code execution (*not implemented yet)
+* ✍️ Re-name "XR Session" to anything you want
+* 🦄 Pause, Stop and Clear debug window (*not implemented)
+* 🥷 Keyboard shortcuts for ninjas (*not implemented)
+* 📟 Generates dump [backtrace](#flags)
+* ⏸ [Pause](#flags) and resume your code execution (*not implemented)
 * 🌚 Dark / 🌝 Light mode follows your system preferences
-* 👽 Ephemeral as it doesn't require to store any persistent data
+* 👽 Ephemeral, it doesn't store any persistent data
 * 🍒 HTML based (save page, search, shortcuts, etc.)
 * 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
-* 🥰 Experience a colorful, typed and easy to read dump variable design
 * 😅 Handle exceptions (hook or replace your existing handler)
 
 <p align="center"><img alt="XR dark" src=".screen/xr-dark-2.png"></p>
