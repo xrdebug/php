@@ -6,11 +6,65 @@ filterOperator = {
     topic: '=',
     emote: '*=',
 },
-es = new EventSource('dump');
-es.addEventListener('message', function (event) {
-    var data = JSON.parse(event.data),
-    template = document.querySelector('#message'),
-    el = template.content.cloneNode(true);
+currentStatus = 'resume',
+actions = {
+    pushStatus: function(status) {
+        setStatus(status);
+        if(status === 'resume') {
+            actions.resume();
+        }
+    },
+    resume: function() {
+        document.querySelectorAll('.message--while-pause').forEach(function(el) {
+            el.classList.remove('message--while-pause');
+        })
+    },
+    clear: function() {
+        document.getElementById('messages').innerHTML = '';
+        filter = {
+            topic: '',
+            emote: '',
+        };
+    }
+},
+buttonActions = function(action) {
+    if(action === currentStatus) {
+        return;
+    }
+    if(action === 'clear') {
+        actions.clear();
+    } else {
+        actions.pushStatus(action);
+    }
+    pushMessage({
+        message: '<b>' + action.toUpperCase() + '</b> ' + document.title,
+    });
+},
+keysToAction = {
+    KeyS: 'stop',
+    KeyR: 'resume',
+    KeyP: 'pause',
+    KeyX: 'clear', 
+},
+setStatus = function(status) {
+    document.querySelectorAll('.button--active').forEach(function(el) {
+        el.classList.remove("button--active")
+    });
+    document.querySelectorAll('[data-action="'+status+'"]')
+    .forEach(function(el) {
+        el.classList.add('button--active');
+    });
+    if(status === 'clear') {
+        setStatus(currentStatus);
+        return;
+    }
+    currentStatus = status;
+    
+    return currentStatus;
+},
+template = document.querySelector('#message');
+pushMessage = function(data, isPaused) {
+    let el = template.content.cloneNode(true);
     el.querySelector('.time').textContent = (new Date()).toTimeString().split(' ')[0];
     el.querySelector('.topic').textContent = data.topic;
     el.querySelector('.emote').textContent = data.emote;
@@ -20,8 +74,34 @@ es.addEventListener('message', function (event) {
     bodyFileDisplay.setAttribute('title', data.file_display);
     document.getElementById("messages").prepend(el);
     el = document.querySelector('.message:first-child');
-    el.dataset.emote = data.emote;
-    el.dataset.topic = data.topic;
+    el.dataset.emote = data.emote ? data.emote : '';
+    el.dataset.topic = data.topic ? data.topic : '';
+    if(isPaused) {
+        el.classList.add('message--while-pause');
+    }
+};
+setStatus(currentStatus);
+for(key in keysToAction) {
+    document.querySelectorAll('[data-action="'+keysToAction[key]+'"]').forEach(function(el) {
+        el.addEventListener('click', function() {
+            buttonActions(this.dataset.action);
+        });
+    })
+}
+document.addEventListener('keyup', function(event) {
+    if(event.target.classList.contains("no-keys")) {
+        return;
+    }
+    if(event.code in keysToAction) {
+        buttonActions(keysToAction[event.code]);
+    }
+});
+es = new EventSource('dump');
+es.addEventListener('message', function (event) {
+    if(currentStatus === 'stop') {
+        return;
+    }
+    pushMessage(JSON.parse(event.data), currentStatus === 'pause');
 });
 document.querySelector('.header-title').addEventListener('input', event => {
     document.title = event.target.textContent;
@@ -33,10 +113,8 @@ document.addEventListener('click', event => {
     }
     if(el.classList.contains('filter-button')) {
         var filterQuery = '',
-            hasFilter = false,
             message = el.closest('.message'),
             header = el.closest('header'),
-            resetFilter = header !== null,
             subject = el.classList.contains('topic')
                 ? 'topic'
                 : 'emote';
@@ -50,7 +128,6 @@ document.addEventListener('click', event => {
             if(filter[filterSubject] === '') {
                 continue;
             }
-            resetFilter = false;
             filterQuery += '[data-' +  filterSubject + filterOperator[filterSubject] + '"' + filter[filterSubject] + '"]';
         }
         document.getElementById('filtering').innerHTML = filterQuery === ''
