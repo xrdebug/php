@@ -185,8 +185,26 @@ header, .message {
     position: relative;
     margin: 0.1rem;
     background: none;
-    opacity: .15;
+    opacity: .25;
     cursor: pointer;
+    transition: opacity .2s ease-in-out;
+}
+
+.button-badge {
+    font-size: 0.4em;
+    position: absolute;
+    top: -0.75em;
+    left: -0.75em;
+    background: #fe0000;
+    color: #FFF;
+    border-radius: 100em;
+    padding: 0.215em 0.5em;
+    z-index: 1;
+    line-height: normal;
+}
+
+.button-badge:empty {
+    display: none;
 }
 
 .button:after {
@@ -205,11 +223,10 @@ header, .message {
     -webkit-mask-size: contain;
     mask-size: contain;
     background-color: var(--buttonColor);
-
 }
 
 .button:hover {
-    opacity: .5;
+    opacity: .70;
 }
 
 .button.button--active {
@@ -252,6 +269,7 @@ header, .message {
     -webkit-animation: slideDown 250ms ease-in-out;
     animation: slideDown 250ms ease-in-out;
 }
+
 .message--while-pause {
     display: none;
 }

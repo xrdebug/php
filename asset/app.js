@@ -7,6 +7,7 @@ filterOperator = {
     emote: '*=',
 },
 currentStatus = 'resume',
+queuedMessageCount = 0,
 actions = {
     pushStatus: function(status) {
         setStatus(status);
@@ -18,6 +19,8 @@ actions = {
         document.querySelectorAll('.message--while-pause').forEach(function(el) {
             el.classList.remove('message--while-pause');
         })
+        queuedMessageCount = 0;
+        document.getElementById('queue-count').textContent = '';
     },
     clear: function() {
         document.getElementById('messages').innerHTML = '';
@@ -38,7 +41,7 @@ buttonActions = function(action) {
     }
     pushMessage({
         message: '<b>' + action.toUpperCase() + '</b> ' + document.title,
-    });
+    }, true);
 },
 keysToAction = {
     KeyS: 'stop',
@@ -63,7 +66,7 @@ setStatus = function(status) {
     return currentStatus;
 },
 template = document.querySelector('#message');
-pushMessage = function(data, isPaused) {
+pushMessage = function(data, isStatus = false) {
     let el = template.content.cloneNode(true);
     el.querySelector('.time').textContent = (new Date()).toTimeString().split(' ')[0];
     el.querySelector('.topic').textContent = data.topic;
@@ -76,8 +79,10 @@ pushMessage = function(data, isPaused) {
     el = document.querySelector('.message:first-child');
     el.dataset.emote = data.emote ? data.emote : '';
     el.dataset.topic = data.topic ? data.topic : '';
-    if(isPaused) {
+    if(!isStatus && currentStatus === 'pause') {
+        queuedMessageCount++;
         el.classList.add('message--while-pause');
+        document.getElementById('queue-count').textContent = queuedMessageCount;
     }
 };
 setStatus(currentStatus);
@@ -101,7 +106,7 @@ es.addEventListener('message', function (event) {
     if(currentStatus === 'stop') {
         return;
     }
-    pushMessage(JSON.parse(event.data), currentStatus === 'pause');
+    pushMessage(JSON.parse(event.data));
 });
 document.querySelector('.header-title').addEventListener('input', event => {
     document.title = event.target.textContent;
