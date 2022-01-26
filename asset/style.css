@@ -310,10 +310,6 @@ header, .message {
     border-color: rgba(var(--colorBorderRGB), 1);
 }
 
-.body-raw {
-    margin-bottom: var(--marginEl);
-}
-
 .body-file {
     font-size: var(--fontSizeSmall);
 }
