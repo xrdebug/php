@@ -14,7 +14,7 @@ https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-
 
 XR is a dump server utility for PHP. No extras required, debug your PHP code anywhere.
 
-<p align="center"><img alt="XR dark" src=".screen/xr-light-2.png"></p>
+<p align="center"><img alt="XR dark" src=".screen/xr-light-welcome-0.1.2.png"></p>
 
 ## Features
 
@@ -33,7 +33,10 @@ XR is a dump server utility for PHP. No extras required, debug your PHP code any
 * 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
 * 😅 Handle exceptions (hook or replace your existing handler)
 
-<p align="center"><img alt="XR dark" src=".screen/xr-dark-2.png"></p>
+<p align="center">
+    <img alt="XR dark" src=".screen/xr-light-0.1.2.png">
+    <img alt="XR dark" src=".screen/xr-dark-0.1.2.png">
+</p>
 
 ## Contributing
 
