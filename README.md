@@ -23,8 +23,8 @@ XR is a dump server utility for PHP. No extras required, debug your PHP code any
 * 😊 One-click server run on top of PHP (no extras required)
 * 👻 Filter messages by [Topics](#topic) and [Emotes](#emote)
 * ✍️ Re-name "XR Session" to anything you want
-* 🦄 Pause, Stop and Clear debug window (*not implemented)
-* 🥷 Keyboard shortcuts for ninjas (*not implemented)
+* 🦄 Stop, Resume, Pause and Clear debug window controls
+* 🥷 Keyboard shortcuts for ninjas (**S**top, **R**esume, **P**ause and **C**lear)
 * 📟 Generates dump [backtrace](#flags)
 * ⏸ [Pause](#flags) and resume your code execution (*not implemented)
 * 🌚 Dark / 🌝 Light mode follows your system preferences
