@@ -23,7 +23,7 @@ actions = {
         document.getElementById('queue-count').textContent = '';
     },
     clear: function() {
-        document.getElementById('messages').innerHTML = '';
+        document.querySelector('main').innerHTML = '';
         filter = {
             topic: '',
             emote: '',
@@ -31,7 +31,7 @@ actions = {
     }
 },
 buttonActions = function(action) {
-    if(action === currentStatus) {
+    if(action === currentStatus || document.body.classList.contains('body--splash')) {
         return;
     }
     if(action === 'clear') {
@@ -50,13 +50,14 @@ keysToAction = {
     KeyX: 'clear', 
 },
 setStatus = function(status) {
+    console.log('wea', status)
     document.querySelectorAll('.button--active').forEach(function(el) {
         el.classList.remove("button--active")
     });
     document.querySelectorAll('[data-action="'+status+'"]')
-    .forEach(function(el) {
-        el.classList.add('button--active');
-    });
+        .forEach(function(el) {
+            el.classList.add('button--active');
+        });
     if(status === 'clear') {
         setStatus(currentStatus);
         return;
@@ -75,7 +76,10 @@ pushMessage = function(data, isStatus = false) {
     var bodyFileDisplay = el.querySelector('.body-file-display');
     bodyFileDisplay.textContent = data.file_display_short;
     bodyFileDisplay.setAttribute('title', data.file_display);
-    document.getElementById("messages").prepend(el);
+    if(document.body.classList.contains('body--splash')) {
+        document.body.classList.remove('body--splash', 'body--splash-in');
+    }
+    document.querySelector('main').prepend(el);
     el = document.querySelector('.message:first-child');
     el.dataset.emote = data.emote ? data.emote : '';
     el.dataset.topic = data.topic ? data.topic : '';
@@ -87,11 +91,12 @@ pushMessage = function(data, isStatus = false) {
 };
 setStatus(currentStatus);
 for(key in keysToAction) {
-    document.querySelectorAll('[data-action="'+keysToAction[key]+'"]').forEach(function(el) {
-        el.addEventListener('click', function() {
-            buttonActions(this.dataset.action);
-        });
-    })
+    document.querySelectorAll('[data-action="'+keysToAction[key]+'"]')
+        .forEach(function(el) {
+            el.addEventListener('click', function() {
+                buttonActions(this.dataset.action);
+            });
+        })
 }
 document.addEventListener('keyup', function(event) {
     if(event.target.classList.contains("no-keys")) {
@@ -119,7 +124,6 @@ document.addEventListener('click', event => {
     if(el.classList.contains('filter-button')) {
         var filterQuery = '',
             message = el.closest('.message'),
-            header = el.closest('header'),
             subject = el.classList.contains('topic')
                 ? 'topic'
                 : 'emote';
@@ -133,7 +137,9 @@ document.addEventListener('click', event => {
             if(filter[filterSubject] === '') {
                 continue;
             }
-            filterQuery += '[data-' +  filterSubject + filterOperator[filterSubject] + '"' + filter[filterSubject] + '"]';
+            filterQuery += '[data-' +  filterSubject
+                + filterOperator[filterSubject]
+                + '"' + filter[filterSubject] + '"]';
         }
         document.getElementById('filtering').innerHTML = filterQuery === ''
             ? ''
@@ -143,3 +149,6 @@ document.addEventListener('click', event => {
             : '';
     }
 });
+setTimeout(function() {
+    document.body.classList.add('body--splash-in');
+}, 150);

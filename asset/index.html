@@ -9,8 +9,46 @@
     <link rel="apple-touch-icon" href="icon.svg">
     <link rel="mask-icon" href="icon.svg" color="#000">
     <style rel="stylesheet" media="all" id="filtering"></style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body class="body--splash">
+    <section id="splash" class="splash">
+        <div class="splash-logo">
+            <img src="icon.svg" />
+        </div>
+        <div class="splash-welcome">Welcome to chevere/xr</div>
+        <div class="splash-version">Version <a href="https://github.com/chevere/xr" target="_blank">0.1.2</a> <span class="splash-version-codename">Chocolito</span></div>
+        <div class="splash-keys">
+            <div class="splash-key">
+                <kbd>R</kbd>
+                <div>
+                    <div class="splash-key-title">Resume</div>
+                    <div class="splash-key-description button button--resume">Receive messages</div>
+                </div>
+            </div>
+            <div class="splash-key">
+                <kbd>P</kbd>
+                <div>
+                    <div class="splash-key-title">Pause</div>
+                    <div class="splash-key-description button button--pause">Pause message display</div>
+                </div>
+            </div>
+            <div class="splash-key">
+                <kbd>S</kbd>
+                <div>
+                    <div class="splash-key-title">Stop</div>
+                    <div class="splash-key-description button button--stop">Stop receiving messages</div>
+                </div>
+            </div>
+            <div class="splash-key">
+                <kbd>X</kbd>
+                <div>
+                    <div class="splash-key-title">Clear</div>
+                    <div class="splash-key-description button button--clear">Clear session messages</div>
+                </div>
+            </div>
+        </div>
+    </section>
     <header>
         <div contenteditable="true" class="header-title no-keys">XR Session</div>
         <div class="header-filter">
@@ -23,7 +61,7 @@
             <button data-action="clear" class="button button--clear"></button>
         </div>
     </header>
-    <div id="messages"></div>
+    <main></main>
     <template id="message">
         <div class="message" data-emote="" data-topic="">
             <div class="status">

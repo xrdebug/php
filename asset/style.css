@@ -108,6 +108,7 @@ html {
 html, body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
 body {
@@ -135,8 +136,8 @@ header {
     right: 0;
     top: 0;
     background: var(--headerBackground);
-    -webkit-backdrop-filter: blur(2rem);
-    backdrop-filter: blur(2rem);
+    -webkit-backdrop-filter: blur(0.1rem);
+    backdrop-filter: blur(0.1rem);
     padding: 0.875rem 1.75rem;
     height: var(--headerHeight);
     grid-template-columns: auto auto 1fr;
@@ -474,4 +475,120 @@ pre+.backtrace {
 
 .throwable-message, .throwable-backtrace {
     margin-top: 1em;
+}
+
+.splash {
+    text-align: center;
+    padding: 2rem;
+    width: 22rem;
+    margin: 0 auto;
+}
+
+.splash>div {
+    margin: 1rem;
+}
+
+.body--splash .splash {
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+    transition-delay: 300ms;
+}
+
+.body--splash-in .splash {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.body--splash .splash-logo {
+    transform: scale(25);
+}
+
+.body--splash-in .splash-logo {
+    transform: scale(1);
+    transition-duration: 600ms !important;
+}
+
+.splash-logo {
+    z-index: 1;
+    position: relative;
+}
+
+.splash-logo img {
+    width: 5rem;
+    height: 5rem;
+    display: inline-block;
+    z-index: 1;
+}
+
+.splash-welcome {
+    font-size: 2rem;
+}
+
+.splash-version {
+    color: var(--buttonTopicText);
+}
+
+.splash-version a {
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.splash-keys {
+    text-align: left;
+    font-size: var(--fontSizeSubNormal);
+    border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+}
+
+.splash-key {
+    margin: var(--marginEl);
+    position: relative;
+    padding-left: 3em;
+    margin: 1em 0;
+}
+
+.splash-key kbd {
+    font-size: 1em;
+    font-weight: 600;
+    font-family: XR;
+    background: var(--dumpBackground);
+    color: var(--dumpText);
+    padding: 0.5em 0.75em;
+    display: inline-block;
+    border: var(--borderSize) solid rgba(var(--colorBorderRGB), .50);
+    border-radius: var(--borderRadiusBox);
+    margin-right: 0.75rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-shadow: 0.125em 0.125em 0.375em rgba(var(--colorBorderRGB), .40);
+}
+
+.splash-key-title {
+    font-weight: bold;
+}
+
+.splash-key-description {
+    opacity: 0.5;
+    padding-left: 1.25em;
+}
+
+.splash-key-description:after {
+    left: 3.5em;
+    top: 1.75em;
+}
+
+body.body--splash {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0;
+}
+
+body.body--splash header {
+    display: none;
+}
+
+body:not(.body--splash) .splash {
+    display: none;
 }
