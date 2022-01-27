@@ -22,11 +22,7 @@ foreach (['/', '/../../../'] as $path) {
     }
 }
 
-xr(
-    greet: '😘 Hola, mundo!',
-    t: 'hello-world',
-    e: '😊',
-);
+xrr('😘 Hola, mundo!');
 sleep(2);
 xr(
     👉: [
@@ -41,7 +37,6 @@ $message = message('Did you heard about %package%?')
     ->code('%package%', 'spatie/ray');
 xr(
     inspiration: $message,
-    message: $message->__toString(),
     t: 'hello-world',
     e: '😎',
     f: XR_BACKTRACE
@@ -55,7 +50,7 @@ xr(
         ];
     },
     t: 'hello-world',
-    e: '✨🐘'
+    e: '✨🐘',
 );
 sleep(4);
 xr(
