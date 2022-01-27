@@ -161,4 +161,6 @@ document.addEventListener('click', event => {
             : '';
     }
 });
-document.body.classList.add('body--splash-in');
+setTimeout(function() {
+    document.body.classList.add('body--splash-in');
+}, 1);
