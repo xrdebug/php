@@ -184,12 +184,13 @@ header, .message {
     width: 1em;
     height: 1em;
     position: relative;
-    margin: 0.1rem;
+    margin: 0 0.1em;
     background: none;
     opacity: .25;
     cursor: pointer;
     transition: opacity .2s ease-in-out;
     outline: 0;
+    padding: 0 0.1em;
 }
 
 .button-badge {
@@ -213,15 +214,9 @@ header, .message {
     width: 1em;
     height: 1em;
     display: inline-block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     content: '';
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    -webkit-mask-repeat: 50% 50%;
-    mask-repeat: 50% 50%;
     -webkit-mask-size: contain;
     mask-size: contain;
     background-color: var(--buttonColor);
@@ -442,9 +437,6 @@ pre+.backtrace {
 .throwable-item {
     font-size: 0.875em;
     border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
-}
-
-.throwable-item {
     padding: var(--marginElRelative) 0;
 }
 
@@ -579,6 +571,7 @@ pre+.backtrace {
 .splash-key-description {
     opacity: 0.5;
     padding-left: 1.25em;
+    position: relative;
 }
 
 .splash-key:hover .splash-key-description {
@@ -586,8 +579,9 @@ pre+.backtrace {
 }
 
 .splash-key-description:after {
-    left: 3.5em;
-    top: 1.75em;
+    left: 0;
+    top: .125em;
+    position: absolute;
 }
 
 body.body--splash {

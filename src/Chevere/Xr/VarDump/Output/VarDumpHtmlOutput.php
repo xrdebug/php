@@ -31,6 +31,6 @@ final class VarDumpHtmlOutput extends VarDumpAbstractOutput
 
     public function writeCallerFile(VarDumpFormatInterface $formatter): void
     {
-        return;
+        // null override
     }
 }
