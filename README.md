@@ -4,9 +4,9 @@
 
 <p align="center"><img alt="XR" src="asset/icon.svg" width="40%"></p>
 
-https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-a51d-f94cd6d7caec.mp4
+https://user-images.githubusercontent.com/20590102/151376274-56fae8c6-ac08-4d32-8488-9c1d699c0cdb.mp4
 
-🦄 [View demo](https://user-images.githubusercontent.com/20590102/148118746-56588764-bfd7-44af-a51d-f94cd6d7caec.mp4)
+🦄 [View demo](https://user-images.githubusercontent.com/20590102/151376274-56fae8c6-ac08-4d32-8488-9c1d699c0cdb.mp4)
 
 ![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square) [![Apache-2.0](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 
