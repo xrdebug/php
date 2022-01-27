@@ -189,6 +189,7 @@ header, .message {
     opacity: .25;
     cursor: pointer;
     transition: opacity .2s ease-in-out;
+    outline: 0;
 }
 
 .button-badge {
@@ -500,7 +501,7 @@ pre+.backtrace {
 }
 
 .body--splash .splash-logo {
-    transform: scale(25);
+    transform: scale(35);
 }
 
 .body--splash-in .splash-logo {
@@ -514,8 +515,8 @@ pre+.backtrace {
 }
 
 .splash-logo img {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
     display: inline-block;
     z-index: 1;
 }
@@ -562,7 +563,14 @@ pre+.backtrace {
     left: 0;
     top: 0;
     box-shadow: 0.125em 0.125em 0.375em rgba(var(--colorBorderRGB), .40);
+    transition: all 100ms linear;
 }
+.splash-key kbd:hover {
+    left: 0.15em;
+    top: 0.15em;
+    box-shadow: none;
+}
+
 
 .splash-key-title {
     font-weight: bold;
@@ -583,6 +591,7 @@ body.body--splash {
     justify-content: center;
     align-items: center;
     padding-top: 0;
+    overflow: hidden;
 }
 
 body.body--splash header {

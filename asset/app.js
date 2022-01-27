@@ -19,6 +19,9 @@ actions = {
         document.querySelectorAll('.message--while-pause').forEach(function(el) {
             el.classList.remove('message--while-pause');
         })
+        this.resetQueue();
+    },
+    resetQueue: function() {
         queuedMessageCount = 0;
         document.getElementById('queue-count').textContent = '';
     },
@@ -28,6 +31,7 @@ actions = {
             topic: '',
             emote: '',
         };
+        this.resetQueue();
     }
 },
 buttonActions = function(action) {
@@ -47,7 +51,7 @@ keysToAction = {
     KeyS: 'stop',
     KeyR: 'resume',
     KeyP: 'pause',
-    KeyX: 'clear', 
+    KeyC: 'clear', 
 },
 setStatus = function(status) {
     console.log('wea', status)
@@ -113,9 +117,17 @@ es.addEventListener('message', function (event) {
     }
     pushMessage(JSON.parse(event.data));
 });
-document.querySelector('.header-title').addEventListener('input', event => {
-    document.title = event.target.textContent;
-});
+document.querySelector('.header-title')
+    .addEventListener('paste', event => {
+        event.preventDefault();
+        var text = (event.originalEvent || event)
+            .clipboardData.getData('text/plain');
+        document.execCommand("insertHTML", false, text);
+    });
+document.querySelector('.header-title')  
+    .addEventListener('input', event => {
+        document.title = event.target.textContent;
+    });
 document.addEventListener('click', event => {
     var el = event.target;
     if (el.classList.contains('body-file-display')) {
@@ -149,6 +161,4 @@ document.addEventListener('click', event => {
             : '';
     }
 });
-setTimeout(function() {
-    document.body.classList.add('body--splash-in');
-}, 150);
+document.body.classList.add('body--splash-in');
