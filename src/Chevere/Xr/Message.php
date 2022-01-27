@@ -17,7 +17,6 @@ use Chevere\Common\Interfaces\ToArrayInterface;
 use Chevere\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
 use Chevere\Trace\TraceFormat;
 use Chevere\VarDump\Formats\VarDumpHtmlFormat;
-use Chevere\VarDump\Interfaces\VarDumpInterface;
 use Chevere\VarDump\VarDump;
 use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\NullWriter;
@@ -40,8 +39,6 @@ final class Message implements ToArrayInterface
     private bool $isBacktrace = false;
 
     private array $vars = [];
-
-    private VarDumpInterface $varDump;
 
     private WriterInterface $writer;
 
