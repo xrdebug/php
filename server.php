@@ -110,14 +110,9 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             $address = $request->getServerParams()['REMOTE_ADDR'];
             $body = $request->getParsedBody() ?? [];
             $message = $body['body'] ?? '';
+            $message = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $message);
             $emote = $body['emote'] ?? '';
             $topic = $body['topic'] ?? '';
-            $dom = new DOMDocument();
-            $dom->loadHTML(mb_convert_encoding($message, 'HTML-ENTITIES', 'UTF-8'));
-            while (($r = $dom->getElementsByTagName("script")) && $r->length) {
-                $r->item(0)->parentNode->removeChild($r->item(0));
-            }
-            $message = $dom->saveHTML() ?: '';
             if (($message . $emote . $topic) !== '') {
                 $file = $body['file_path'] ?? '';
                 $line = $body['file_line'] ?? '';
