@@ -105,7 +105,7 @@ document.addEventListener("keyup", function(event) {
     if(event.target.classList.contains("no-keys")) {
         return;
     }
-    if(event.code in keysToAction) {
+    if(event.code in keysToAction && !(event.metaKey || event.ctrlKey || event.altKey)) {
         buttonActions(keysToAction[event.code]);
     }
 });
