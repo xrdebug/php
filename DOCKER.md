@@ -43,7 +43,7 @@ docker build -t ghcr.io/chevere/xr:tag .
 
 ## Docker configuration
 
-When using Docker (local) the host should point to the internal IP of your Docker host by using `host.docker.internal`.
+When using Docker (local) the host [config](./README.md#configuration) should point to the internal IP of your Docker host by using `host.docker.internal`.
 
 ```php
 <?php
