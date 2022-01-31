@@ -64,16 +64,8 @@ You will require to add this to your `composer.json` file.
 
 ## Start the server
 
-* With PHP:
-
 ```sh
 php vendor/chevere/xr/server.php -p 27420
-```
-
-* With Docker:
-
-```sh
-docker run -d -p 27420:27420 --name chevere-xr ghcr.io/chevere/xr
 ```
 
 The server will be available at [http://localhost:27420](http://localhost:27420)
@@ -84,13 +76,6 @@ Open the debugger and then run:
 
 ```php
 php vendor/chevere/xr/demo.php
-```
-
-* In Docker:
-
-```php
-docker exec -it chevere-xr \
-    php demo.php
 ```
 
 ## XR Helpers
@@ -237,44 +222,9 @@ return [
 ];
 ```
 
-### Docker configuration
-
-When using Docker (local) the host should point to the internal IP of your Docker host by using `host.docker.internal`.
-
-```php
-<?php
-
-return [
-    // ...
-    'host' => 'host.docker.internal',
-];
-```
-
 ## Docker
 
-### Start
-
-```sh
-docker container start chevere-xr
-```
-
-### Stop
-
-```sh
-docker container stop chevere-xr
-```
-
-### Remove
-
-```sh
-docker container rm chevere-xr -f
-```
-
-### Build
-
-```sh
-docker build -t ghcr.io/chevere/xr:tag .
-```
+See [DOCKER](./DOCKER.md).
 
 ## Message reference
 
