@@ -1,6 +1,6 @@
 {
     "name": "chevere/xr",
-    "description": "Lightweight debug server utility built on ReactPHP.",
+    "description": "Lightweight debug server utility.",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -12,7 +12,7 @@
     "require": {
         "php": ">=8.0",
         "chevere/chevere": "^0.1",
-        "clue/sse-react": "dev-master",
+        "rodber/php-sse-react": "^0.1",
         "samejack/php-argv": "^1.0"
     },
     "require-dev": {
