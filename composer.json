@@ -24,10 +24,10 @@
     },
     "autoload": {
         "files": [
-            "src/Chevere/Xr/functions.php"
+            "src/functions.php"
         ],
         "psr-4": {
-            "Chevere\\Xr\\": "src/Chevere/Xr/"
+            "Chevere\\Xr\\": "src/"
         }
     },
     "minimum-stability": "dev",
