@@ -18,8 +18,11 @@
               processUncoveredFiles="true"
               ignoreDeprecatedCodeUnits="true">
         <include>
-            <directory suffix=".php">src/Chevere/Xr/</directory>
+            <directory suffix=".php">src/</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">src/**/Exceptions/</directory>
+        </exclude>
         <report>
             <clover outputFile="build/logs/clover.xml"/>
             <html outputDirectory="build/logs/html" lowUpperBound="50" highLowerBound="90"/>
