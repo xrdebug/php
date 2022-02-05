@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "^0.2",
+        "chevere/chevere": "^0.2.x-dev",
         "chevere/throwable-handler": "^0.1.x-dev",
         "chevere/var-dump": "^0.1.x-dev",
         "chevere/trace": "^0.1.x-dev",

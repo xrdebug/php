@@ -17,7 +17,7 @@
             <img src="icon.svg" />
         </div>
         <div class="splash-welcome">Welcome to chevere/xr</div>
-        <div class="splash-version">Version <a href="https://github.com/chevere/xr" target="_blank">0.1.2</a> <span class="splash-version-codename">Chocolito</span></div>
+        <div class="splash-version">Version <a href="https://github.com/chevere/xr" target="_blank">0.1.3</a> <span class="splash-version-codename">Crocanty</span></div>
         <div class="splash-keys">
             <div class="splash-key">
                 <kbd>R</kbd>
@@ -54,7 +54,7 @@
         <div class="header-filter">
             <span class="topic filter-button user-select-none cursor-pointer hide-if-empty"></span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty"></span>
         </div>
-        <div class="header-buttons">
+        <div class="buttons header-buttons">
             <button data-action="resume" class="button button--resume"></button>
             <button data-action="pause" class="button button--pause"><span id="queue-count" class="button-badge"></span></button>
             <button data-action="stop" class="button button--stop"></button>
@@ -64,15 +64,17 @@
     <main></main>
     <template id="message">
         <div class="message" data-emote="" data-topic="">
-            <div class="status">
-                <div class="time">%time%</div>
+            <div class="message-sidebar">
+                <div class="buttons message-buttons">
+                    <button class="button button--remove" data-action="remove"></button>
+                    <button class="button button--copy" data-action="copy"></button>
+                    <button class="button button--export" data-action="export"></button>
+                </div> 
             </div>
             <div class="body">
                 <div class="body-filters"><span class="topic filter-button user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
                 <div class="body-raw hide-if-empty">%message%</div>
-                <div class="body-file">
-                    <span class="body-file-display hide-if-empty user-select-none" title="%fileDisplay%">%fileDisplayShort%</span>
-                </div>
+                <div class="body-context"><span class="time">%time%</span><span class="body-context-display hide-if-empty cursor-pointer" title="%fileDisplay%">%fileDisplayShort%</span></div>
             </div>
         </div>
     </template>

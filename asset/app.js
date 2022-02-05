@@ -76,9 +76,12 @@ pushMessage = function(data, isStatus = false) {
     el.querySelector(".topic").textContent = data.topic;
     el.querySelector(".emote").textContent = data.emote;
     el.querySelector(".body-raw").innerHTML = data.message;
-    var bodyFileDisplay = el.querySelector(".body-file-display");
-    bodyFileDisplay.textContent = data.file_display_short;
-    bodyFileDisplay.setAttribute("title", data.file_display);
+    var bodyContextDisplay = el.querySelector(".body-context-display");
+    bodyContextDisplay.textContent = data.file_display_short;
+    if(data.file_display_short) {
+        bodyContextDisplay.textContent = "・" + data.file_display_short;
+        bodyContextDisplay.setAttribute("title", data.file_display || "");
+    }
     if(document.body.classList.contains("body--splash")) {
         document.body.classList.remove("body--splash", "body--splash-in");
     }
@@ -127,22 +130,66 @@ document.querySelector(".header-title")
     .addEventListener("input", event => {
         document.title = event.target.textContent;
     });
+
+function copyToClipboard(text) {
+    try {
+        navigator.clipboard.writeText(text);
+    }
+    catch(ex) {
+        if (window.clipboardData && window.clipboardData.setData) {
+            return window.clipboardData.setData("Text", text);    
+        }
+        else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+            var textarea = document.createElement("textarea");
+            textarea.textContent = text;
+            textarea.style.position = "fixed";
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                return document.execCommand("copy");
+            }
+            catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+                return prompt("Copy to clipboard: Ctrl+C, Enter", text);
+            }
+            finally {
+                document.body.removeChild(textarea);
+            }
+        }
+    }
+}
+
 document.addEventListener("click", event => {
     var el = event.target;
-    if (el.classList.contains("body-file-display")) {
-        navigator.clipboard.writeText(el.getAttribute("title"));
+    var messageEl = el.closest(".message");
+    switch(el.dataset.action) {
+        case "remove":
+                messageEl.remove();
+            break;
+        case "copy":
+            copyToClipboard(
+                messageEl.querySelector(".body-raw").textContent
+                + "\n"
+                + "--"
+                + "\n"
+                + messageEl.querySelector(".body-context").textContent.replace(/[\n\r]+|[\s]{2,}/g, '')
+            );
+            break;
+    }
+    if (el.classList.contains("body-context-display")) {
+        copyToClipboard(el.getAttribute("title"));
     }
     if(el.classList.contains("filter-button")) {
         var filterQuery = "",
-            message = el.closest(".message"),
+            messageEl = messageEl,
             subject = el.classList.contains("topic")
                 ? "topic"
                 : "emote";
-        if(message && filter[subject]  === message.dataset[subject]) {
+        if(messageEl && filter[subject]  === messageEl.dataset[subject]) {
             return;
         }
-        filter[subject] = message
-            ? message.dataset[subject]
+        filter[subject] = messageEl
+            ? messageEl.dataset[subject]
             : "";
         for(filterSubject in filter) {
             if(filter[filterSubject] === "") {
@@ -156,7 +203,7 @@ document.addEventListener("click", event => {
         document.getElementById("filtering").innerHTML = filterQuery === ""
             ? ""
             : ".message:not(" + filterQuery + ") { display: none; }";
-        document.querySelector(".header-filter ." + subject).textContent = message
+        document.querySelector(".header-filter ." + subject).textContent = messageEl
             ? filter[subject]
             : "";
     }
