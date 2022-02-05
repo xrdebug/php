@@ -327,10 +327,13 @@ header, .message {
 
 .message-sidebar {
     width: 7rem;
-    position: -webkit-sticky;
-    position: sticky;
     top: var(--headerHeight);
     font-size: 1.4rem;
+    position: -webkit-sticky;
+    position: sticky;
+}
+.message--loading .message-sidebar {
+    position: static;
 }
 
 .body-filters .filter-button {

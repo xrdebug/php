@@ -87,6 +87,7 @@ pushMessage = function(data, isStatus = false) {
     }
     document.querySelector("main").prepend(el);
     el = document.querySelector(".message:first-child");
+    el.classList.add("message--loading");
     el.dataset.emote = data.emote ? data.emote : "";
     el.dataset.topic = data.topic ? data.topic : "";
     if(!isStatus && currentStatus === "pause") {
@@ -94,6 +95,9 @@ pushMessage = function(data, isStatus = false) {
         el.classList.add("message--while-pause");
         document.getElementById("queue-count").textContent = queuedMessageCount;
     }
+    setTimeout(function() {
+        el.classList.remove("message--loading");
+    }, 250);
 };
 setStatus(currentStatus);
 for(key in keysToAction) {
@@ -198,7 +202,7 @@ document.addEventListener("click", event => {
             break;
         case "export":
             const node = messageEl.querySelector(".body");
-            const scale = 4;
+            const scale = 1.5;
             var canvas = createHiDPICanvas(
                 node.offsetWidth * scale,
                 node.offsetHeight * scale,
@@ -214,7 +218,7 @@ document.addEventListener("click", event => {
                     },
                 }
             ).then(function(canvas) {
-                var dataUrl = canvas.toDataURL('image/png');
+                var dataUrl = canvas.toDataURL("image/png");
                 var link = document.createElement('a');
                 link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".png";
                 link.href = dataUrl;
