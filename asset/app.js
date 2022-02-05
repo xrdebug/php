@@ -191,7 +191,10 @@ document.addEventListener("click", event => {
     var messageEl = el.closest(".message");
     switch(el.dataset.action) {
         case "remove":
-                messageEl.remove();
+                messageEl.classList.add("message--removing");
+                setTimeout(function() {
+                    messageEl.remove();
+                }, 250);
             break;
         case "copy":
             copyToClipboard(
@@ -258,6 +261,4 @@ document.addEventListener("click", event => {
             : "";
     }
 });
-setTimeout(function() {
-    document.body.classList.add("body--splash-in");
-}, 1);
+document.body.classList.add("body--splash-in");
