@@ -190,6 +190,7 @@ final class Message implements ToArrayInterface
                 new ThrowableHandlerHtmlFormat()
             );
             $this->body .= '<div class="backtrace">'
+                . "\n"
                 . $traceDocument->__toString()
                 . '</div>';
         }

@@ -76,7 +76,7 @@ pushMessage = function(data, isStatus = false) {
     el.querySelector(".topic").textContent = data.topic;
     el.querySelector(".emote").textContent = data.emote;
     el.querySelector(".body-raw").innerHTML = data.message;
-    var bodyContextDisplay = el.querySelector(".body-context-display");
+    let bodyContextDisplay = el.querySelector(".body-context-display");
     bodyContextDisplay.textContent = data.file_display_short;
     if(data.file_display_short) {
         bodyContextDisplay.textContent = "・" + data.file_display_short;
@@ -159,6 +159,29 @@ function copyToClipboard(text) {
     }
 }
 
+function saveAs(uri, filename) {
+    var link = document.createElement('a');
+    if (typeof link.download === 'string') {
+        link.href = uri;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        window.open(uri);
+    }
+}
+
+createHiDPICanvas = function(width, height, ratio) {
+    var canvas = document.createElement("canvas");
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    canvas.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+    return canvas;
+}
+
 document.addEventListener("click", event => {
     var el = event.target;
     var messageEl = el.closest(".message");
@@ -170,10 +193,33 @@ document.addEventListener("click", event => {
             copyToClipboard(
                 messageEl.querySelector(".body-raw").textContent
                 + "\n"
-                + "--"
-                + "\n"
                 + messageEl.querySelector(".body-context").textContent.replace(/[\n\r]+|[\s]{2,}/g, '')
             );
+            break;
+        case "export":
+            const node = messageEl.querySelector(".body");
+            const scale = 4;
+            var canvas = createHiDPICanvas(
+                node.offsetWidth * scale,
+                node.offsetHeight * scale,
+                2
+            );
+            html2canvas(
+                node,
+                {
+                    scale: scale,
+                    canvas: canvas,
+                    ignoreElements: (el) => {
+                        return el.classList.contains("body-filters");
+                    },
+                }
+            ).then(function(canvas) {
+                var dataUrl = canvas.toDataURL('image/png');
+                var link = document.createElement('a');
+                link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".png";
+                link.href = dataUrl;
+                link.click();
+            });
             break;
     }
     if (el.classList.contains("body-context-display")) {

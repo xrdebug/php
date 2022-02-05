@@ -79,6 +79,12 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                 ['Content-Type' => 'text/javascript'],
                 file_get_contents(__DIR__ . '/asset/app.js')
             );
+        case '/html2canvas.min.js':
+            return new Response(
+                '200',
+                ['Content-Type' => 'text/javascript'],
+                file_get_contents(__DIR__ . '/asset/html2canvas.min.js')
+            );
         case '/icon.svg':
             return new Response(
                 '200',
