@@ -266,7 +266,7 @@ header, .message {
 .button--copy:hover:after {
     background-color: var(--colorCopy);
 }
-.button--copy:active:after {
+.button--copy:hover:active:after, .body-context-display:hover:active:after {
     -webkit-mask-image: var(--iconCheck);
     mask-image: var(--iconCheck);
 }
@@ -279,6 +279,10 @@ header, .message {
 .button--export:hover:after {
     background-color: var(--colorExport);
 }
+.button--export:hover:active:after {
+    -webkit-mask-image: var(--iconCheck);
+    mask-image: var(--iconCheck);
+}
 
 .button--export:after {
     -webkit-mask-image: var(--iconExport);
@@ -287,6 +291,10 @@ header, .message {
 
 .button--remove:hover:after {
     background-color: var(--colorRemove);
+}
+.button--remove:hover:active:after {
+    -webkit-mask-image: var(--iconCheck);
+    mask-image: var(--iconCheck);
 }
 
 .button--remove:after {

@@ -159,13 +159,10 @@ document.addEventListener("click", event => {
         case "copy": copyToClipboard(messageEl.querySelector(".body-raw").textContent + "\n" + messageEl.querySelector(".body-context").textContent.replace(/[\n\r]+|[\s]{2,}/g, ''));
             break;
         case "export":
-            const node = messageEl.querySelector(".body");
-            html2canvas(node, {
-                scale: 2,
-            }).then(function (canvas) {
-                var dataUrl = canvas.toDataURL("image/png");
-                var link = document.createElement("a");
-                link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".png";
+            html2canvas(messageEl.querySelector(".body"), {scale: window.devicePixelRatio * 2}).then(function (canvas) {
+                let dataUrl = canvas.toDataURL("image/jpg");
+                let link = document.createElement("a");
+                link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".jpg";
                 link.href = dataUrl;
                 link.click();
             });
