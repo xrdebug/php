@@ -15,8 +15,8 @@ https://user-images.githubusercontent.com/20590102/151376274-56fae8c6-ac08-4d32-
 XR is a dump debug server utility for PHP. No extras required, debug your PHP code anywhere.
 
 <p align="center">
-    <img alt="XR light" src=".screen/xr-0.1.2-light-welcome.png">
-    <img alt="XR light" src=".screen/xr-0.1.2-dark-welcome.png">
+    <img alt="XR light" src=".screen/xr-0.1.3-light-welcome.png">
+    <img alt="XR light" src=".screen/xr-0.1.3-dark-welcome.png">
 </p>
 
 ## Features
@@ -38,8 +38,8 @@ XR is a dump debug server utility for PHP. No extras required, debug your PHP co
 * 😅 Handle exceptions (hook or replace your existing handler)
 
 <p align="center">
-    <img alt="XR light demo" src=".screen/xr-0.1.2-light-demo.png">
-    <img alt="XR dark demo" src=".screen/xr-0.1.2-dark-demo.png">
+    <img alt="XR light demo" src=".screen/xr-0.1.3-light-demo.png">
+    <img alt="XR dark demo" src=".screen/xr-0.1.3-dark-demo.png">
 </p>
 
 ## Contributing
