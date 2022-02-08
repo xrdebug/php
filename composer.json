@@ -11,10 +11,10 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "^0.2.x-dev",
-        "chevere/throwable-handler": "^0.1.x-dev",
-        "chevere/var-dump": "^0.1.x-dev",
-        "chevere/trace": "^0.1.x-dev",
+        "chevere/chevere": "^0.3",
+        "chevere/throwable-handler": "^0.1",
+        "chevere/var-dump": "^0.1",
+        "chevere/trace": "^0.1",
         "rodber/php-sse-react": "^0.1",
         "samejack/php-argv": "^1.0"
     },
