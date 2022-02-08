@@ -4,7 +4,7 @@
 
 <p align="center"><img alt="XR" src="asset/icon.svg" width="40%"></p>
 
-https://user-images.githubusercontent.com/20590102/151376274-56fae8c6-ac08-4d32-8488-9c1d699c0cdb.mp4
+https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-b7b6-bd8733e623a2.mp4
 
 🦄 [View demo](https://user-images.githubusercontent.com/20590102/151376274-56fae8c6-ac08-4d32-8488-9c1d699c0cdb.mp4)
 
