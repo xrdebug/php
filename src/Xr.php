@@ -20,33 +20,33 @@ use Throwable;
 
 final class Xr
 {
-    private bool $enable = true;
-
     private Client $client;
 
-    private array $clientArgs = [];
+    private DirInterface $configDir;
 
     private string $configFile = '';
 
     private array $configNames = ['xr.php'];
 
-    private array $defaultSettings = [
-        'enable' => true,
-        'host' => 'localhost',
-        'port' => 27420,
-    ];
+    public function __construct(
+        private bool $enable = true,
+        private string $host = 'localhost',
+        private int $port = 27420
+    ) {
+        $this->setClient();
+    }
 
-    private array $settings;
-
-    public function __construct(private DirInterface $configDir)
+    public function withConfigDir(DirInterface $configDir): self
     {
-        $this->settings = $this->defaultSettings;
-        $this->configFile = $this->getConfigFile();
-        if ($this->configFile !== '') {
-            $this->setConfigFromFile();
+        $new = clone $this;
+        $new->configDir = $configDir;
+        $new->configFile = $new->getConfigFile();
+        if ($new->configFile !== '') {
+            $new->setConfigFromFile();
         }
-        $this->enable = (bool) ($this->settings['enable'] ?? false);
-        $this->client = new Client(...$this->clientArgs);
+        $new->setClient();
+
+        return $new;
     }
 
     public function enable(): bool
@@ -59,16 +59,24 @@ final class Xr
         return $this->client;
     }
 
+    public function host(): string
+    {
+        return $this->host;
+    }
+
+    public function port(): int
+    {
+        return $this->port;
+    }
+
     private function setConfigFromFile(): void
     {
         try {
             $return = filePhpReturnForPath($this->configFile)
                 ->varType(typeArray());
-            $this->settings = array_merge($this->settings, $return);
-            $this->clientArgs = [
-                'host' => $this->settings['host'] ?? $this->defaultSettings['host'],
-                'port' => $this->settings['port'] ?? $this->defaultSettings['port'],
-            ];
+            foreach (['enable', 'host', 'port'] as $prop) {
+                $this->{$prop} = $return[$prop] ?? $this->{$prop};
+            }
         }
         // @codeCoverageIgnoreStart
         catch (Throwable) {
@@ -95,5 +103,10 @@ final class Xr
         }
 
         return ''; // @codeCoverageIgnore
+    }
+
+    private function setClient(): void
+    {
+        $this->client = new Client($this->host, $this->port);
     }
 }

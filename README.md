@@ -223,13 +223,27 @@ return [
 ];
 ```
 
+### For software providers
+
+If you want to handle XR settings somewhere within your existing application logic (not depend on the `xr.php` file) you can do:
+
+```php
+use Chevere\Xr\XrInstance;
+
+// (...) your logic sets $enable, $host and $port
+
+new XrInstance(
+    new Xr(enable: $enable, host: $host: port: $port)
+);
+```
+
 ## Docker
 
 See [DOCKER](./DOCKER.md).
 
 ## Message reference
 
-The XR dump server can receive messages from *anywhere*:
+The XR dump server can receive messages from anywhere:
 
 ```plain
 POST http://localhost:27420/message

@@ -20,23 +20,46 @@ use PHPUnit\Framework\TestCase;
 
 final class XrTest extends TestCase
 {
-    public function testConstructWithoutSettingsFile(): void
+    public function testConstructDefault(): void
     {
-        $xr = new Xr(dirForPath(__DIR__));
-        $this->assertSame(true, $xr->enable());
+        $xr = new Xr();
+        $args = [
+            'enable' => true,
+            'host' => 'localhost',
+            'port' => 27420,
+        ];
+        foreach ($args as $prop => $value) {
+            $this->assertSame($value, $xr->{$prop}());
+        }
         $this->assertEquals(new Client(), $xr->client());
+    }
+
+    public function testConstructWithArguments(): void
+    {
+        $args = [
+            'enable' => false,
+            'host' => 'test',
+            'port' => 1234,
+        ];
+        $xr = new Xr(...$args);
+        foreach ($args as $prop => $value) {
+            $this->assertSame($value, $xr->{$prop}());
+        }
+        $this->assertEquals(new Client($args['host'], $args['port']), $xr->client());
     }
 
     public function testConstructWithoutSettingsFileSubfolder(): void
     {
-        $xr = new Xr(dirForPath(__DIR__ . '/_empty/_empty/'));
+        $xr = (new Xr())
+            ->withConfigDir(dirForPath(__DIR__ . '/_empty/_empty/'));
         $this->assertSame(true, $xr->enable());
         $this->assertEquals(new Client(), $xr->client());
     }
 
     public function testConstructWithDirNotExitst(): void
     {
-        $xr = new Xr(dirForPath(__DIR__ . '/_not-found/'));
+        $xr = (new Xr())
+            ->withConfigDir(dirForPath(__DIR__ . '/_not-found/'));
         $this->assertSame(true, $xr->enable());
         $this->assertEquals(new Client(), $xr->client());
     }
@@ -45,7 +68,7 @@ final class XrTest extends TestCase
     {
         $configDir = dirForPath(__DIR__ . '/_resources/');
         $return = include $configDir->path()->getChild('xr.php')->__toString();
-        $xr = new Xr($configDir);
+        $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['enable'], $xr->enable());
         unset($return['enable']);
         $this->assertEquals(new Client(...$return), $xr->client());

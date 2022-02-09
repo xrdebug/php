@@ -27,16 +27,23 @@ namespace Chevere\Xr {
         try {
             return WriterInstance::get();
         } catch (LogicException) {
-            return new StreamWriter(streamTemp(''));
+            $writer = new StreamWriter(streamTemp(''));
+
+            return (new WriterInstance($writer))::get();
         }
     }
 
-    function getXrInstance(): Xr
+    function getXr(): Xr
     {
         try {
             return XrInstance::get();
         } catch (LogicException) {
-            return new Xr(dirForPath(getcwd()));
+            $xr = (new Xr())
+                ->withConfigDir(
+                    dirForPath(getcwd())
+                );
+
+            return (new XrInstance($xr))::get();
         }
     }
 
@@ -74,11 +81,11 @@ namespace Chevere\Xr {
      */
     function throwableHandler(Throwable $throwable, string $extra = ''): void
     {
-        if (getXrInstance()->enable() === false) {
+        if (getXr()->enable() === false) {
             return; // @codeCoverageIgnore
         }
         $parser = new ThrowableParser($throwable, $extra);
-        getXrInstance()->client()
+        getXr()->client()
             ->sendMessage(
                 (new Message(
                     backtrace: $parser->throwableRead()->trace(),
@@ -92,7 +99,7 @@ namespace Chevere\Xr {
 
 namespace {
     use function Chevere\Xr\getWriter;
-    use function Chevere\Xr\getXrInstance;
+    use function Chevere\Xr\getXr;
     use Chevere\Xr\Message;
 
 // @codeCoverageIgnoreStart
@@ -118,7 +125,7 @@ namespace {
          */
         function xr(...$vars): void
         {
-            if (getXrInstance()->enable() === false) {
+            if (getXr()->enable() === false) {
                 return; // @codeCoverageIgnore
             }
             $defaultArgs = ['e' => '', 't' => '', 'f' => 0];
@@ -128,7 +135,7 @@ namespace {
                     unset($vars[$name]);
                 }
             }
-            getXrInstance()->client()
+            getXr()->client()
                 ->sendMessage(
                     (new Message(
                         backtrace: debug_backtrace(),
@@ -163,10 +170,10 @@ namespace {
             string $e = '',
             int $f = 0
         ): void {
-            if (getXrInstance()->enable() === false) {
+            if (getXr()->enable() === false) {
                 return;
             }
-            getXrInstance()->client()
+            getXr()->client()
                 ->sendMessage(
                     (new Message(
                         backtrace: debug_backtrace(),
