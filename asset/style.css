@@ -232,7 +232,7 @@ header, .message {
 }
 
 .header-buttons .button:hover {
-    opacity: .70;
+    opacity: 1;
 }
 
 .header-buttons .button.button--active {
@@ -345,6 +345,10 @@ header, .message {
 
 .body-raw>pre {
     margin: 0;
+}
+
+.message--status .message-sidebar {
+    display: none;
 }
 
 .message-sidebar {

@@ -114,6 +114,15 @@ pushMessage = function (data, isStatus = false) {
     el.classList.add("message--loading");
     el.dataset.emote = data.emote ? data.emote : "";
     el.dataset.topic = data.topic ? data.topic : "";
+    if(isStatus) {
+        el.classList.add("message--status");
+        setTimeout(function() {
+            el.classList.add("message--removing");
+            setTimeout(function() {
+                el.remove();
+            }, 250)
+        }, 5000)
+    }
     if (! isStatus && currentStatus === "pause") {
         queuedMessageCount++;
         el.classList.add("message--while-pause");
@@ -122,6 +131,7 @@ pushMessage = function (data, isStatus = false) {
     setTimeout(function () {
         el.classList.remove("message--loading");
     }, 250);
+    
 }
 setStatus(currentStatus);
 for (key in keysToAction) {
