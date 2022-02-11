@@ -1,0 +1,46 @@
+{
+    "interface": {
+        "description": "Create a interface",
+        "prefix": "interface",
+        "body": [
+            "<?php",
+            "",
+            "namespace Chevere\\Xr;",
+            "",
+            "/**",
+            " * Describes the component in charge of ${1:doing}.",
+            " */",
+            "interface $TM_FILENAME_BASE",
+            "{",
+            "\t$0",
+            "}"
+        ]
+    },
+    "class": {
+        "description": "Create a class",
+        "prefix": "class",
+        "body": [
+            "<?php",
+            "",
+            "namespace Chevere\\Xr;",
+            "",
+            "final class $TM_FILENAME_BASE",
+            "{",
+            "\t${0}",
+            "}"
+        ]
+    },
+    "trait": {
+        "description": "Create a trait",
+        "prefix": "trait",
+        "body": [
+            "<?php",
+            "namespace Chevere\\Xr;",
+            "",
+            "trait $TM_FILENAME_BASE",
+            "{",
+            "\t$0",
+            "}"
+        ]
+    },
+}
