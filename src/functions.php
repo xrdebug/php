@@ -100,6 +100,9 @@ namespace Chevere\Xr {
 namespace {
     use function Chevere\Xr\getWriter;
     use function Chevere\Xr\getXr;
+    use Chevere\Xr\Inspector\XrInspector;
+    use Chevere\Xr\Inspector\XrInspectorInstance;
+    use Chevere\Xr\Inspector\XrInspectorNull;
     use Chevere\Xr\Message;
 
 // @codeCoverageIgnoreStart
@@ -148,7 +151,6 @@ namespace {
                 );
         }
     }
-
     if (!function_exists('xrr')) { // @codeCoverageIgnore
         /**
          * Send a raw html message to XR.
@@ -183,6 +185,30 @@ namespace {
                         ->withEmote($e)
                         ->withFlags($f)
                 );
+        }
+    }
+    if (!function_exists('xri')) { // @codeCoverageIgnore
+        /**
+         * Send debug information using XR inspector.
+         *
+         * ```php
+         * xri()->memory();
+         * ```
+         *
+         * @codeCoverageIgnore
+         */
+        function xri(): XrInspector
+        {
+            try {
+                return XrInspectorInstance::get();
+            } catch (LogicException) {
+                $xrInspector = getXr()->enable()
+                    ? XrInspector::class
+                    : XrInspectorNull::class;
+                $xrInspector = new $xrInspector(getXr());
+    
+                return (new XrInspectorInstance($xrInspector))::get();
+            }
         }
     }
 }
