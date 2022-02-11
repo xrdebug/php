@@ -12,12 +12,12 @@
 declare(strict_types=1);
 namespace Chevere\Xr\Inspector\Traits;
 
-use Chevere\Xr\Message;
-use Chevere\Xr\Xr;
+use Chevere\Xr\Interfaces\XrInterface;
+use Chevere\Xr\XrMessage;
 
 trait XrInspectorTrait
 {
-    final public function __construct(protected Xr $xr)
+    final public function __construct(protected XrInterface $xr)
     {
     }
     
@@ -36,7 +36,7 @@ trait XrInspectorTrait
         }
         $this->xr->client()
             ->sendMessage(
-                (new Message(
+                (new XrMessage(
                     backtrace: $backtrace,
                 ))
                     ->withBody($body)

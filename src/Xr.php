@@ -16,11 +16,13 @@ namespace Chevere\Xr;
 use function Chevere\Filesystem\filePhpReturnForPath;
 use Chevere\Filesystem\Interfaces\DirInterface;
 use function Chevere\Type\typeArray;
+use Chevere\Xr\Interfaces\XrClientInterface;
+use Chevere\Xr\Interfaces\XrInterface;
 use Throwable;
 
-final class Xr
+final class Xr implements XrInterface
 {
-    private Client $client;
+    private XrClientInterface $client;
 
     private DirInterface $configDir;
 
@@ -36,7 +38,7 @@ final class Xr
         $this->setClient();
     }
 
-    public function withConfigDir(DirInterface $configDir): self
+    public function withConfigDir(DirInterface $configDir): XrInterface
     {
         $new = clone $this;
         $new->configDir = $configDir;
@@ -54,7 +56,7 @@ final class Xr
         return $this->enable;
     }
 
-    public function client(): Client
+    public function client(): XrClientInterface
     {
         return $this->client;
     }
@@ -107,6 +109,6 @@ final class Xr
 
     private function setClient(): void
     {
-        $this->client = new Client($this->host, $this->port);
+        $this->client = new XrClient($this->host, $this->port);
     }
 }

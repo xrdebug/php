@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests;
 
-use Chevere\Xr\Client;
+use Chevere\Xr\XrClient;
 use PHPUnit\Framework\TestCase;
 
 final class ClientTest extends TestCase
 {
     public function testDefault(): void
     {
-        $client = new Client();
+        $client = new XrClient();
         $this->assertSame(
             'http://localhost:27420/endpoint',
             $client->getUrl('endpoint')
@@ -31,7 +31,7 @@ final class ClientTest extends TestCase
     {
         $port = 12345;
         $host = 'test-host';
-        $client = new Client(port: $port, host: $host);
+        $client = new XrClient(port: $port, host: $host);
         $this->assertSame(
             "http://$host:$port/endpoint",
             $client->getUrl('endpoint')

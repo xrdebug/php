@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace Chevere\Xr\Inspector;
 
 use Chevere\Xr\Inspector\Traits\XrInspectorTrait;
+use Chevere\Xr\Interfaces\XrInspectorInterface;
 
-class XrInspector
+class XrInspector implements XrInspectorInterface
 {
     use XrInspectorTrait;
 

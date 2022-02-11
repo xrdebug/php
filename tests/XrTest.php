@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests;
 
 use function Chevere\Filesystem\dirForPath;
-use Chevere\Xr\Client;
 use Chevere\Xr\Xr;
+use Chevere\Xr\XrClient;
 use PHPUnit\Framework\TestCase;
 
 final class XrTest extends TestCase
@@ -31,7 +31,7 @@ final class XrTest extends TestCase
         foreach ($args as $prop => $value) {
             $this->assertSame($value, $xr->{$prop}());
         }
-        $this->assertEquals(new Client(), $xr->client());
+        $this->assertEquals(new XrClient(), $xr->client());
     }
 
     public function testConstructWithArguments(): void
@@ -45,7 +45,7 @@ final class XrTest extends TestCase
         foreach ($args as $prop => $value) {
             $this->assertSame($value, $xr->{$prop}());
         }
-        $this->assertEquals(new Client($args['host'], $args['port']), $xr->client());
+        $this->assertEquals(new XrClient($args['host'], $args['port']), $xr->client());
     }
 
     public function testConstructWithoutSettingsFileSubfolder(): void
@@ -53,7 +53,7 @@ final class XrTest extends TestCase
         $xr = (new Xr())
             ->withConfigDir(dirForPath(__DIR__ . '/_empty/_empty/'));
         $this->assertSame(true, $xr->enable());
-        $this->assertEquals(new Client(), $xr->client());
+        $this->assertEquals(new XrClient(), $xr->client());
     }
 
     public function testConstructWithDirNotExitst(): void
@@ -61,7 +61,7 @@ final class XrTest extends TestCase
         $xr = (new Xr())
             ->withConfigDir(dirForPath(__DIR__ . '/_not-found/'));
         $this->assertSame(true, $xr->enable());
-        $this->assertEquals(new Client(), $xr->client());
+        $this->assertEquals(new XrClient(), $xr->client());
     }
 
     public function testConstructWithSettingsFile(): void
@@ -71,6 +71,6 @@ final class XrTest extends TestCase
         $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['enable'], $xr->enable());
         unset($return['enable']);
-        $this->assertEquals(new Client(...$return), $xr->client());
+        $this->assertEquals(new XrClient(...$return), $xr->client());
     }
 }

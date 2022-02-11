@@ -16,7 +16,7 @@ namespace Chevere\Xr\Tests;
 use function Chevere\Writer\streamTemp;
 use Chevere\Writer\StreamWriter;
 use function Chevere\Xr\getWriter;
-use Chevere\Xr\WriterInstance;
+use Chevere\Xr\XrWriterInstance;
 use PHPUnit\Framework\TestCase;
 
 final class FunctionsTest extends TestCase
@@ -25,7 +25,7 @@ final class FunctionsTest extends TestCase
     {
         $previousWriter = getWriter();
         $writer = new StreamWriter(streamTemp(''));
-        new WriterInstance($writer);
+        new XrWriterInstance($writer);
         $var = 'Hola xr!';
         $length = strlen($var);
         xr($var, t: 'Topic', e: '😎', f: XR_BACKTRACE | XR_PAUSE);
@@ -34,7 +34,7 @@ final class FunctionsTest extends TestCase
 Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre>',
             $writer->__toString()
         );
-        new WriterInstance($previousWriter);
+        new XrWriterInstance($previousWriter);
     }
 
     public function testXrr(): void

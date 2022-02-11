@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
+use Chevere\Xr\Interfaces\XrClientInterface;
+use Chevere\Xr\Interfaces\XrMessageInterface;
 use CurlHandle;
 
-final class Client
+final class XrClient implements XrClientInterface
 {
     public function __construct(
         private string $host = 'localhost',
@@ -28,7 +30,7 @@ final class Client
         return "http://{$this->host}:{$this->port}/{$endpoint}";
     }
 
-    public function sendMessage(Message $message): void
+    public function sendMessage(XrMessageInterface $message): void
     {
         try {
             $curlHandle = $this->getCurlHandle('message', $message->toArray());

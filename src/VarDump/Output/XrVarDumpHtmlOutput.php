@@ -16,7 +16,7 @@ namespace Chevere\Xr\VarDump\Output;
 use Chevere\VarDump\Interfaces\VarDumpFormatInterface;
 use Chevere\VarDump\Outputs\VarDumpAbstractOutput;
 
-final class VarDumpHtmlOutput extends VarDumpAbstractOutput
+final class XrVarDumpHtmlOutput extends VarDumpAbstractOutput
 {
     public function tearDown(): void
     {

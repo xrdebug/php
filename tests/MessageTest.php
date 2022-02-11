@@ -17,7 +17,7 @@ use Chevere\Writer\Interfaces\WriterInterface;
 use function Chevere\Writer\streamTemp;
 use Chevere\Writer\StreamWriter;
 use function Chevere\Xr\getWriter;
-use Chevere\Xr\Message;
+use Chevere\Xr\XrMessage;
 use PHPUnit\Framework\TestCase;
 
 final class MessageTest extends TestCase
@@ -36,7 +36,7 @@ final class MessageTest extends TestCase
 
     public function testEmptyBacktrace(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $line = __LINE__ - 1;
         $this->assertSame(__FILE__, $message->filePath());
         $this->assertSame($line, $message->fileLine());
@@ -64,7 +64,7 @@ final class MessageTest extends TestCase
                 'line' => $testLine,
             ],
         ];
-        $message = new Message($trace);
+        $message = new XrMessage($trace);
         $this->assertSame($testFile, $message->filePath());
         $this->assertSame($testLine, $message->fileLine());
         $this->assertSame(
@@ -78,7 +78,7 @@ final class MessageTest extends TestCase
 
     public function testWithBody(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $body = 'the body';
         $withBody = $message->withBody($body);
         $this->assertNotSame($message, $withBody);
@@ -88,7 +88,7 @@ final class MessageTest extends TestCase
 
     public function testWithTopic(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $topic = 'Topic';
         $withTopic = $message->withTopic($topic);
         $this->assertNotSame($message, $withTopic);
@@ -104,7 +104,7 @@ final class MessageTest extends TestCase
 
     public function testWithEmote(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $emote = '😎';
         $withEmote = $message->withEmote($emote);
         $this->assertNotSame($message, $withEmote);
@@ -120,7 +120,7 @@ final class MessageTest extends TestCase
 
     public function testWithWriter(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $writer = new StreamWriter(streamTemp('test'));
         $withWriter = $message->withWriter($writer);
         $this->assertNotSame($message, $withWriter);
@@ -132,7 +132,7 @@ final class MessageTest extends TestCase
 
     public function testWithVars(): void
     {
-        $message = (new Message())->withWriter(getWriter());
+        $message = (new XrMessage())->withWriter(getWriter());
         $var = 'Hola, mundo!';
         $length = strlen($var);
         $withVars = $message->withVars($var);
@@ -147,7 +147,7 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
 
     public function testWithBacktraceFlag(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $line = strval(__LINE__ - 1);
         $this->assertFalse($message->isBacktrace());
         $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);
@@ -165,7 +165,7 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
 
     public function testWithPauseFlag(): void
     {
-        $message = new Message();
+        $message = new XrMessage();
         $this->assertFalse($message->isPause());
         $withPauseFlag = $message->withFlags(XR_PAUSE);
         $this->assertNotSame($message, $withPauseFlag);

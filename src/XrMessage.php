@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Common\Interfaces\ToArrayInterface;
 use Chevere\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
 use Chevere\Trace\TraceDocument;
 use Chevere\VarDump\Formats\VarDumpHtmlFormat;
 use Chevere\VarDump\VarDump;
 use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\NullWriter;
-use Chevere\Xr\VarDump\Output\VarDumpHtmlOutput;
+use Chevere\Xr\Interfaces\XrMessageInterface;
+use Chevere\Xr\VarDump\Output\XrVarDumpHtmlOutput;
 
-final class Message implements ToArrayInterface
+final class XrMessage implements XrMessageInterface
 {
     private string $body = '';
 
@@ -172,7 +172,7 @@ final class Message implements ToArrayInterface
         }
         (new VarDump(
             new VarDumpHtmlFormat(),
-            new VarDumpHtmlOutput()
+            new XrVarDumpHtmlOutput()
         ))
             ->withVars(...$this->vars)
             ->process($this->writer);

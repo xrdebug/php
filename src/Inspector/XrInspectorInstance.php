@@ -15,20 +15,21 @@ namespace Chevere\Xr\Inspector;
 
 use Chevere\Message\Message;
 use Chevere\Throwable\Exceptions\LogicException;
+use Chevere\Xr\Interfaces\XrInspectorInterface;
 
 /**
  * @codeCoverageIgnore
  */
 final class XrInspectorInstance
 {
-    private static XrInspector $instance;
+    private static XrInspectorInterface $instance;
 
-    public function __construct(XrInspector $xrInspector)
+    public function __construct(XrInspectorInterface $xrInspector)
     {
         self::$instance = $xrInspector;
     }
 
-    public static function get(): XrInspector
+    public static function get(): XrInspectorInterface
     {
         if (!isset(self::$instance)) {
             throw new LogicException(

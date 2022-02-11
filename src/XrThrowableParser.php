@@ -20,7 +20,7 @@ use Chevere\ThrowableHandler\ThrowableRead;
 use Chevere\Trace\TraceDocument;
 use Throwable;
 
-class ThrowableParser
+class XrThrowableParser
 {
     private string $topic = '';
 
@@ -28,7 +28,7 @@ class ThrowableParser
 
     private string $emote = '⚠️Throwable';
 
-    private ThrowableHandlerFormatInterface $documentFormat;
+    private ThrowableHandlerFormatInterface $format;
 
     private int $index = 0;
 
@@ -51,7 +51,7 @@ class ThrowableParser
         private string $extra = '',
     ) {
         $this->throwableRead = new ThrowableRead($throwable);
-        $this->documentFormat = new ThrowableHandlerHtmlFormat();
+        $this->format = new ThrowableHandlerHtmlFormat();
         $this->topic = basename(
             str_replace(
                 '\\',
@@ -106,7 +106,7 @@ class ThrowableParser
                 ]
             ];
         }
-        $traceDocument = new TraceDocument($trace, $this->documentFormat);
+        $traceDocument = new TraceDocument($trace, $this->format);
         $translate = [
                 '%title%' => $read->className(),
                 '%code%' => $read->code(),

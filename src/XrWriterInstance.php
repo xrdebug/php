@@ -20,7 +20,7 @@ use Chevere\Writer\Interfaces\WriterInterface;
 /**
  * @codeCoverageIgnore
  */
-final class WriterInstance
+final class XrWriterInstance
 {
     private static WriterInterface $instance;
 

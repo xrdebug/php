@@ -16,6 +16,7 @@ namespace Chevere\Xr {
     use Chevere\Writer\Interfaces\WriterInterface;
     use function Chevere\Writer\streamTemp;
     use Chevere\Writer\StreamWriter;
+    use Chevere\Xr\Interfaces\XrInterface;
     use LogicException;
     use Throwable;
 
@@ -25,15 +26,15 @@ namespace Chevere\Xr {
     function getWriter(): WriterInterface
     {
         try {
-            return WriterInstance::get();
+            return XrWriterInstance::get();
         } catch (LogicException) {
             $writer = new StreamWriter(streamTemp(''));
 
-            return (new WriterInstance($writer))::get();
+            return (new XrWriterInstance($writer))::get();
         }
     }
 
-    function getXr(): Xr
+    function getXr(): XrInterface
     {
         try {
             return XrInstance::get();
@@ -84,10 +85,10 @@ namespace Chevere\Xr {
         if (getXr()->enable() === false) {
             return; // @codeCoverageIgnore
         }
-        $parser = new ThrowableParser($throwable, $extra);
+        $parser = new XrThrowableParser($throwable, $extra);
         getXr()->client()
             ->sendMessage(
-                (new Message(
+                (new XrMessage(
                     backtrace: $parser->throwableRead()->trace(),
                 ))
                     ->withBody($parser->body())
@@ -103,7 +104,7 @@ namespace {
     use Chevere\Xr\Inspector\XrInspector;
     use Chevere\Xr\Inspector\XrInspectorInstance;
     use Chevere\Xr\Inspector\XrInspectorNull;
-    use Chevere\Xr\Message;
+    use Chevere\Xr\XrMessage;
 
 // @codeCoverageIgnoreStart
     if (!defined('XR_BACKTRACE')) {
@@ -140,7 +141,7 @@ namespace {
             }
             getXr()->client()
                 ->sendMessage(
-                    (new Message(
+                    (new XrMessage(
                         backtrace: debug_backtrace(),
                     ))
                         ->withWriter(getWriter())
@@ -177,7 +178,7 @@ namespace {
             }
             getXr()->client()
                 ->sendMessage(
-                    (new Message(
+                    (new XrMessage(
                         backtrace: debug_backtrace(),
                     ))
                         ->withBody($html)
