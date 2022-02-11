@@ -81,15 +81,19 @@ php vendor/chevere/xr/demo.php
 
 ## XR Helpers
 
-### Dump variables
+💡 All helpers supports [topic](#topic) `t`, [emote](#emote) `e` and [flags](#flags) `f` arguments.
 
-Use `xr($var1, $var2,...)` to dump *any variable* from your code.
+### xr()
+
+#### Dump variables
+
+Use `xr($var1, $var2,...)` to dump any variable(s).
 
 ```php
 xr($var, 'Hola, mundo!');
 ```
 
-### Topic
+#### Topic
 
 Add a topic passing `t:`.
 
@@ -101,7 +105,7 @@ xr(
 );
 ```
 
-### Emote
+#### Emote
 
 Add an emote passing `e:`.
 
@@ -114,7 +118,7 @@ xr(
 );
 ```
 
-### Flags
+#### Flags
 
 Pass bitwise flags to trigger special behavior.
 
@@ -142,11 +146,9 @@ xr(
 );
 ```
 
-### Send raw message
+### xrr()
 
-Use `xrr` to send a raw message to the server.
-
-💡 `xrr` also supports [topic](#topic) `t`, [emote](#emote) `e` and [flags](#flags) `f` arguments.
+Use `xrr` to send a raw message to the debugger.
 
 ```php
 xrr(
@@ -155,7 +157,23 @@ xrr(
 );
 ```
 
-### Exception handling
+### xri()
+
+Use `xri` to use the inspector to send information to the debugger.
+
+```php
+xri()->memory();
+```
+
+## Custom inspectors
+
+You may want to create your own custom inspectors to easily debug information in your context:
+
+* Check [XrInspector](src/Inspector/XrInspector.php) to get an idea on how you may send the data.
+* Create your custom inspector using [XrInspectorTrait](src/Inspector/Traits/XrInspectorTrait.php) to get the `sendMessage` method. Also create a null inspector, like [XrInspectorNull](src/Inspector/XrInspectorNull.php) to void any inspection call if XR is disabled.
+* Register your custom `xri_function`, just like [xri()](src/functions.php) but replacing your symbols.
+
+## Exception handling
 
 Use `registerThrowableHandler` to enable XR to handle throwables.
 
@@ -185,7 +203,7 @@ set_exception_handler(
 );
 ```
 
-### Error handling
+## Error handling
 
 You will require to handle errors as exceptions and from there use [Exception handling](#exception-handling).
 
@@ -223,7 +241,7 @@ return [
 ];
 ```
 
-### For software providers
+### Software providers
 
 If you want to handle XR settings somewhere within your existing application logic (not depend on the `xr.php` file) you can do:
 
