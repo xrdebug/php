@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests\Chevere\Xr;
+namespace Chevere\Xr\Tests;
 
 use function Chevere\Message\message;
 use Chevere\Throwable\Errors\TypeError;
@@ -43,14 +43,20 @@ final class ThrowableParserTest extends TestCase
             TypeError::class,
             $parser->throwableRead()->className()
         );
-        $this->assertStringContainsString(ThrowableParser::class, $parser->body());
+        $this->assertStringContainsString(
+            '<div class="throwable-message">foo</div>',
+            $parser->body()
+        );
     }
 
     public function testWithPrevious(): void
     {
         $throwable = new Exception('foo', previous: new Exception('bar'));
         $parser = new ThrowableParser($throwable, '');
-        $this->assertStringContainsString(ThrowableParser::class, $parser->body());
+        $this->assertStringContainsString(
+            '<div class="throwable-message">bar</div>',
+            $parser->body()
+        );
     }
 
     public function testWithExtra(): void

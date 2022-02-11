@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests\Chevere\Xr;
+namespace Chevere\Xr\Tests;
 
 use function Chevere\Writer\streamTemp;
 use Chevere\Writer\StreamWriter;

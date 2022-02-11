@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Chevere\Xr;
 
 use Chevere\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
+use Chevere\ThrowableHandler\Interfaces\ThrowableHandlerFormatInterface;
 use Chevere\ThrowableHandler\Interfaces\ThrowableReadInterface;
 use Chevere\ThrowableHandler\ThrowableRead;
 use Chevere\Trace\TraceDocument;
-use Chevere\VarDump\Interfaces\VarDumpDocumentFormatInterface;
 use Throwable;
 
 class ThrowableParser
@@ -28,7 +28,7 @@ class ThrowableParser
 
     private string $emote = '⚠️Throwable';
 
-    private VarDumpDocumentFormatInterface $documentFormat;
+    private ThrowableHandlerFormatInterface $documentFormat;
 
     private int $index = 0;
 
