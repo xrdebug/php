@@ -104,6 +104,7 @@ namespace {
     use Chevere\Xr\Inspector\XrInspector;
     use Chevere\Xr\Inspector\XrInspectorInstance;
     use Chevere\Xr\Inspector\XrInspectorNull;
+    use Chevere\Xr\Interfaces\XrInspectorInterface;
     use Chevere\Xr\XrMessage;
 
 // @codeCoverageIgnoreStart
@@ -160,7 +161,7 @@ namespace {
          * xrr($html, ...);
          * ```
          *
-         * @param string $html Message to send
+         * @param string $body Message to send
          * @param string $t Topic
          * @param string $e Emote
          * @param int $f `XR_BACKTRACE | XR_PAUSE`
@@ -168,7 +169,7 @@ namespace {
          * @codeCoverageIgnore
          */
         function xrr(
-            string $html,
+            string $body,
             string $t = '',
             string $e = '',
             int $f = 0
@@ -181,7 +182,7 @@ namespace {
                     (new XrMessage(
                         backtrace: debug_backtrace(),
                     ))
-                        ->withBody($html)
+                        ->withBody($body)
                         ->withTopic($t)
                         ->withEmote($e)
                         ->withFlags($f)
@@ -198,7 +199,7 @@ namespace {
          *
          * @codeCoverageIgnore
          */
-        function xri(): XrInspector
+        function xri(): XrInspectorInterface
         {
             try {
                 return XrInspectorInstance::get();

@@ -17,7 +17,7 @@ use Chevere\Xr\XrMessage;
 
 trait XrInspectorTrait
 {
-    final public function __construct(protected XrInterface $xr)
+    public function __construct(protected XrInterface $xr)
     {
     }
     

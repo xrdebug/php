@@ -14,9 +14,13 @@ declare(strict_types=1);
 namespace Chevere\Xr\Interfaces;
 
 /**
- * Describes the component in charge of typing an XR inspector.
+ * Describes the component in charge of defining the XR inspector default interface.
  */
 interface XrInspectorInterface
 {
-    public function __construct(XrInterface $xr);
+    public function memory(
+        string $e = '',
+        string $t = '',
+        int $f = 0,
+    ): void;
 }

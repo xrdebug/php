@@ -69,7 +69,7 @@ You will require to add this to your `composer.json` file.
 php vendor/chevere/xr/server.php -p 27420
 ```
 
-The server will be available at [http://localhost:27420](http://localhost:27420)
+👉 The server will be available at [http://localhost:27420](http://localhost:27420)
 
 ## Demo
 
@@ -95,27 +95,18 @@ xr($var, 'Hola, mundo!');
 
 #### Topic
 
-Add a topic passing `t:`.
+Pass a topic using `t:`.
 
 ```php
-xr(
-    $var,
-    'Hola, mundo!',
-    t: 'Epic win'
-);
+xr($var, t: 'Epic win');
 ```
 
 #### Emote
 
-Add an emote passing `e:`.
+Pass an emote using `e:`.
 
 ```php
-xr(
-    $var,
-    'Hola, mundo!',
-    t: 'Epic win',
-    e: '😎'
-);
+xr($var, e: '😎');
 ```
 
 #### Flags
@@ -125,25 +116,13 @@ Pass bitwise flags to trigger special behavior.
 * `f: XR_BACKTRACE` to dump debug backtrace.
 
 ```php
-xr(
-    $var,
-    'Hola, mundo!',
-    t: 'Epic win',
-    e: '😎',
-    f: XR_BACKTRACE
-);
+xr($var, f: XR_BACKTRACE);
 ```
 
 * `f: XR_PAUSE` to pause code execution (*not implemented).
 
 ```php
-xr(
-    $var,
-    'Hola, mundo!',
-    t: 'Epic win',
-    e: '😎',
-    f: XR_PAUSE
-);
+xr($var, f: XR_PAUSE);
 ```
 
 ### xrr()
@@ -151,15 +130,12 @@ xr(
 Use `xrr` to send a raw message to the debugger.
 
 ```php
-xrr(
-    '<h1>Hola, mundo!</h1>',
-    t: 'Greet'
-);
+xrr('<h1>Hola, mundo!</h1>');
 ```
 
 ### xri()
 
-Use `xri` to use the inspector to send information to the debugger.
+Use `xri` to send information using the inspector.
 
 ```php
 xri()->memory();
@@ -167,15 +143,17 @@ xri()->memory();
 
 ## Custom inspectors
 
-You may want to create your own custom inspectors to easily debug information in your context:
+💡 A custom inspector can provide better (customized) insights for your existing application.
 
-* Check [XrInspector](src/Inspector/XrInspector.php) to get an idea on how you may send the data.
-* Create your custom inspector using [XrInspectorTrait](src/Inspector/Traits/XrInspectorTrait.php) to get the `sendMessage` method. Also create a null inspector, like [XrInspectorNull](src/Inspector/XrInspectorNull.php) to void any inspection call if XR is disabled.
-* Register your custom `xri_function`, just like [xri()](src/functions.php) but replacing your symbols.
+* Extend [XrInspector](src/Inspector/XrInspector.php) to add your extra methods.
+* Also create a `null` inspector (check [XrInspectorNull](src/Inspector/XrInspectorNull.php)) to void any inspection call if XR is disabled.
+* Register your custom `function`, just like `xri()` at [functions.php](src/functions.php) but replacing your symbols.
 
 ## Exception handling
 
-Use `registerThrowableHandler` to enable XR to handle throwables.
+💡 XR's throwable handler can hook or replace your existing exception handler logic.
+
+Use `registerThrowableHandler` to enable XR throwable handling.
 
 ```php
 
@@ -220,14 +198,11 @@ register_shutdown_function(
 
 ## Configuration
 
-Optionally configure XR by creating a file named `xr.php` in your project directory with the following options:
+💡 Optionally configure XR by creating a file named `xr.php` in your project directory with the following options:
 
-* `enable`
-  * `bool` Controls sending messages to the server. Set true to enable, false to disable.
-* `host`
-  * `string` The hostname/IP address where XR server is running.
-* `port`
-  * `int` Port to connect to the `host`.
+* `enable` `bool` - Controls sending messages to the server. Set `true` to enable, `false` to disable.
+* `host` `string` - The host where XR server is running.
+* `port` `int` - The Port to connect to the `host`.
 
 The following example is a `xr.php` file with default settings.
 
@@ -243,7 +218,7 @@ return [
 
 ### Software providers
 
-If you want to handle XR settings somewhere within your existing application logic (not depend on the `xr.php` file) you can do:
+💡 If you want to handle XR settings somewhere within your existing application logic (not depend on the `xr.php` file) you can do:
 
 ```php
 use Chevere\Xr\XrInstance;
@@ -257,7 +232,7 @@ new XrInstance(
 
 ## Docker
 
-See [DOCKER](./DOCKER.md).
+🐋 See [DOCKER](./DOCKER.md).
 
 ## Message reference
 
