@@ -22,7 +22,7 @@ foreach (['/', '/../../../'] as $path) {
     }
 }
 
-xri()->pause(t: 'topic');
+xri()->pause();
 xrr('😘 Hola, mundo!');
 sleep(2);
 xr(

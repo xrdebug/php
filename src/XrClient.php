@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Chevere\Xr;
 
 use Chevere\Throwable\Exceptions\LogicException;
+use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrClientInterface;
 use Chevere\Xr\Interfaces\XrMessageInterface;
 use CurlHandle;
@@ -34,38 +35,55 @@ final class XrClient implements XrClientInterface
     public function sendMessage(XrMessageInterface $message): void
     {
         try {
-            $curlHandle = $this->getCurlHandle('message', $message->toArray());
+            $curlHandle = $this->getCurlHandle(
+                'message',
+                $message->toArray()
+            );
             curl_exec($curlHandle);
-            if ($message->isPause()) {
+        } finally {
+            curl_close($curlHandle);
+        }
+    }
+
+    public function sendPause(XrPause $pause): void
+    {
+        try {
+            $curlHandle = $this->getCurlHandle(
+                'lock-post',
+                $pause->message()->toArray()
+            );
+            curl_exec($curlHandle);
+            $curlError = curl_error($curlHandle);
+            if ($curlError === '') {
                 do {
                     sleep(1);
-                } while ($this->isLocked($message));
+                } while ($this->isLocked($pause));
             }
         } finally {
             curl_close($curlHandle);
         }
     }
 
-    public function isLocked(XrMessageInterface $message): bool
+    public function isLocked(XrPause $pause): bool
     {
-        $curlHandle = $this->getCurlHandle(
-            'locks',
-            ['key' => $message->key()]
-        );
-        $curlError = null;
-
         try {
+            $curlHandle = $this->getCurlHandle(
+                'locks',
+                ['key' => $pause->key()]
+            );
+            $curlError = null;
             $curlResult = curl_exec($curlHandle);
-            if (curl_errno($curlHandle)) {
-                $curlError = curl_error($curlHandle);
-            }
-            if ($curlError) {
+            $curlError = curl_error($curlHandle);
+            if ($curlError !== '') {
                 throw new LogicException();
             }
             if (!$curlResult) {
                 return false;
             }
             $response = json_decode($curlResult);
+            if ($response->stop ?? false) {
+                throw new XrStopException();
+            }
 
             return boolval($response->active ?? false);
         } finally {

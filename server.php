@@ -64,6 +64,42 @@ set_exception_handler(function (Throwable $e) {
     die(255);
 });
 
+function writeToDebugger(
+    ServerRequestInterface $request,
+    BufferedChannel $channel,
+    string $action = 'message',
+): void {
+    $address = $request->getServerParams()['REMOTE_ADDR'];
+    $body = $request->getParsedBody() ?? [];
+    $message = $body['body'] ?? '';
+    $message = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $message);
+    $emote = $body['emote'] ?? '';
+    $topic = $body['topic'] ?? '';
+    $key = $body['key'] ?? '';
+    $file = $body['file_path'] ?? '';
+    $line = $body['file_line'] ?? '';
+    $fileDisplay = $file;
+    $fileDisplayShort = basename($file);
+    if ($line !== '') {
+        $fileDisplay .= ':' . $line;
+        $fileDisplayShort .= ':' . $line;
+    }
+    $channel->writeMessage(
+        json_encode([
+            'message' => $message,
+            'file_path' => $file,
+            'file_line' => $line,
+            'file_display' => $fileDisplay,
+            'file_display_short' => $fileDisplayShort,
+            'emote' => $emote,
+            'topic' => $topic,
+            'key' => $key,
+            'action' => $action,
+        ])
+    );
+    echo "* [$address $action] $fileDisplay\n";
+}
+
 $loop = Loop::get();
 $channel = new BufferedChannel();
 $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
@@ -113,17 +149,44 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
         case '/locks':
             $body = $request->getParsedBody() ?? [];
             $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
-            $data = ['active' => false];
+            $json = json_encode(['active' => false]);
             if ($lockFile->exists()) {
-                $data['active'] = true;
+                $json = $lockFile->getContents();
             }
 
             return new Response(
                 '200',
                 ['Content-Type' => 'text/json'],
-                json_encode($data)
+                $json
             );
-        case '/lock-remove':
+        case '/lock-post':
+            $json = '{"active":true}';
+            $body = $request->getParsedBody() ?? [];
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile->removeIfExists();
+            $lockFile->create();
+            $lockFile->put($json);
+            writeToDebugger($request, $channel, 'pause');
+
+            return new Response(
+                '200',
+                ['Content-Type' => 'text/json'],
+                $json
+            );
+        case '/lock-patch':
+            $json = '{"stop":true}';
+            $body = $request->getParsedBody() ?? [];
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile->removeIfExists();
+            $lockFile->create();
+            $lockFile->put($json);
+
+            return new Response(
+                '200',
+                ['Content-Type' => 'text/json'],
+                $json
+            );
+        case '/lock-delete':
             $body = $request->getParsedBody() ?? [];
             $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
             $lockFile->removeIfExists();
@@ -136,43 +199,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             if ($request->getMethod() !== 'POST') {
                 return new Response(405);
             }
-            $address = $request->getServerParams()['REMOTE_ADDR'];
-            $body = $request->getParsedBody() ?? [];
-            $message = $body['body'] ?? '';
-            $message = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $message);
-            $emote = $body['emote'] ?? '';
-            $topic = $body['topic'] ?? '';
-            $key = $body['key'] ?? '';
-            $isPause = $body['pause'] === '1';
-            if (($message . $emote . $topic . ($isPause ? 'p' : '')) !== '') {
-                if ($isPause) {
-                    $lockFile = fileForPath(__DIR__ . '/locks/' . $key);
-                    $lockFile->create();
-                }
-                $file = $body['file_path'] ?? '';
-                $line = $body['file_line'] ?? '';
-                $fileDisplay = $file;
-                $fileDisplayShort = basename($file);
-                if ($line !== '') {
-                    $fileDisplay .= ':' . $line;
-                    $fileDisplayShort .= ':' . $line;
-                }
-                $channel->writeMessage(
-                    json_encode([
-                        'message' => $message,
-                        'file_path' => $file,
-                        'file_line' => $line,
-                        'file_display' => $fileDisplay,
-                        'file_display_short' => $fileDisplayShort,
-                        'emote' => $emote,
-                        'action' => $body['action'] ?? '',
-                        'topic' => $topic,
-                        'key' => $body['key'] ?? '',
-                    ])
-                );
-                
-                echo "* [$address] $fileDisplay\n";
-            }
+            writeToDebugger($request, $channel);
 
             return new Response(
                 '201',

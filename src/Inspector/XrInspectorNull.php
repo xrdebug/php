@@ -13,8 +13,18 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Inspector;
 
-final class XrInspectorNull extends XrInspector
+use Chevere\Xr\Interfaces\XrInspectorInterface;
+
+final class XrInspectorNull implements XrInspectorInterface
 {
+    public function pause(
+        string $e = '',
+        string $t = '',
+        int $f = 0,
+    ): void {
+        return;
+    }
+
     public function memory(
         string $e = '',
         string $t = '',

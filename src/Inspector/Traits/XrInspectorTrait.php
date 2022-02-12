@@ -14,6 +14,7 @@ namespace Chevere\Xr\Inspector\Traits;
 
 use Chevere\Xr\Interfaces\XrInterface;
 use Chevere\Xr\XrMessage;
+use Chevere\Xr\XrPause;
 
 trait XrInspectorTrait
 {
@@ -22,15 +23,20 @@ trait XrInspectorTrait
     }
 
     public function pause(
-        string $e = '',
-        string $t = '',
-        int $f = 0,
+        string $topic = '',
+        string $emote = '',
+        int $flags = 0
     ): void {
-        $this->sendMessage(
-            topic: $t,
-            emote: $e,
-            flags: $f
-        );
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1);
+        $message = (new XrMessage(
+            backtrace: $backtrace,
+        ))
+            ->withTopic($topic)
+            ->withEmote($emote)
+            ->withFlags($flags);
+        $pause = new XrPause($message);
+
+        $this->xr->client()->sendPause($pause);
     }
 
     public function memory(
@@ -62,9 +68,7 @@ trait XrInspectorTrait
             ->withTopic($topic)
             ->withEmote($emote)
             ->withFlags($flags);
-        if (($backtrace[0]['function'] ?? '') === 'pause') {
-            $message = $message->withPause();
-        }
+        
         $this->xr->client()->sendMessage($message);
     }
 }

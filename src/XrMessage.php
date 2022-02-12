@@ -34,8 +34,6 @@ final class XrMessage implements XrMessageInterface
 
     private int $fileLine = 0;
 
-    private bool $isPause = false;
-
     private bool $isFlagBacktrace = false;
 
     private array $vars = [];
@@ -80,24 +78,19 @@ final class XrMessage implements XrMessageInterface
         return $this->fileLine;
     }
 
-    public function isFlagBacktrace(): bool
+    public function isEnableBacktrace(): bool
     {
         return $this->isFlagBacktrace;
-    }
-
-    public function isPause(): bool
-    {
-        return $this->isPause;
-    }
-
-    public function key(): string
-    {
-        return $this->key;
     }
 
     public function vars(): array
     {
         return $this->vars;
+    }
+
+    public function key(): string
+    {
+        return $this->key;
     }
 
     public function writer(): WriterInterface
@@ -155,14 +148,6 @@ final class XrMessage implements XrMessageInterface
         return $new;
     }
 
-    public function withPause(): self
-    {
-        $new = clone $this;
-        $new->isPause = true;
-
-        return $new;
-    }
-
     public function toArray(): array
     {
         $this->handleDumpVars();
@@ -174,7 +159,6 @@ final class XrMessage implements XrMessageInterface
             'file_line' => strval($this->fileLine),
             'emote' => $this->emote,
             'topic' => $this->topic,
-            'pause' => strval(intval($this->isPause)),
             'key' => $this->key,
         ];
     }
