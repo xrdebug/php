@@ -20,6 +20,7 @@ foreach (['/', '/../../../'] as $path) {
     }
 }
 
+use function Chevere\Filesystem\fileForPath;
 use Chevere\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\ThrowableHandler\ThrowableHandler;
 use function Chevere\ThrowableHandler\throwableHandler;
@@ -109,6 +110,28 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                 ['Content-Type' => 'font/woff'],
                 file_get_contents(__DIR__ . '/asset/fonts/firacode/firacode-regular.woff')
             );
+        case '/locks':
+            $body = $request->getParsedBody() ?? [];
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $data = ['active' => false];
+            if ($lockFile->exists()) {
+                $data['active'] = true;
+            }
+
+            return new Response(
+                '200',
+                ['Content-Type' => 'text/json'],
+                json_encode($data)
+            );
+        case '/lock-remove':
+            $body = $request->getParsedBody() ?? [];
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile->removeIfExists();
+
+            return new Response(
+                '200',
+                ['Content-Type' => 'text/json']
+            );
         case '/message':
             if ($request->getMethod() !== 'POST') {
                 return new Response(405);
@@ -119,7 +142,13 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             $message = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $message);
             $emote = $body['emote'] ?? '';
             $topic = $body['topic'] ?? '';
-            if (($message . $emote . $topic) !== '') {
+            $key = $body['key'] ?? '';
+            $isPause = $body['pause'] === '1';
+            if (($message . $emote . $topic . ($isPause ? 'p' : '')) !== '') {
+                if ($isPause) {
+                    $lockFile = fileForPath(__DIR__ . '/locks/' . $key);
+                    $lockFile->create();
+                }
                 $file = $body['file_path'] ?? '';
                 $line = $body['file_line'] ?? '';
                 $fileDisplay = $file;
@@ -138,6 +167,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                         'emote' => $emote,
                         'action' => $body['action'] ?? '',
                         'topic' => $topic,
+                        'key' => $body['key'] ?? '',
                     ])
                 );
                 

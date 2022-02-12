@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
+use Chevere\Throwable\Exceptions\LogicException;
 use Chevere\Xr\Interfaces\XrClientInterface;
 use Chevere\Xr\Interfaces\XrMessageInterface;
 use CurlHandle;
@@ -35,21 +36,59 @@ final class XrClient implements XrClientInterface
         try {
             $curlHandle = $this->getCurlHandle('message', $message->toArray());
             curl_exec($curlHandle);
+            if ($message->isPause()) {
+                do {
+                    sleep(1);
+                } while ($this->isLocked($message));
+            }
         } finally {
             curl_close($curlHandle);
         }
     }
 
+    public function isLocked(XrMessageInterface $message): bool
+    {
+        $curlHandle = $this->getCurlHandle(
+            'locks',
+            ['key' => $message->key()]
+        );
+        $curlError = null;
+
+        try {
+            $curlResult = curl_exec($curlHandle);
+            if (curl_errno($curlHandle)) {
+                $curlError = curl_error($curlHandle);
+            }
+            if ($curlError) {
+                throw new LogicException();
+            }
+            if (!$curlResult) {
+                return false;
+            }
+            $response = json_decode($curlResult);
+
+            return boolval($response->active ?? false);
+        } finally {
+            curl_close($curlHandle);
+        }
+
+        return false;
+    }
+
     private function getCurlHandle(string $endpoint, array $data): CurlHandle
     {
         $curlHandle = curl_init();
-        curl_setopt($curlHandle, CURLOPT_URL, $this->getUrl($endpoint));
-        curl_setopt($curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($curlHandle, CURLOPT_ENCODING, '');
         curl_setopt($curlHandle, CURLINFO_HEADER_OUT, true);
+        curl_setopt($curlHandle, CURLOPT_ENCODING, '');
         curl_setopt($curlHandle, CURLOPT_FAILONERROR, true);
+        curl_setopt($curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
         curl_setopt($curlHandle, CURLOPT_POST, true);
         curl_setopt($curlHandle, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($curlHandle, CURLOPT_TIMEOUT, 2);
+        curl_setopt($curlHandle, CURLOPT_URL, $this->getUrl($endpoint));
+        curl_setopt($curlHandle, CURLOPT_USERAGENT, 'chevere/xr 1.0');
 
         return $curlHandle;
     }

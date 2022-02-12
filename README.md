@@ -113,16 +113,10 @@ xr($var, e: '😎');
 
 Pass bitwise flags to trigger special behavior.
 
-* `f: XR_BACKTRACE` to dump debug backtrace.
+* `f: XR_BACKTRACE` to include debug backtrace.
 
 ```php
 xr($var, f: XR_BACKTRACE);
-```
-
-* `f: XR_PAUSE` to pause code execution (*not implemented).
-
-```php
-xr($var, f: XR_PAUSE);
 ```
 
 ### xrr()
@@ -135,7 +129,15 @@ xrr('<h1>Hola, mundo!</h1>');
 
 ### xri()
 
-Use `xri` to send information using the inspector.
+Use `xri` to interact with the inspector.
+
+#### Pause
+
+```php
+xri()->pause();
+```
+
+#### Memory
 
 ```php
 xri()->memory();
@@ -215,8 +217,6 @@ return [
     'port' => 27420,
 ];
 ```
-
-### Software providers
 
 💡 If you want to handle XR settings somewhere within your existing application logic (not depend on the `xr.php` file) you can do:
 

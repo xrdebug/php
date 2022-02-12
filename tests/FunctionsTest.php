@@ -28,7 +28,7 @@ final class FunctionsTest extends TestCase
         new XrWriterInstance($writer);
         $var = 'Hola xr!';
         $length = strlen($var);
-        xr($var, t: 'Topic', e: '😎', f: XR_BACKTRACE | XR_PAUSE);
+        xr($var, t: 'Topic', e: '😎', f: XR_BACKTRACE);
         $this->assertSame(
             '<pre>
 Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre>',

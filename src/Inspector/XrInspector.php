@@ -19,18 +19,4 @@ use Chevere\Xr\Interfaces\XrInspectorInterface;
 class XrInspector implements XrInspectorInterface
 {
     use XrInspectorTrait;
-
-    public function memory(
-        string $e = '',
-        string $t = '',
-        int $f = 0,
-    ): void {
-        $memory = memory_get_usage(true);
-        $this->sendMessage(
-            body: sprintf('%.2F MB', $memory / 1000000),
-            topic: $t,
-            emote: $e,
-            flags: $f,
-        );
-    }
 }

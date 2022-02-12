@@ -36,11 +36,13 @@ final class XrMessage implements XrMessageInterface
 
     private bool $isPause = false;
 
-    private bool $isBacktrace = false;
+    private bool $isFlagBacktrace = false;
 
     private array $vars = [];
 
     private WriterInterface $writer;
+
+    private string $key;
 
     public function __construct(private array $backtrace = [])
     {
@@ -50,6 +52,7 @@ final class XrMessage implements XrMessageInterface
         $this->writer = new NullWriter();
         $this->filePath = strval($this->backtrace[0]['file'] ?? '');
         $this->fileLine = intval($this->backtrace[0]['line'] ?? 0);
+        $this->key = md5(strval(time()));
     }
 
     public function body(): string
@@ -77,14 +80,19 @@ final class XrMessage implements XrMessageInterface
         return $this->fileLine;
     }
 
-    public function isBacktrace(): bool
+    public function isFlagBacktrace(): bool
     {
-        return $this->isBacktrace;
+        return $this->isFlagBacktrace;
     }
 
     public function isPause(): bool
     {
         return $this->isPause;
+    }
+
+    public function key(): string
+    {
+        return $this->key;
     }
 
     public function vars(): array
@@ -141,11 +149,16 @@ final class XrMessage implements XrMessageInterface
     {
         $new = clone $this;
         if ($flags & XR_BACKTRACE) {
-            $new->isBacktrace = true;
+            $new->isFlagBacktrace = true;
         }
-        if ($flags & XR_PAUSE) {
-            $new->isPause = true;
-        }
+
+        return $new;
+    }
+
+    public function withPause(): self
+    {
+        $new = clone $this;
+        $new->isPause = true;
 
         return $new;
     }
@@ -162,6 +175,7 @@ final class XrMessage implements XrMessageInterface
             'emote' => $this->emote,
             'topic' => $this->topic,
             'pause' => strval(intval($this->isPause)),
+            'key' => $this->key,
         ];
     }
 
@@ -184,7 +198,7 @@ final class XrMessage implements XrMessageInterface
 
     private function handleBacktrace(): void
     {
-        if ($this->isBacktrace) {
+        if ($this->isFlagBacktrace) {
             $traceDocument = new TraceDocument(
                 $this->backtrace,
                 new ThrowableHandlerHtmlFormat()

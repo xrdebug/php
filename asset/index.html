@@ -62,8 +62,10 @@
         </div>
     </header>
     <main></main>
+    <template id="message-buttons"></template>
+    <template id="message--status"></template>
     <template id="message">
-        <div class="message" data-emote="" data-topic="">
+        <div class="message" data-emote="" data-topic="" data-key="">
             <div class="message-sidebar">
                 <div class="buttons message-buttons">
                     <button class="button button--remove" data-action="remove"></button>
@@ -73,6 +75,10 @@
             </div>
             <div class="body">
                 <div class="body-filters"><span class="topic filter-button user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
+                <div class="body-pause-buttons">
+                    <button class="button button--continue-execution" data-action="ex-continue">Continue</button>
+                    <button class="button button--stop-execution" data-action="ex-stop">Stop execution</button>
+                </div>
                 <div class="body-raw hide-if-empty">%message%</div>
                 <div class="body-context"><span class="time">%time%</span><span class="body-context-display hide-if-empty cursor-pointer" title="%fileDisplay%">%fileDisplayShort%</span></div>
             </div>

@@ -49,6 +49,7 @@ final class MessageTest extends TestCase
                 'emote' => '',
                 'topic' => '',
                 'pause' => '0',
+                'key' => $message->key(),
             ],
             $message->toArray()
         );
@@ -149,10 +150,10 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
     {
         $message = new XrMessage();
         $line = strval(__LINE__ - 1);
-        $this->assertFalse($message->isBacktrace());
+        $this->assertFalse($message->isFlagBacktrace());
         $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);
         $this->assertNotSame($message, $withBacktraceFlag);
-        $this->assertTrue($withBacktraceFlag->isBacktrace());
+        $this->assertTrue($withBacktraceFlag->isFlagBacktrace());
         $this->assertStringContainsString(
             '<div class="backtrace">',
             $withBacktraceFlag->toArray()['body']
@@ -163,13 +164,13 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
         );
     }
 
-    public function testWithPauseFlag(): void
+    public function testWithPause(): void
     {
         $message = new XrMessage();
         $this->assertFalse($message->isPause());
-        $withPauseFlag = $message->withFlags(XR_PAUSE);
-        $this->assertNotSame($message, $withPauseFlag);
-        $this->assertTrue($withPauseFlag->isPause());
-        $this->assertSame('1', $withPauseFlag->toArray()['pause']);
+        $withPause = $message->withPause();
+        $this->assertNotSame($message, $withPause);
+        $this->assertTrue($withPause->isPause());
+        $this->assertSame('1', $withPause->toArray()['pause']);
     }
 }

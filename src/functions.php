@@ -111,9 +111,6 @@ namespace {
     if (!defined('XR_BACKTRACE')) {
         define('XR_BACKTRACE', 1);
     }
-    if (!defined('XR_PAUSE')) {
-        define('XR_PAUSE', 2);
-    }
     // @codeCoverageIgnoreEnd
     if (!function_exists('xr')) { // @codeCoverageIgnore
         /**
@@ -126,7 +123,7 @@ namespace {
          * @param mixed ...$vars Variable(s) to dump
          * @param string $t Topic
          * @param string $e Emote
-         * @param int $f `XR_BACKTRACE | XR_PAUSE`
+         * @param int $f `XR_BACKTRACE`
          */
         function xr(...$vars): void
         {
@@ -164,7 +161,7 @@ namespace {
          * @param string $body Message to send
          * @param string $t Topic
          * @param string $e Emote
-         * @param int $f `XR_BACKTRACE | XR_PAUSE`
+         * @param int $f `XR_BACKTRACE`
          *
          * @codeCoverageIgnore
          */
