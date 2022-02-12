@@ -75,9 +75,15 @@
             </div>
             <div class="body">
                 <div class="body-filters"><span class="topic filter-button user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
-                <div class="body-pause-buttons">
-                    <button class="button button--continue-execution" data-action="ex-continue">Continue</button>
-                    <button class="button button--stop-execution" data-action="ex-stop">Stop execution</button>
+                <div class="message-buttons--pause">
+                    <button data-action="ex-continue">
+                        <i class="button button--resume button--continue"></i>
+                        Continue
+                    </button>
+                    <button data-action="ex-stop">
+                        <i class="button button--stop"></i>
+                        Stop execution
+                    </button>
                 </div>
                 <div class="body-raw hide-if-empty">%message%</div>
                 <div class="body-context"><span class="time">%time%</span><span class="body-context-display hide-if-empty cursor-pointer" title="%fileDisplay%">%fileDisplayShort%</span></div>

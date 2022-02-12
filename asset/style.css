@@ -33,10 +33,10 @@
     :root {
         --bodyBackground: #FFF;
         --bodyText: #24292f;
-        --headerBackground: hsl(210deg 29% 97% / 80%);
-        --colorBorderRGB: 189, 195, 199;
+        --headerBackground: rgba(var(--colorShadeRGB), .2);
+        --colorShadeRGB: 189, 195, 199;
         --buttonTopicText: #24292f;
-        --buttonTopicBackground: hsl(210deg 29% 96%);
+        --buttonBackground: rgba(var(--colorShadeRGB), .4);
         --dumpText: var(--bodyText);
         --dumpBackground: hsl(210deg 29% 96%);
         --traceBackgroundOdd: var(--dumpBackground);
@@ -53,10 +53,10 @@
     :root {
         --bodyBackground: #010409;
         --bodyText: #c9d1d9;
-        --headerBackground: hsl(215deg 21% 11% / 85%);
-        --colorBorderRGB: 65, 74, 88;
+        --headerBackground: rgba(var(--colorShadeRGB), .2);
+        --colorShadeRGB: 65, 74, 88;
         --buttonTopicText: #c9d1d9;
-        --buttonTopicBackground: hsl(207, 20%, 11%);
+        --buttonBackground: rgba(var(--colorShadeRGB), .4);
         --dumpText: #020202;
         --dumpBackground: #132537;
         --dumpText: var(--bodyText);
@@ -126,6 +126,10 @@ body {
     line-height: normal;
 }
 
+button {
+    cursor: pointer;
+}
+
 pre, .pre {
     padding: 1rem;
     font-family: var(--fontPre);
@@ -176,15 +180,15 @@ header>div {
     margin-bottom: 0;
 }
 
-header, .message {
-    border-bottom: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+.message {
+    border-bottom: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
 }
 
 .buttons {
     font-size: 0;
 }
 
-.buttons>.button {
+.button {
     border: 0;
     margin: 0;
     display: inline-block;
@@ -329,18 +333,53 @@ header, .message {
     padding: 0.875rem;
 }
 
-.buttons.message-buttons {
+.message-buttons {
     display: flex;
     justify-content: space-between;
 }
 
-.buttons.message-buttons .button {
+.message-buttons .button {
     padding: 0 0.25em;
     font-size: 1rem;
     opacity: 0.5;
 }
-.buttons.message-buttons .button:hover {
+.message-buttons .button:hover {
     opacity: 1;
+}
+
+.message-buttons--pause {
+    font-size: 0;
+}
+
+.message-buttons--pause > button {
+    border: 0;
+    height: auto;
+    font-size: var(--fontSizeNormal);
+    background: rgba(var(--colorShadeRGB), .2);
+    padding: var(--fontSizeSmall) calc(1.5 * var(--fontSizeSmall));
+    margin: 0;
+    display: inline-flex;
+}
+.message-buttons--pause > button:hover {
+    background: rgba(var(--colorShadeRGB), .4);
+}
+.message-buttons--pause > button:first-child {
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    border-right: calc(var(--borderSize) + var(--borderSize)) solid var(--bodyBackground);
+}
+.message-buttons--pause > button:last-child {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+.message-buttons--pause .button:after {
+    margin-right: var(--marginEl);
+}
+.message-buttons--pause .button--continue:after {
+    background-color: var(--colorCopy);
+}
+.message-buttons--pause .button--stop:after {
+    background-color: var(--colorRemove);
 }
 
 .body-raw>pre {
@@ -380,15 +419,14 @@ header, .message {
 
 .topic {
     font-size: var(--fontSizeSubNormal);
-    background: var(--buttonTopicBackground);
+    background: var(--buttonBackground);
     padding: calc(var(--fontSizeSmall)/2) var(--fontSizeSmall);
     border-radius: var(--marginEl);
-    border: var(--borderSize) solid rgba(var(--colorBorderRGB), 0.5);
     margin-right: var(--marginEl);
 }
 
 .topic:hover {
-    border-color: rgba(var(--colorBorderRGB), 1);
+    border-color: rgba(var(--colorShadeRGB), 1);
 }
 
 .body-context {
@@ -512,7 +550,7 @@ pre+.backtrace {
 }
 
 .throwable {
-    border-bottom: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+    border-bottom: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
     margin-bottom: var(--marginEl);
 }
 
@@ -523,7 +561,7 @@ pre+.backtrace {
 
 .throwable-item {
     font-size: 0.875em;
-    border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+    border-top: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
     padding: var(--marginElRelative) 0;
 }
 
@@ -618,7 +656,7 @@ pre+.backtrace {
 .splash-keys {
     text-align: left;
     font-size: var(--fontSizeSubNormal);
-    border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+    border-top: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
 }
 
 .splash-key {
@@ -636,13 +674,13 @@ pre+.backtrace {
     color: var(--dumpText);
     padding: 0.5em 0.75em;
     display: inline-block;
-    border: var(--borderSize) solid rgba(var(--colorBorderRGB), .50);
+    border: var(--borderSize) solid rgba(var(--colorShadeRGB), .50);
     border-radius: var(--borderRadiusBox);
     margin-right: 0.75rem;
     position: absolute;
     left: 0;
     top: 0;
-    box-shadow: 0.125em 0.125em 0.375em rgba(var(--colorBorderRGB), .40);
+    box-shadow: 0.125em 0.125em 0.375em rgba(var(--colorShadeRGB), .40);
 }
 
 .splash-key:hover kbd {
