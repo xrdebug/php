@@ -175,7 +175,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             );
         case '/lock-patch':
             $json = '{"stop":true}';
-            $body = $request->getParsedBody() ?? [];
+            $body = json_decode($request->getBody()->__toString(), true);
             $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
             $lockFile->removeIfExists();
             $lockFile->create();
@@ -187,13 +187,14 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                 $json
             );
         case '/lock-delete':
-            $body = $request->getParsedBody() ?? [];
+            $body = json_decode($request->getBody()->__toString(), true);
             $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
             $lockFile->removeIfExists();
 
             return new Response(
                 '200',
-                ['Content-Type' => 'text/json']
+                ['Content-Type' => 'text/json'],
+                '{"ok":true}'
             );
         case '/message':
             if ($request->getMethod() !== 'POST') {
