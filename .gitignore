@@ -1,5 +1,5 @@
 .DS_Store
-/.locks
+/locks
 /vendor
 /composer.lock
 /build

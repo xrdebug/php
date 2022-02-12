@@ -30,7 +30,7 @@ XR is a dump debug server utility for PHP. No extras required, debug your PHP co
 * 🥷 Keyboard shortcuts for ninjas (Resume **R**, Pause **P**, Stop **S** and Clear **C**)
 * 😊 Export message to clipboard (plain text) or as inline-download PNG image
 * 📟 Generates dump [backtrace](#flags)
-* ⏸ [Pause](#flags) and resume your code execution (*not implemented)
+* ⏸ [Pause](#pause) and resume your code execution
 * 🌚 Dark / 🌝 Light mode follows your system preferences
 * 👽 Ephemeral, it doesn't store any persistent data
 * 🍒 HTML based (save page, search, shortcuts, etc.)
