@@ -17,14 +17,29 @@ use function Chevere\Message\message;
 use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrClientInterface;
 use Chevere\Xr\Interfaces\XrMessageInterface;
-use CurlHandle;
 
 final class XrClient implements XrClientInterface
 {
+    private XrCurl $curl;
+
     public function __construct(
         private string $host = 'localhost',
         private int $port = 27420,
     ) {
+        $this->curl = new XrCurl();
+    }
+
+    public function withCurl(XrCurl $curl): self
+    {
+        $new = clone $this;
+        $new->curl = $curl;
+
+        return $new;
+    }
+
+    public function curl(): XrCurl
+    {
+        return $this->curl;
     }
 
     public function getUrl(string $endpoint): string
@@ -35,46 +50,44 @@ final class XrClient implements XrClientInterface
     public function sendMessage(XrMessageInterface $message): void
     {
         try {
-            $curlHandle = $this->getCurlHandle(
+            $curl = $this->getCurlHandle(
                 'message',
                 $message->toArray()
             );
-            curl_exec($curlHandle);
+            $curl->exec();
         } finally {
-            curl_close($curlHandle);
+            unset($curl);
         }
     }
 
     public function sendPause(XrMessageInterface $message): void
     {
         try {
-            $curlHandle = $this->getCurlHandle(
+            $curl = $this->getCurlHandle(
                 'lock-post',
                 $message->toArray()
             );
-            curl_exec($curlHandle);
-            $curlError = curl_error($curlHandle);
+            $curl->exec();
+            $curlError = $curl->error();
             if ($curlError === '') {
                 do {
                     sleep(1);
                 } while ($this->isLocked($message));
             }
         } finally {
-            curl_close($curlHandle);
+            unset($curl);
         }
     }
 
     public function isLocked(XrMessageInterface $message): bool
     {
         try {
-            $curlHandle = $this->getCurlHandle(
+            $curl = $this->getCurlHandle(
                 'locks',
                 ['id' => $message->id()]
             );
-            $curlError = null;
-            $curlResult = curl_exec($curlHandle);
-            $curlError = curl_error($curlHandle);
-            if (!$curlResult || $curlError !== '') {
+            $curlResult = $curl->exec();
+            if (!$curlResult || $curl->error() !== '') {
                 return false;
             }
             $response = json_decode($curlResult);
@@ -85,29 +98,32 @@ final class XrClient implements XrClientInterface
                 );
             }
 
-            return boolval($response->active ?? false);
+            return boolval($response->lock ?? false);
         } finally {
-            curl_close($curlHandle);
+            unset($curl);
         }
 
         return false;
     }
 
-    private function getCurlHandle(string $endpoint, array $data): CurlHandle
+    private function getCurlHandle(string $endpoint, array $data): XrCurl
     {
-        $curlHandle = curl_init();
-        curl_setopt($curlHandle, CURLINFO_HEADER_OUT, true);
-        curl_setopt($curlHandle, CURLOPT_ENCODING, '');
-        curl_setopt($curlHandle, CURLOPT_FAILONERROR, true);
-        curl_setopt($curlHandle, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($curlHandle, CURLOPT_POST, true);
-        curl_setopt($curlHandle, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, true);
-        curl_setopt($curlHandle, CURLOPT_TIMEOUT, 2);
-        curl_setopt($curlHandle, CURLOPT_URL, $this->getUrl($endpoint));
-        curl_setopt($curlHandle, CURLOPT_USERAGENT, 'chevere/xr 1.0');
+        $this->curl->setOptArray(
+            [
+                CURLINFO_HEADER_OUT => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_FAILONERROR => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => http_build_query($data),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYPEER => true,
+                CURLOPT_TIMEOUT => 2,
+                CURLOPT_URL => $this->getUrl($endpoint),
+                CURLOPT_USERAGENT => 'chevere/xr 1.0',
+            ]
+        );
 
-        return $curlHandle;
+        return $this->curl;
     }
 }

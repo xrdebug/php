@@ -30,11 +30,14 @@ final class Xr implements XrInterface
 
     private array $configNames = ['xr.php'];
 
+    private XrCurl $curl;
+
     public function __construct(
         private bool $enable = true,
         private string $host = 'localhost',
         private int $port = 27420
     ) {
+        $this->curl = new XrCurl();
         $this->setClient();
     }
 
@@ -109,6 +112,9 @@ final class Xr implements XrInterface
 
     private function setClient(): void
     {
-        $this->client = new XrClient($this->host, $this->port);
+        $this->client = (new XrClient(
+            host: $this->host,
+            port: $this->port,
+        ))->withCurl($this->curl);
     }
 }

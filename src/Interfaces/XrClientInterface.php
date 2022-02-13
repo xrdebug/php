@@ -18,11 +18,6 @@ namespace Chevere\Xr\Interfaces;
  */
 interface XrClientInterface
 {
-    public function __construct(
-        string $host = 'localhost',
-        int $port = 27420,
-    );
-
     public function getUrl(string $endpoint): string;
 
     public function sendMessage(XrMessageInterface $message): void;

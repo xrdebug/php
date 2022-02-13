@@ -150,7 +150,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
         case '/locks':
             $body = $request->getParsedBody() ?? [];
             $lockFile = fileForPath(__DIR__ . '/locks/' . $body['id']);
-            $json = json_encode(['active' => false]);
+            $json = json_encode(['lock' => false]);
             if ($lockFile->exists()) {
                 $json = $lockFile->getContents();
             }
@@ -161,7 +161,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
                 $json
             );
         case '/lock-post':
-            $json = '{"active":true}';
+            $json = '{"lock":true}';
             $body = $request->getParsedBody() ?? [];
             $lockFile = fileForPath(__DIR__ . '/locks/' . $body['id']);
             $lockFile->removeIfExists();

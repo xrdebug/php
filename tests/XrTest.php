@@ -45,7 +45,10 @@ final class XrTest extends TestCase
         foreach ($args as $prop => $value) {
             $this->assertSame($value, $xr->{$prop}());
         }
-        $this->assertEquals(new XrClient($args['host'], $args['port']), $xr->client());
+        $this->assertEquals(
+            new XrClient($args['host'], $args['port']),
+            $xr->client()
+        );
     }
 
     public function testConstructWithoutSettingsFileSubfolder(): void
