@@ -69,7 +69,7 @@
         --buttonActiveBackgroundColor: rgb(35, 134, 54);
         --buttonActiveColor: #FFF;
         --buttonColor: #c9d1d9;
-        --buttonColorDisabled: rgba(201, 209, 217, 6);
+        --buttonColorDisabled: rgba(201, 209, 217, .6);
     }
 }
 
@@ -275,6 +275,7 @@ header>div {
 .button--copy:hover:after {
     background-color: var(--colorCopy);
 }
+
 .button--copy:hover:active:after, .body-context-display:hover:active:after {
     -webkit-mask-image: var(--iconCheck);
     mask-image: var(--iconCheck);
@@ -288,6 +289,7 @@ header>div {
 .button--export:hover:after {
     background-color: var(--colorExport);
 }
+
 .button--export:hover:active:after {
     -webkit-mask-image: var(--iconCheck);
     mask-image: var(--iconCheck);
@@ -301,6 +303,7 @@ header>div {
 .button--remove:hover:after {
     background-color: var(--colorRemove);
 }
+
 .button--remove:hover:active:after {
     -webkit-mask-image: var(--iconCheck);
     mask-image: var(--iconCheck);
@@ -348,6 +351,7 @@ header>div {
     font-size: 1rem;
     opacity: 0.5;
 }
+
 .message-buttons .button:hover {
     opacity: 1;
 }
@@ -355,12 +359,14 @@ header>div {
 .message-buttons--pause {
     font-size: 0;
     display: none;
+    margin-bottom: var(--marginEl);
 }
+
 .message.message--pause .message-buttons--pause {
     display: block;
 }
 
-.message-buttons--pause > button {
+.message-buttons--pause>button {
     border: 0;
     height: auto;
     font-size: var(--fontSizeSubNormal);
@@ -368,33 +374,42 @@ header>div {
     padding: var(--fontSizeSmall) calc(1.5 * var(--fontSizeSmall));
     margin: 0;
     display: inline-flex;
+    color: var(--buttonColor);
 }
-.message-buttons--pause > button:disabled {
+
+.message-buttons--pause>button:disabled {
     color: var(--buttonColorDisabled);
 }
-.message-buttons--pause > button:disabled .icon:after {
+
+.message-buttons--pause>button:disabled .icon:after {
     background-color: var(--buttonColorDisabled);
 }
-.message-buttons--pause > button:hover:not([disabled]) {
+
+.message-buttons--pause>button:hover:not([disabled]) {
     background: rgba(var(--colorShadeRGB), .4);
 }
-.message-buttons--pause > button:first-child {
+
+.message-buttons--pause>button:first-child {
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
     margin-right: calc(2 * var(--borderSize));
 }
-.message-buttons--pause > button:last-child {
+
+.message-buttons--pause>button:last-child {
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
 }
+
 .message-buttons--pause .icon:after {
     margin-right: var(--marginEl);
     cursor: inherit;
 }
-.message-buttons--pause > button:not([disabled]) .button--continue:after {
+
+.message-buttons--pause>button:not([disabled]) .button--continue:after {
     background-color: var(--colorCopy);
 }
-.message-buttons--pause > button:not([disabled]) .button--stop:after {
+
+.message-buttons--pause>button:not([disabled]) .button--stop:after {
     background-color: var(--colorRemove);
 }
 
@@ -417,10 +432,12 @@ header>div {
 .message--loading .message-sidebar {
     position: static;
 }
+
 .message--removing {
     opacity: 0;
     transform: translateX(-100%);
 }
+
 .message--copying {
     background-color: #fff8c5;
 }
