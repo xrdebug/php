@@ -147,8 +147,8 @@ xri()->memory();
 
 💡 A custom inspector can provide better (customized) insights for your existing application.
 
-* Extend [XrInspector](src/Inspector/XrInspector.php) to add your extra methods.
-* Also create a `null` inspector (check [XrInspectorNull](src/Inspector/XrInspectorNull.php)) to void any inspection call if XR is disabled.
+* Use [XrInspectorTrait](src/Inspector/Traits/XrInspectorTrait.php) to implement the [XrInspectorInterface](src/Interfaces/XrInspectorInterface.php).
+* Create a `null` inspector (check [XrInspectorNull](src/Inspector/XrInspectorNull.php)) to void any inspection call if XR is disabled.
 * Register your custom `function`, just like `xri()` at [functions.php](src/functions.php) but replacing your symbols.
 
 ## Exception handling
