@@ -151,7 +151,7 @@ header {
     top: 0;
     background: var(--headerBackground);
     -webkit-backdrop-filter: blur(0.1rem);
-    backdrop-filter: blur(0.1rem);
+    backdrop-filter: blur(0.75rem);
     padding: 0.875rem 1.75rem;
     height: var(--headerHeight);
     grid-template-columns: auto auto 1fr;
@@ -363,7 +363,7 @@ header>div {
 .message-buttons--pause > button {
     border: 0;
     height: auto;
-    font-size: var(--fontSizeNormal);
+    font-size: var(--fontSizeSubNormal);
     background: rgba(var(--colorShadeRGB), .2);
     padding: var(--fontSizeSmall) calc(1.5 * var(--fontSizeSmall));
     margin: 0;
@@ -713,6 +713,7 @@ pre+.backtrace {
     opacity: 0.5;
     padding-left: 1.25em;
     position: relative;
+    cursor: default;
 }
 
 .splash-key:hover .splash-key-description {

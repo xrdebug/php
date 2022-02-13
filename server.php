@@ -20,6 +20,7 @@ foreach (['/', '/../../../'] as $path) {
     }
 }
 
+use function Chevere\Filesystem\dirForPath;
 use function Chevere\Filesystem\fileForPath;
 use Chevere\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\ThrowableHandler\ThrowableHandler;
@@ -243,6 +244,7 @@ if (array_key_exists('h', $options) || array_key_exists('help', $options)) {
     echo implode("\n", ['-p Port (default 27420)', '-c Cert .pem file', '']);
     die(0);
 }
+dirForPath(__DIR__ . '/locks')->removeContents();
 $host = '0.0.0.0';
 $port = $options['p'] ?? '0';
 $cert = $options['c'] ?? null;
