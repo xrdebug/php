@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
+use function Chevere\Message\message;
 use Chevere\Throwable\Exceptions\LogicException;
 use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrClientInterface;
@@ -82,7 +83,10 @@ final class XrClient implements XrClientInterface
             }
             $response = json_decode($curlResult);
             if ($response->stop ?? false) {
-                throw new XrStopException();
+                throw new XrStopException(
+                    message('[STOP EXECUTION] triggered from %remote%')
+                        ->strtr('%remote%', $this->host . ':' . $this->port)
+                );
             }
 
             return boolval($response->active ?? false);

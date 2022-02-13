@@ -12,6 +12,7 @@
 declare(strict_types=1);
 namespace Chevere\Xr\Inspector\Traits;
 
+use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrInterface;
 use Chevere\Xr\XrMessage;
 use Chevere\Xr\XrPause;
@@ -23,20 +24,27 @@ trait XrInspectorTrait
     }
 
     public function pause(
-        string $topic = '',
-        string $emote = '',
-        int $flags = 0
+        string $e = '',
+        string $t = '',
+        int $f = 0,
     ): void {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1);
         $message = (new XrMessage(
             backtrace: $backtrace,
         ))
-            ->withTopic($topic)
-            ->withEmote($emote)
-            ->withFlags($flags);
+            ->withTopic($t)
+            ->withEmote($e)
+            ->withFlags($f);
         $pause = new XrPause($message);
 
-        $this->xr->client()->sendPause($pause);
+        try {
+            $this->xr->client()->sendPause($pause);
+        } catch (XrStopException $e) {
+            if (PHP_SAPI === 'cli') {
+                echo '* ' . $e->getMessage() . PHP_EOL;
+                die(255);
+            }
+        }
     }
 
     public function memory(
