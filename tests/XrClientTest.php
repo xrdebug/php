@@ -14,9 +14,10 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests;
 
 use Chevere\Xr\XrClient;
+use Chevere\Xr\XrMessage;
 use PHPUnit\Framework\TestCase;
 
-final class ClientTest extends TestCase
+final class XrClientTest extends TestCase
 {
     public function testDefault(): void
     {
@@ -25,6 +26,10 @@ final class ClientTest extends TestCase
             'http://localhost:27420/endpoint',
             $client->getUrl('endpoint')
         );
+        $message = new XrMessage();
+        $client->sendMessage($message);
+        $client->sendPause($message);
+        $this->assertFalse($client->isLocked($message));
     }
 
     public function testCustom(): void

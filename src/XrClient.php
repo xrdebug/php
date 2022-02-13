@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Chevere\Xr;
 
 use function Chevere\Message\message;
-use Chevere\Throwable\Exceptions\LogicException;
 use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrClientInterface;
 use Chevere\Xr\Interfaces\XrMessageInterface;
@@ -46,39 +45,36 @@ final class XrClient implements XrClientInterface
         }
     }
 
-    public function sendPause(XrPause $pause): void
+    public function sendPause(XrMessageInterface $message): void
     {
         try {
             $curlHandle = $this->getCurlHandle(
                 'lock-post',
-                $pause->message()->toArray()
+                $message->toArray()
             );
             curl_exec($curlHandle);
             $curlError = curl_error($curlHandle);
             if ($curlError === '') {
                 do {
                     sleep(1);
-                } while ($this->isLocked($pause));
+                } while ($this->isLocked($message));
             }
         } finally {
             curl_close($curlHandle);
         }
     }
 
-    public function isLocked(XrPause $pause): bool
+    public function isLocked(XrMessageInterface $message): bool
     {
         try {
             $curlHandle = $this->getCurlHandle(
                 'locks',
-                ['key' => $pause->key()]
+                ['id' => $message->id()]
             );
             $curlError = null;
             $curlResult = curl_exec($curlHandle);
             $curlError = curl_error($curlHandle);
-            if ($curlError !== '') {
-                throw new LogicException();
-            }
-            if (!$curlResult) {
+            if (!$curlResult || $curlError !== '') {
                 return false;
             }
             $response = json_decode($curlResult);

@@ -21,6 +21,8 @@ use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\NullWriter;
 use Chevere\Xr\Interfaces\XrMessageInterface;
 use Chevere\Xr\VarDump\Output\XrVarDumpHtmlOutput;
+use Ramsey\Uuid\Provider\Node\RandomNodeProvider;
+use Ramsey\Uuid\Uuid;
 
 final class XrMessage implements XrMessageInterface
 {
@@ -40,7 +42,7 @@ final class XrMessage implements XrMessageInterface
 
     private WriterInterface $writer;
 
-    private string $key;
+    private string $id;
 
     public function __construct(private array $backtrace = [])
     {
@@ -50,7 +52,8 @@ final class XrMessage implements XrMessageInterface
         $this->writer = new NullWriter();
         $this->filePath = strval($this->backtrace[0]['file'] ?? '');
         $this->fileLine = intval($this->backtrace[0]['line'] ?? 0);
-        $this->key = md5(strval(time()));
+        $node = (new RandomNodeProvider())->getNode();
+        $this->id = Uuid::uuid1($node)->__toString();
     }
 
     public function body(): string
@@ -88,9 +91,9 @@ final class XrMessage implements XrMessageInterface
         return $this->vars;
     }
 
-    public function key(): string
+    public function id(): string
     {
-        return $this->key;
+        return $this->id;
     }
 
     public function writer(): WriterInterface
@@ -159,7 +162,7 @@ final class XrMessage implements XrMessageInterface
             'file_line' => strval($this->fileLine),
             'emote' => $this->emote,
             'topic' => $this->topic,
-            'key' => $this->key,
+            'id' => $this->id,
         ];
     }
 

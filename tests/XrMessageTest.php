@@ -19,8 +19,9 @@ use Chevere\Writer\StreamWriter;
 use function Chevere\Xr\getWriter;
 use Chevere\Xr\XrMessage;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Rfc4122\Validator;
 
-final class MessageTest extends TestCase
+final class XrMessageTest extends TestCase
 {
     private WriterInterface $writer;
 
@@ -38,6 +39,7 @@ final class MessageTest extends TestCase
     {
         $message = new XrMessage();
         $line = __LINE__ - 1;
+        $this->assertTrue((new Validator())->validate($message->id()));
         $this->assertSame(__FILE__, $message->filePath());
         $this->assertSame($line, $message->fileLine());
         $this->assertInstanceOf(WriterInterface::class, $message->writer());
@@ -48,7 +50,7 @@ final class MessageTest extends TestCase
                 'file_line' => strval($line),
                 'emote' => '',
                 'topic' => '',
-                'key' => $message->key(),
+                'id' => $message->id(),
             ],
             $message->toArray()
         );

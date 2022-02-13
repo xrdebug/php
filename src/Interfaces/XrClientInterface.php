@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Interfaces;
 
-use Chevere\Xr\XrPause;
-
 /**
  * Describes the component in charge of defining the client.
  */
@@ -29,5 +27,5 @@ interface XrClientInterface
 
     public function sendMessage(XrMessageInterface $message): void;
 
-    public function sendPause(XrPause $pause): void;
+    public function sendPause(XrMessageInterface $message): void;
 }

@@ -35,6 +35,8 @@ interface XrMessageInterface extends ToArrayInterface
 
     public function vars(): array;
 
+    public function id(): string;
+
     public function writer(): WriterInterface;
 
     public function withBody(string $body): self;

@@ -19,7 +19,7 @@ use Chevere\Xr\XrThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-final class ThrowableParserTest extends TestCase
+final class XrThrowableParserTest extends TestCase
 {
     public function testTopLevel(): void
     {

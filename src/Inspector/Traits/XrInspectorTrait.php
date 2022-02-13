@@ -15,7 +15,6 @@ namespace Chevere\Xr\Inspector\Traits;
 use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrInterface;
 use Chevere\Xr\XrMessage;
-use Chevere\Xr\XrPause;
 
 trait XrInspectorTrait
 {
@@ -35,10 +34,9 @@ trait XrInspectorTrait
             ->withTopic($t)
             ->withEmote($e)
             ->withFlags($f);
-        $pause = new XrPause($message);
 
         try {
-            $this->xr->client()->sendPause($pause);
+            $this->xr->client()->sendPause($message);
         } catch (XrStopException $e) {
             if (PHP_SAPI === 'cli') {
                 echo '* ' . $e->getMessage() . PHP_EOL;
