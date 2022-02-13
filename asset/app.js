@@ -1,13 +1,42 @@
 let filter = {
-        topic: "",
-        emote: ""
-    },
+    topic: "",
+    emote: ""
+},
     filterOperator = {
         topic: "=",
         emote: "*="
     },
     currentStatus = "resume",
     queuedMessageCount = 0,
+    messageActions = {
+        continue: function (el) {
+            messageAction('lock-delete', el);
+        },
+        stop: function (el) {
+            messageAction('lock-patch', el);
+        }
+    },
+    messageAction = function (endpoint, el) {
+        let message = el.closest(".message");
+        let data = {
+            key: message.dataset.key
+        };
+        fetch("/" + endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(function () {
+            message.querySelectorAll(".message-buttons--pause > button").forEach(function (el) {
+                el.setAttribute("disabled", "disabled")
+            })
+        }).catch((error) => {
+            console.log("Error:", error);
+        });
+    },
     windowActions = {
         pushStatus: function (status) {
             setStatus(status);
@@ -34,7 +63,7 @@ let filter = {
             this.resetQueue();
         }
     },
-    buttonActions = function (action) {
+    windowAction = function (action) {
         if (action === currentStatus || document.body.classList.contains("body--splash")) {
             return;
         }
@@ -71,7 +100,7 @@ let filter = {
     templates = {
         message: document.querySelector("#message")
     };
-copyToClipboard = function(text) {
+copyToClipboard = function (text) {
     try {
         navigator.clipboard.writeText(text);
     } catch (ex) {
@@ -114,16 +143,20 @@ pushMessage = function (data, isStatus = false) {
     el.classList.add("message--loading");
     el.dataset.emote = data.emote ? data.emote : "";
     el.dataset.topic = data.topic ? data.topic : "";
-    if(isStatus) {
+    el.dataset.key = data.key ? data.key : "";
+    if (data.action === "pause") {
+        el.classList.add("message--pause");
+    }
+    if (isStatus) {
         el.classList.add("message--status");
-        setTimeout(function() {
+        setTimeout(function () {
             el.classList.add("message--removing");
-            setTimeout(function() {
+            setTimeout(function () {
                 el.remove();
             }, 250)
         }, 5000)
     }
-    if (! isStatus && currentStatus === "pause") {
+    if (!isStatus && currentStatus === "pause") {
         queuedMessageCount++;
         el.classList.add("message--while-pause");
         document.getElementById("queue-count").textContent = queuedMessageCount;
@@ -131,13 +164,13 @@ pushMessage = function (data, isStatus = false) {
     setTimeout(function () {
         el.classList.remove("message--loading");
     }, 250);
-    
+
 }
 setStatus(currentStatus);
 for (key in keysToAction) {
     document.querySelectorAll("[data-action=" + keysToAction[key] + "]").forEach(function (el) {
         el.addEventListener("click", function () {
-            buttonActions(this.dataset.action);
+            windowAction(this.dataset.action);
         });
     })
 }
@@ -146,7 +179,7 @@ document.addEventListener("keyup", function (event) {
         return;
     }
     if (event.code in keysToAction && !(event.metaKey || event.ctrlKey || event.altKey)) {
-        buttonActions(keysToAction[event.code]);
+        windowAction(keysToAction[event.code]);
     }
 })
 document.querySelector(".header-title").addEventListener("paste", event => {
@@ -161,15 +194,26 @@ document.addEventListener("click", event => {
     var el = event.target;
     var messageEl = el.closest(".message");
     switch (el.dataset.action) {
-        case "remove": messageEl.classList.add("message--removing");
+        case "execution--continue": messageActions.continue(el);
+            break;
+        case "execution--stop": messageActions.stop(el);
+            break;
+        case "remove":
+            if(messageEl.classList.contains("message--pause")) {
+                messageActions.continue(el);
+            }
+            messageEl.classList.add("message--removing");           
             setTimeout(function () {
                 messageEl.remove();
             }, 250);
             break;
-        case "copy": copyToClipboard(messageEl.querySelector(".body-raw").textContent + "\n" + messageEl.querySelector(".body-context").textContent.replace(/[\n\r]+|[\s]{2,}/g, ''));
+        case "copy":
+            copyToClipboard(messageEl.querySelector(".body-raw").textContent + "\n" + messageEl.querySelector(".body-context").textContent.replace(/[\n\r]+|[\s]{2,}/g, ''));
             break;
         case "export":
-            html2canvas(messageEl.querySelector(".body"), {scale: window.devicePixelRatio * 2}).then(function (canvas) {
+            html2canvas(messageEl.querySelector(".body"), {
+                scale: window.devicePixelRatio * 2
+            }).then(function (canvas) {
                 let dataUrl = canvas.toDataURL("image/jpg");
                 let link = document.createElement("a");
                 link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".jpg";
@@ -195,12 +239,8 @@ document.addEventListener("click", event => {
             }
             filterQuery += "[data-" + filterSubject + filterOperator[filterSubject] + filter[filterSubject] + "]";
         }
-        document.getElementById("filtering").innerHTML = filterQuery === ""
-            ? ""
-            : ".message:not(" + filterQuery + ") { display: none; }";
-        document.querySelector(".header-filter ." + subject).textContent = messageEl
-            ? filter[subject]
-            : "";
+        document.getElementById("filtering").innerHTML = filterQuery === "" ? "" : ".message:not(" + filterQuery + ") { display: none; }";
+        document.querySelector(".header-filter ." + subject).textContent = messageEl ? filter[subject] : "";
     }
 });
 document.body.classList.add("body--splash-in");

@@ -48,7 +48,6 @@ final class MessageTest extends TestCase
                 'file_line' => strval($line),
                 'emote' => '',
                 'topic' => '',
-                'pause' => '0',
                 'key' => $message->key(),
             ],
             $message->toArray()
@@ -150,10 +149,10 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
     {
         $message = new XrMessage();
         $line = strval(__LINE__ - 1);
-        $this->assertFalse($message->isFlagBacktrace());
+        $this->assertFalse($message->isEnableBacktrace());
         $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);
         $this->assertNotSame($message, $withBacktraceFlag);
-        $this->assertTrue($withBacktraceFlag->isFlagBacktrace());
+        $this->assertTrue($withBacktraceFlag->isEnableBacktrace());
         $this->assertStringContainsString(
             '<div class="backtrace">',
             $withBacktraceFlag->toArray()['body']
@@ -162,15 +161,5 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
             __FILE__ . ':' . $line,
             $withBacktraceFlag->toArray()['body']
         );
-    }
-
-    public function testWithPause(): void
-    {
-        $message = new XrMessage();
-        $this->assertFalse($message->isPause());
-        $withPause = $message->withPause();
-        $this->assertNotSame($message, $withPause);
-        $this->assertTrue($withPause->isPause());
-        $this->assertSame('1', $withPause->toArray()['pause']);
     }
 }

@@ -31,11 +31,7 @@ interface XrMessageInterface extends ToArrayInterface
 
     public function fileLine(): int;
 
-    public function isFlagBacktrace(): bool;
-
-    public function isPause(): bool;
-
-    public function key(): string;
+    public function isEnableBacktrace(): bool;
 
     public function vars(): array;
 

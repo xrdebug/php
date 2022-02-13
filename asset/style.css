@@ -33,10 +33,10 @@
     :root {
         --bodyBackground: #FFF;
         --bodyText: #24292f;
-        --headerBackground: hsl(210deg 29% 97% / 80%);
-        --colorBorderRGB: 189, 195, 199;
+        --headerBackground: rgba(var(--colorShadeRGB), .2);
+        --colorShadeRGB: 189, 195, 199;
         --buttonTopicText: #24292f;
-        --buttonTopicBackground: hsl(210deg 29% 96%);
+        --buttonBackground: rgba(var(--colorShadeRGB), .4);
         --dumpText: var(--bodyText);
         --dumpBackground: hsl(210deg 29% 96%);
         --traceBackgroundOdd: var(--dumpBackground);
@@ -46,6 +46,7 @@
         --buttonActiveBackgroundColor: rgb(45, 164, 78);
         --buttonActiveColor: #FFF;
         --buttonColor: #24292f;
+        --buttonColorDisabled: rgba(36, 41, 47, .6);
     }
 }
 
@@ -53,10 +54,10 @@
     :root {
         --bodyBackground: #010409;
         --bodyText: #c9d1d9;
-        --headerBackground: hsl(215deg 21% 11% / 85%);
-        --colorBorderRGB: 65, 74, 88;
+        --headerBackground: rgba(var(--colorShadeRGB), .2);
+        --colorShadeRGB: 65, 74, 88;
         --buttonTopicText: #c9d1d9;
-        --buttonTopicBackground: hsl(207, 20%, 11%);
+        --buttonBackground: rgba(var(--colorShadeRGB), .4);
         --dumpText: #020202;
         --dumpBackground: #132537;
         --dumpText: var(--bodyText);
@@ -68,6 +69,7 @@
         --buttonActiveBackgroundColor: rgb(35, 134, 54);
         --buttonActiveColor: #FFF;
         --buttonColor: #c9d1d9;
+        --buttonColorDisabled: rgba(201, 209, 217, 6);
     }
 }
 
@@ -126,6 +128,10 @@ body {
     line-height: normal;
 }
 
+button:not([disabled]) {
+    cursor: pointer;
+}
+
 pre, .pre {
     padding: 1rem;
     font-family: var(--fontPre);
@@ -145,7 +151,7 @@ header {
     top: 0;
     background: var(--headerBackground);
     -webkit-backdrop-filter: blur(0.1rem);
-    backdrop-filter: blur(0.1rem);
+    backdrop-filter: blur(0.75rem);
     padding: 0.875rem 1.75rem;
     height: var(--headerHeight);
     grid-template-columns: auto auto 1fr;
@@ -176,15 +182,15 @@ header>div {
     margin-bottom: 0;
 }
 
-header, .message {
-    border-bottom: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+.message {
+    border-bottom: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
 }
 
 .buttons {
     font-size: 0;
 }
 
-.buttons>.button {
+.icon, .button {
     border: 0;
     margin: 0;
     display: inline-block;
@@ -192,9 +198,12 @@ header, .message {
     position: relative;
     margin: 0 0.1em;
     background: none;
-    cursor: pointer;
     outline: 0;
     padding: 0 0.1em;
+}
+
+.button {
+    cursor: pointer;
 }
 
 .header-buttons .button {
@@ -219,7 +228,7 @@ header, .message {
     display: none;
 }
 
-.button:after {
+.icon:after, .button:after {
     width: 1em;
     height: 1em;
     display: inline-block;
@@ -329,18 +338,64 @@ header, .message {
     padding: 0.875rem;
 }
 
-.buttons.message-buttons {
+.message-buttons {
     display: flex;
     justify-content: space-between;
 }
 
-.buttons.message-buttons .button {
+.message-buttons .button {
     padding: 0 0.25em;
     font-size: 1rem;
     opacity: 0.5;
 }
-.buttons.message-buttons .button:hover {
+.message-buttons .button:hover {
     opacity: 1;
+}
+
+.message-buttons--pause {
+    font-size: 0;
+    display: none;
+}
+.message.message--pause .message-buttons--pause {
+    display: block;
+}
+
+.message-buttons--pause > button {
+    border: 0;
+    height: auto;
+    font-size: var(--fontSizeSubNormal);
+    background: rgba(var(--colorShadeRGB), .2);
+    padding: var(--fontSizeSmall) calc(1.5 * var(--fontSizeSmall));
+    margin: 0;
+    display: inline-flex;
+}
+.message-buttons--pause > button:disabled {
+    color: var(--buttonColorDisabled);
+}
+.message-buttons--pause > button:disabled .icon:after {
+    background-color: var(--buttonColorDisabled);
+}
+.message-buttons--pause > button:hover:not([disabled]) {
+    background: rgba(var(--colorShadeRGB), .4);
+}
+.message-buttons--pause > button:first-child {
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    margin-right: calc(2 * var(--borderSize));
+}
+.message-buttons--pause > button:last-child {
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+}
+.message-buttons--pause .icon:after {
+    margin-right: var(--marginEl);
+    cursor: inherit;
+}
+.message-buttons--pause > button:not([disabled]) .button--continue:after {
+    background-color: var(--colorCopy);
+}
+.message-buttons--pause > button:not([disabled]) .button--stop:after {
+    background-color: var(--colorRemove);
 }
 
 .body-raw>pre {
@@ -380,15 +435,14 @@ header, .message {
 
 .topic {
     font-size: var(--fontSizeSubNormal);
-    background: var(--buttonTopicBackground);
+    background: var(--buttonBackground);
     padding: calc(var(--fontSizeSmall)/2) var(--fontSizeSmall);
     border-radius: var(--marginEl);
-    border: var(--borderSize) solid rgba(var(--colorBorderRGB), 0.5);
     margin-right: var(--marginEl);
 }
 
 .topic:hover {
-    border-color: rgba(var(--colorBorderRGB), 1);
+    border-color: rgba(var(--colorShadeRGB), 1);
 }
 
 .body-context {
@@ -512,7 +566,7 @@ pre+.backtrace {
 }
 
 .throwable {
-    border-bottom: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+    border-bottom: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
     margin-bottom: var(--marginEl);
 }
 
@@ -523,7 +577,7 @@ pre+.backtrace {
 
 .throwable-item {
     font-size: 0.875em;
-    border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+    border-top: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
     padding: var(--marginElRelative) 0;
 }
 
@@ -618,7 +672,7 @@ pre+.backtrace {
 .splash-keys {
     text-align: left;
     font-size: var(--fontSizeSubNormal);
-    border-top: var(--borderSize) solid rgba(var(--colorBorderRGB), .25);
+    border-top: var(--borderSize) solid rgba(var(--colorShadeRGB), .25);
 }
 
 .splash-key {
@@ -636,13 +690,13 @@ pre+.backtrace {
     color: var(--dumpText);
     padding: 0.5em 0.75em;
     display: inline-block;
-    border: var(--borderSize) solid rgba(var(--colorBorderRGB), .50);
+    border: var(--borderSize) solid rgba(var(--colorShadeRGB), .50);
     border-radius: var(--borderRadiusBox);
     margin-right: 0.75rem;
     position: absolute;
     left: 0;
     top: 0;
-    box-shadow: 0.125em 0.125em 0.375em rgba(var(--colorBorderRGB), .40);
+    box-shadow: 0.125em 0.125em 0.375em rgba(var(--colorShadeRGB), .40);
 }
 
 .splash-key:hover kbd {
@@ -659,6 +713,7 @@ pre+.backtrace {
     opacity: 0.5;
     padding-left: 1.25em;
     position: relative;
+    cursor: default;
 }
 
 .splash-key:hover .splash-key-description {
