@@ -28,9 +28,7 @@ namespace Chevere\Xr {
         try {
             return XrWriterInstance::get();
         } catch (LogicException) {
-            $writer = new StreamWriter(streamTemp(''));
-
-            return (new XrWriterInstance($writer))::get();
+            return new StreamWriter(streamTemp(''));
         }
     }
 

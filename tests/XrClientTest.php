@@ -26,10 +26,6 @@ final class XrClientTest extends TestCase
             'http://localhost:27420/endpoint',
             $client->getUrl('endpoint')
         );
-        $message = new XrMessage();
-        $client->sendMessage($message);
-        $client->sendPause($message);
-        $this->assertFalse($client->isLocked($message));
     }
 
     public function testCustom(): void
@@ -41,5 +37,9 @@ final class XrClientTest extends TestCase
             "http://$host:$port/endpoint",
             $client->getUrl('endpoint')
         );
+        $message = new XrMessage();
+        $client->sendMessage($message);
+        $client->sendPause($message);
+        $this->assertFalse($client->isLocked($message));
     }
 }

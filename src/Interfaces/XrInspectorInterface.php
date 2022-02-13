@@ -19,14 +19,14 @@ namespace Chevere\Xr\Interfaces;
 interface XrInspectorInterface
 {
     public function pause(
-        string $e = '',
         string $t = '',
+        string $e = '',
         int $f = 0,
     ): void;
 
     public function memory(
-        string $e = '',
         string $t = '',
+        string $e = '',
         int $f = 0,
     ): void;
 }

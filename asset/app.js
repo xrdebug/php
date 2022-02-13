@@ -19,7 +19,7 @@ let filter = {
     messageAction = function (endpoint, el) {
         let message = el.closest(".message");
         let data = {
-            key: message.dataset.key
+            id: message.dataset.id
         };
         fetch("/" + endpoint, {
             method: "POST",
@@ -143,7 +143,7 @@ pushMessage = function (data, isStatus = false) {
     el.classList.add("message--loading");
     el.dataset.emote = data.emote ? data.emote : "";
     el.dataset.topic = data.topic ? data.topic : "";
-    el.dataset.key = data.key ? data.key : "";
+    el.dataset.id = data.id ? data.id : "";
     if (data.action === "pause") {
         el.classList.add("message--pause");
     }

@@ -76,7 +76,7 @@ function writeToDebugger(
     $message = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $message);
     $emote = $body['emote'] ?? '';
     $topic = $body['topic'] ?? '';
-    $key = $body['key'] ?? '';
+    $id = $body['id'] ?? '';
     $file = $body['file_path'] ?? '';
     $line = $body['file_line'] ?? '';
     $fileDisplay = $file;
@@ -94,7 +94,7 @@ function writeToDebugger(
             'file_display_short' => $fileDisplayShort,
             'emote' => $emote,
             'topic' => $topic,
-            'key' => $key,
+            'id' => $id,
             'action' => $action,
         ])
     );
@@ -149,7 +149,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             );
         case '/locks':
             $body = $request->getParsedBody() ?? [];
-            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['id']);
             $json = json_encode(['active' => false]);
             if ($lockFile->exists()) {
                 $json = $lockFile->getContents();
@@ -163,7 +163,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
         case '/lock-post':
             $json = '{"active":true}';
             $body = $request->getParsedBody() ?? [];
-            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['id']);
             $lockFile->removeIfExists();
             $lockFile->create();
             $lockFile->put($json);
@@ -177,7 +177,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
         case '/lock-patch':
             $json = '{"stop":true}';
             $body = json_decode($request->getBody()->__toString(), true);
-            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['id']);
             $lockFile->removeIfExists();
             $lockFile->create();
             $lockFile->put($json);
@@ -189,7 +189,7 @@ $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
             );
         case '/lock-delete':
             $body = json_decode($request->getBody()->__toString(), true);
-            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['key']);
+            $lockFile = fileForPath(__DIR__ . '/locks/' . $body['id']);
             $lockFile->removeIfExists();
 
             return new Response(

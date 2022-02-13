@@ -23,8 +23,8 @@ trait XrInspectorTrait
     }
 
     public function pause(
-        string $e = '',
         string $t = '',
+        string $e = '',
         int $f = 0,
     ): void {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1);
@@ -46,8 +46,8 @@ trait XrInspectorTrait
     }
 
     public function memory(
-        string $e = '',
         string $t = '',
+        string $e = '',
         int $f = 0,
     ): void {
         $memory = memory_get_usage(true);
