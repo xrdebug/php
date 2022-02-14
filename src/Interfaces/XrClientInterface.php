@@ -23,4 +23,6 @@ interface XrClientInterface
     public function sendMessage(XrMessageInterface $message): void;
 
     public function sendPause(XrMessageInterface $message): void;
+
+    public function exit(int $exitCode = 0): void;
 }

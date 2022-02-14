@@ -203,7 +203,7 @@ namespace {
                 $xrInspector = getXr()->enable()
                     ? XrInspector::class
                     : XrInspectorNull::class;
-                $xrInspector = new $xrInspector(getXr());
+                $xrInspector = new $xrInspector(getXr()->client());
     
                 return (new XrInspectorInstance($xrInspector))::get();
             }

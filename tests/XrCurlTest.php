@@ -59,6 +59,7 @@ final class XrCurlTest extends TestCase
         $curl = new XrCurl();
         $this->assertFalse($curl->exec());
         $curl = new XrCurl('https://www.cloudflare.com/ips-v4');
+        $this->expectOutputRegex('#.*#');
         $this->assertTrue($curl->exec());
         $curl->close();
     }

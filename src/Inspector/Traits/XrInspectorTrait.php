@@ -13,13 +13,13 @@ declare(strict_types=1);
 namespace Chevere\Xr\Inspector\Traits;
 
 use Chevere\Xr\Exceptions\XrStopException;
-use Chevere\Xr\Interfaces\XrInterface;
+use Chevere\Xr\Interfaces\XrClientInterface;
 use Chevere\Xr\XrMessage;
 
 trait XrInspectorTrait
 {
     public function __construct(
-        protected XrInterface $xr,
+        protected XrClientInterface $client,
     ) {
     }
 
@@ -37,11 +37,11 @@ trait XrInspectorTrait
             ->withFlags($f);
 
         try {
-            $this->xr->client()->sendPause($message);
+            $this->client->sendPause($message);
         } catch (XrStopException $e) {
             if (PHP_SAPI === 'cli') {
                 echo '* ' . $e->getMessage() . PHP_EOL;
-                die(255);
+                $this->client->exit(255);
             }
         }
     }
@@ -76,6 +76,6 @@ trait XrInspectorTrait
             ->withEmote($emote)
             ->withFlags($flags);
         
-        $this->xr->client()->sendMessage($message);
+        $this->client->sendMessage($message);
     }
 }
