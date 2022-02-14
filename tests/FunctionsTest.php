@@ -42,4 +42,11 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
         $this->expectNotToPerformAssertions();
         xrr('Hola xrr!');
     }
+
+    public function testXri(): void
+    {
+        $this->expectNotToPerformAssertions();
+        xri()->memory();
+        xri()->pause();
+    }
 }

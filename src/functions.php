@@ -177,6 +177,7 @@ namespace {
                     (new XrMessage(
                         backtrace: debug_backtrace(),
                     ))
+                        ->withWriter(getWriter())
                         ->withBody($body)
                         ->withTopic($t)
                         ->withEmote($e)

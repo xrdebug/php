@@ -16,11 +16,12 @@ namespace Chevere\Xr;
 use function Chevere\Message\message;
 use Chevere\Xr\Exceptions\XrStopException;
 use Chevere\Xr\Interfaces\XrClientInterface;
+use Chevere\Xr\Interfaces\XrCurlInterface;
 use Chevere\Xr\Interfaces\XrMessageInterface;
 
 final class XrClient implements XrClientInterface
 {
-    private XrCurl $curl;
+    private XrCurlInterface $curl;
 
     public function __construct(
         private string $host = 'localhost',
@@ -29,7 +30,7 @@ final class XrClient implements XrClientInterface
         $this->curl = new XrCurl();
     }
 
-    public function withCurl(XrCurl $curl): self
+    public function withCurl(XrCurlInterface $curl): self
     {
         $new = clone $this;
         $new->curl = $curl;
@@ -37,7 +38,7 @@ final class XrClient implements XrClientInterface
         return $new;
     }
 
-    public function curl(): XrCurl
+    public function curl(): XrCurlInterface
     {
         return $this->curl;
     }
@@ -106,7 +107,7 @@ final class XrClient implements XrClientInterface
         return false;
     }
 
-    private function getCurlHandle(string $endpoint, array $data): XrCurl
+    private function getCurlHandle(string $endpoint, array $data): XrCurlInterface
     {
         $this->curl->setOptArray(
             [

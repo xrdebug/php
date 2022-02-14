@@ -11,12 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\Xr\Tests\_resources;
 
 use Chevere\Xr\Interfaces\XrCurlInterface;
 use Chevere\Xr\Traits\XrCurlTrait;
 
-class XrCurl implements XrCurlInterface
+final class XrCurlLockTrue implements XrCurlInterface
 {
     use XrCurlTrait;
+
+    public function error(): string
+    {
+        return '';
+    }
+
+    public function exec(): string|bool
+    {
+        return '{"lock":true}';
+    }
 }

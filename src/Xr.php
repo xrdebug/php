@@ -17,6 +17,7 @@ use function Chevere\Filesystem\filePhpReturnForPath;
 use Chevere\Filesystem\Interfaces\DirInterface;
 use function Chevere\Type\typeArray;
 use Chevere\Xr\Interfaces\XrClientInterface;
+use Chevere\Xr\Interfaces\XrCurlInterface;
 use Chevere\Xr\Interfaces\XrInterface;
 use Throwable;
 
@@ -30,7 +31,7 @@ final class Xr implements XrInterface
 
     private array $configNames = ['xr.php'];
 
-    private XrCurl $curl;
+    private XrCurlInterface $curl;
 
     public function __construct(
         private bool $enable = true,

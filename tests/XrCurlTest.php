@@ -19,8 +19,6 @@ use PHPUnit\Framework\TestCase;
 
 final class XrCurlTest extends TestCase
 {
-    public static $log = [];
-
     public function testError(): void
     {
         $curl = new XrCurl();

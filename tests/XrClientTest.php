@@ -14,6 +14,9 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests;
 
 use Chevere\Xr\Exceptions\XrStopException;
+use Chevere\Xr\Tests\_resources\XrCurlError;
+use Chevere\Xr\Tests\_resources\XrCurlLockTrue;
+use Chevere\Xr\Tests\_resources\XrCurlStopTrue;
 use Chevere\Xr\XrClient;
 use Chevere\Xr\XrCurl;
 use Chevere\Xr\XrMessage;
@@ -53,9 +56,8 @@ final class XrClientTest extends TestCase
 
     public function testPauseLocked()
     {
-        $curl = $this->createStub(XrCurl::class);
-        $curl->method('exec')->willReturn('{"lock":true}');
-        $curl->method('error')->willReturn('');
+        require_once __DIR__ . '/_resources/XrCurlLockTrue.php';
+        $curl = new XrCurlLockTrue();
         $client = (new XrClient())->withCurl($curl);
         $message = new XrMessage();
         $this->assertTrue($client->isLocked($message));
@@ -63,9 +65,8 @@ final class XrClientTest extends TestCase
 
     public function testPauseStop()
     {
-        $curl = $this->createStub(XrCurl::class);
-        $curl->method('exec')->willReturn('{"stop":true}');
-        $curl->method('error')->willReturn('');
+        require_once __DIR__ . '/_resources/XrCurlStopTrue.php';
+        $curl = new XrCurlStopTrue();
         $client = (new XrClient())->withCurl($curl);
         $message = new XrMessage();
         $this->expectException(XrStopException::class);
@@ -74,9 +75,8 @@ final class XrClientTest extends TestCase
 
     public function testPauseError()
     {
-        $curl = $this->createStub(XrCurl::class);
-        $curl->method('exec')->willReturn('');
-        $curl->method('error')->willReturn('oops');
+        require_once __DIR__ . '/_resources/XrCurlError.php';
+        $curl = new XrCurlError();
         $client = (new XrClient())->withCurl($curl);
         $message = new XrMessage();
         $client->sendPause($message);
