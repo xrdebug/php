@@ -2,7 +2,7 @@
 
 > 🔔 Subscribe to the [newsletter](https://newsletter.chevereto.com/subscription?f=gTmksA6763vPCG763763kYCOTgWu6Kx4BPohVDY97aHddrqis6B763cHay8dhtmMKlI6r3vUfGREZmSvDNNGj3MlrRJV7A) to don't miss any update regarding Chevere.
 
-<p align="center"><img alt="XR" src="app/icon.svg" width="40%"></p>
+<p align="center"><img alt="XR" src="app/src/icon.svg" width="40%"></p>
 
 https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-b7b6-bd8733e623a2.mp4
 
@@ -33,7 +33,7 @@ XR is a dump debug server utility for PHP. No extras required, debug your PHP co
 * ⏸ [Pause](#pause) and resume your code execution
 * 🌚 Dark / 🌝 Light mode follows your system preferences
 * 👽 Ephemeral, it doesn't store any persistent data
-* 🍒 HTML based (save page, search, shortcuts, etc.)
+* 🍒 Portable & HTML based (save page, search, shortcuts, etc.)
 * 🔥 Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
 * 😅 Handle exceptions (hook or replace your existing handler)
 
@@ -188,7 +188,7 @@ set_exception_handler(
 You will require to handle errors as exceptions and from there use [Exception handling](#exception-handling).
 
 ```php
-use use Chevere\ThrowableHandler\ThrowableHandler;
+use Chevere\ThrowableHandler\ThrowableHandler;
 
 set_error_handler(
     ThrowableHandler::ERRORS_AS_EXCEPTIONS
