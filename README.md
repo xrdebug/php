@@ -2,7 +2,7 @@
 
 > 🔔 Subscribe to the [newsletter](https://newsletter.chevereto.com/subscription?f=gTmksA6763vPCG763763kYCOTgWu6Kx4BPohVDY97aHddrqis6B763cHay8dhtmMKlI6r3vUfGREZmSvDNNGj3MlrRJV7A) to don't miss any update regarding Chevere.
 
-<p align="center"><img alt="XR" src="asset/icon.svg" width="40%"></p>
+<p align="center"><img alt="XR" src="app/icon.svg" width="40%"></p>
 
 https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-b7b6-bd8733e623a2.mp4
 

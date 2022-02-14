@@ -1,0 +1,5 @@
+@font-face {
+    font-family: "XR";
+    src: local("Fira Code Regular"),
+        url('fonts/firacode/firacode-regular.woff') format('woff');
+}

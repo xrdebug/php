@@ -17,7 +17,7 @@
             <img src="icon.svg" />
         </div>
         <div class="splash-welcome">Welcome to chevere/xr</div>
-        <div class="splash-version">Version <a href="https://github.com/chevere/xr" target="_blank">0.2.0</a> <span class="splash-version-codename">Egocentrico</span></div>
+        <div class="splash-version">Version <a href="https://github.com/chevere/xr" target="_blank">%version%</a> <span class="splash-version-codename">%codename%</span></div>
         <div class="splash-keys">
             <div class="splash-key">
                 <kbd>R</kbd>
@@ -72,13 +72,13 @@
                 </div> 
             </div>
             <div class="body">
-                <div class="body-filters"><span class="topic filter-button user-select-none cursor-pointer hide-if-empty">%topic%</span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty">%emote%</span></div>
+                <div class="body-filters"><span class="topic filter-button user-select-none cursor-pointer hide-if-empty">topic</span><span class="emote filter-button user-select-none cursor-pointer hide-if-empty">emote</span></div>
                 <div class="message-buttons--pause">
                     <button data-action="execution--continue"><i class="icon button--resume button--continue"></i>Continue</button>
                     <button data-action="execution--stop"><i class="icon button--stop"></i>Stop execution</button>
                 </div>
-                <div class="body-raw hide-if-empty">%message%</div>
-                <div class="body-context"><span class="time">%time%</span><span class="body-context-display hide-if-empty cursor-pointer" title="%fileDisplay%">%fileDisplayShort%</span></div>
+                <div class="body-raw hide-if-empty">message</div>
+                <div class="body-context"><span class="time">time</span><span class="body-context-display hide-if-empty cursor-pointer" title="fileDisplay">fileDisplayShort</span></div>
             </div>
         </div>
     </template>
