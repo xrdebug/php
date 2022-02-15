@@ -106,7 +106,7 @@ function writeToDebugger(
 }
 
 echo "👉 Building ";
-echo strtr('[version %v] [codename %c]', [
+echo strtr('v%v (%c)', [
     '%v' => XR_VERSION,
     '%c' => XR_CODENAME,
 ]) . "\n";
@@ -121,7 +121,7 @@ $app->removeIfExists();
 $app->create();
 $app->put($build->html());
 echo sprintf(
-    "* Done [%s]!\n",
+    "* Done! [%s]\n",
     (new HrTime(hrTime(true) - $timeStart))
         ->toReadMs()
 );
