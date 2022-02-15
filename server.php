@@ -22,6 +22,7 @@ foreach (['/', '/../../../'] as $path) {
 
 use function Chevere\Filesystem\dirForPath;
 use function Chevere\Filesystem\fileForPath;
+use Chevere\HrTime\HrTime;
 use Chevere\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\ThrowableHandler\ThrowableHandler;
 use function Chevere\ThrowableHandler\throwableHandler;
@@ -30,6 +31,7 @@ use Chevere\Writer\StreamWriter;
 use Chevere\Writer\Writers;
 use function Chevere\Writer\writers;
 use Chevere\Writer\WritersInstance;
+use Chevere\Xr\XrBuild;
 use Clue\React\Sse\BufferedChannel;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\Loop;
@@ -41,6 +43,8 @@ use React\Http\Middleware\RequestBodyParserMiddleware;
 use React\Http\Middleware\StreamingRequestMiddleware;
 use React\Stream\ThroughStream;
 use samejack\PHP\ArgvParser;
+
+include __DIR__ . '/meta.php';
 
 new WritersInstance(
     (new Writers())
@@ -100,6 +104,27 @@ function writeToDebugger(
     );
     echo "* [$address $action] $fileDisplay\n";
 }
+
+echo "👉 Building ";
+echo strtr('[version %v] [codename %c]', [
+    '%v' => XR_VERSION,
+    '%c' => XR_CODENAME,
+]) . "\n";
+$timeStart = hrtime(true);
+$build = new XrBuild(
+    dirForPath(__DIR__ . '/app/src'),
+    XR_VERSION,
+    XR_CODENAME
+);
+$app = fileForPath(__DIR__ . '/app/build/en.html');
+$app->removeIfExists();
+$app->create();
+$app->put($build->html());
+echo sprintf(
+    "* Done [%s]!\n",
+    (new HrTime(hrTime(true) - $timeStart))
+        ->toReadMs()
+);
 
 $loop = Loop::get();
 $channel = new BufferedChannel();
@@ -230,5 +255,6 @@ $http->listen($socket);
 $socket->on('error', 'printf');
 $scheme = parse_url($socket->getAddress(), PHP_URL_SCHEME);
 $httpAddress = strtr($socket->getAddress(), ['tls:' => 'https:', 'tcp:' => 'http:']);
-echo "👉 Chevere's XR debugger listening on ($scheme) $httpAddress" . PHP_EOL;
+echo "XR debugger listening on ($scheme) $httpAddress" . PHP_EOL;
+echo "---------------------------------------------------" . PHP_EOL;
 $loop->run();
