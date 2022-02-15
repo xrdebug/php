@@ -35,5 +35,11 @@
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
+    },
+    "scripts": {
+        "update-cs": "curl --create-dirs -O --output-dir .ecs https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php"
+    },
+    "scripts-descriptions": {
+        "update-cs": "Update Chevere code style definition"
     }
 }
