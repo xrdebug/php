@@ -11,6 +11,8 @@
 
 declare(strict_types=1);
 
+use function Chevere\Message\message;
+use Chevere\Throwable\Exceptions\RuntimeException;
 use Chevere\ThrowableHandler\ThrowableHandler;
 use function Chevere\Writer\streamFor;
 use Chevere\Writer\StreamWriter;
@@ -18,7 +20,7 @@ use Chevere\Writer\Writers;
 use Chevere\Writer\WritersInstance;
 use function Chevere\Xr\registerThrowableHandler;
 
-foreach (['/', '/../../../'] as $path) {
+foreach (['/../', '/../../../../'] as $path) {
     $autoload = __DIR__ . $path . 'vendor/autoload.php';
     if (stream_resolve_include_path($autoload)) {
         require $autoload;
@@ -51,4 +53,15 @@ set_exception_handler(
 );
 registerThrowableHandler(true);
 
-include __DIR__ . '/demo/runtime-exception.php';
+throw new RuntimeException(
+    message: message("Ch bah puta la güeá"),
+    code: 12345,
+    previous: new Exception(
+        message: "A la chuchesumare",
+        code: 678,
+        previous: new LogicException(
+            message: "Ese conchesumare",
+            code: 0,
+        )
+    )
+);
