@@ -125,7 +125,6 @@ echo sprintf(
     (new HrTime(hrTime(true) - $timeStart))
         ->toReadMs()
 );
-
 $loop = Loop::get();
 $channel = new BufferedChannel();
 $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
