@@ -11,5 +11,5 @@
 
 declare(strict_types=1);
 
-const XR_VERSION = '0.2.1';
+const XR_VERSION = '0.2.2';
 const XR_CODENAME = 'Egocéntrico';
