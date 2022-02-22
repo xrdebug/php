@@ -187,11 +187,7 @@ namespace {
     }
     if (!function_exists('xri')) { // @codeCoverageIgnore
         /**
-         * Send debug information using XR inspector.
-         *
-         * ```php
-         * xri()->memory();
-         * ```
+         * Access XR inspector to send debug information.
          *
          * @codeCoverageIgnore
          */
