@@ -111,6 +111,11 @@ echo strtr('v%v (%c)', [
     '%c' => XR_CODENAME,
 ]) . "\n";
 $timeStart = hrtime(true);
+
+try {
+    dirForPath(__DIR__ . '/locks')->removeContents();
+} catch (Throwable) {
+}
 $build = new XrBuild(
     dirForPath(__DIR__ . '/app/src'),
     XR_VERSION,
@@ -125,7 +130,6 @@ echo sprintf(
     (new HrTime(hrTime(true) - $timeStart))
         ->toReadMs()
 );
-
 $loop = Loop::get();
 $channel = new BufferedChannel();
 $handler = function (ServerRequestInterface $request) use ($channel, $loop) {
@@ -233,7 +237,6 @@ if (array_key_exists('h', $options) || array_key_exists('help', $options)) {
     echo implode("\n", ['-p Port (default 27420)', '-c Cert .pem file', '']);
     die(0);
 }
-dirForPath(__DIR__ . '/locks')->removeContents();
 $host = '0.0.0.0';
 $port = $options['p'] ?? '0';
 $cert = $options['c'] ?? null;
