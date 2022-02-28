@@ -59,8 +59,8 @@ new WritersInstance(
             )
         )
 );
-set_error_handler(ThrowableHandler::ERRORS_AS_EXCEPTIONS);
-register_shutdown_function(ThrowableHandler::FATAL_ERROR_HANDLER);
+set_error_handler(ThrowableHandler::ERROR_AS_EXCEPTION);
+register_shutdown_function(ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION);
 set_exception_handler(function (Throwable $e) {
     $handler = throwableHandler($e);
     $docInternal = new ThrowableHandlerConsoleDocument($handler);

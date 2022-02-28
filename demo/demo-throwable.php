@@ -43,13 +43,13 @@ new WritersInstance(
         )
 );
 set_error_handler(
-    ThrowableHandler::ERRORS_AS_EXCEPTIONS
+    ThrowableHandler::ERROR_AS_EXCEPTION
 );
 register_shutdown_function(
-    ThrowableHandler::FATAL_ERROR_HANDLER
+    ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION
 );
 set_exception_handler(
-    ThrowableHandler::CONSOLE_HANDLER
+    ThrowableHandler::CONSOLE
 );
 registerThrowableHandler(true);
 
