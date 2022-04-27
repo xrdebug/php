@@ -23,13 +23,10 @@ foreach (['/', '/../../../'] as $path) {
 use function Chevere\Filesystem\dirForPath;
 use function Chevere\Filesystem\fileForPath;
 use Chevere\HrTime\HrTime;
-use Chevere\ThrowableHandler\Documents\ThrowableHandlerConsoleDocument;
 use Chevere\ThrowableHandler\ThrowableHandler;
-use function Chevere\ThrowableHandler\throwableHandler;
 use function Chevere\Writer\streamFor;
 use Chevere\Writer\StreamWriter;
 use Chevere\Writer\Writers;
-use function Chevere\Writer\writers;
 use Chevere\Writer\WritersInstance;
 use Chevere\Xr\XrBuild;
 use Clue\React\Sse\BufferedChannel;
@@ -61,13 +58,7 @@ new WritersInstance(
 );
 set_error_handler(ThrowableHandler::ERROR_AS_EXCEPTION);
 register_shutdown_function(ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION);
-set_exception_handler(function (Throwable $e) {
-    $handler = throwableHandler($e);
-    $docInternal = new ThrowableHandlerConsoleDocument($handler);
-    writers()->error()
-        ->write($docInternal->__toString() . "\n");
-    die(255);
-});
+set_exception_handler(ThrowableHandler::CONSOLE);
 
 function writeToDebugger(
     ServerRequestInterface $request,
@@ -258,6 +249,6 @@ $http->listen($socket);
 $socket->on('error', 'printf');
 $scheme = parse_url($socket->getAddress(), PHP_URL_SCHEME);
 $httpAddress = strtr($socket->getAddress(), ['tls:' => 'https:', 'tcp:' => 'http:']);
-echo "XR debugger listening on ($scheme) $httpAddress" . PHP_EOL;
+echo "XR Debug (ReactPHP SSE) listening on ($scheme) $httpAddress" . PHP_EOL;
 echo "---------------------------------------------------" . PHP_EOL;
 $loop->run();
