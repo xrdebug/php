@@ -105,7 +105,6 @@
 
 * {
     box-sizing: border-box;
-    cursor: default;
 }
 
 html {
@@ -665,6 +664,11 @@ pre+.backtrace {
     position: relative;
 }
 
+.splash-logo a {
+    display: inline-block;
+    cursor: pointer;
+}
+
 .splash-logo img {
     width: 6rem;
     height: 6rem;
@@ -674,6 +678,7 @@ pre+.backtrace {
 
 .splash-welcome {
     font-size: 2rem;
+    font-weight: bold;
 }
 
 .splash-version {
