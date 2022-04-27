@@ -214,9 +214,9 @@ document.addEventListener("click", event => {
             html2canvas(messageEl.querySelector(".body"), {
                 scale: window.devicePixelRatio * 2
             }).then(function (canvas) {
-                let dataUrl = canvas.toDataURL("image/jpg");
+                let dataUrl = canvas.toDataURL("image/png");
                 let link = document.createElement("a");
-                link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".jpg";
+                link.download = document.title + "-" + messageEl.querySelector(".time").textContent + ".png";
                 link.href = dataUrl;
                 link.click();
             });
