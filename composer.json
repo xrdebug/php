@@ -17,10 +17,10 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "~0.7",
-        "chevere/throwable-handler": "~0.3",
-        "chevere/trace": "~0.2",
-        "chevere/var-dump": "~0.1",
+        "chevere/chevere": "^0.7",
+        "chevere/throwable-handler": "^0.3",
+        "chevere/trace": "^0.2",
+        "chevere/var-dump": "^0.2",
         "rodber/php-sse-react": "^0.1",
         "samejack/php-argv": "^1.0"
     },
