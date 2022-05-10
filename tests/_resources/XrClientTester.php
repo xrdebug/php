@@ -13,27 +13,27 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\_resources;
 
-use Chevere\Xr\Interfaces\XrClientInterface;
-use Chevere\Xr\Interfaces\XrMessageInterface;
+use Chevere\Xr\Interfaces\ClientInterface;
+use Chevere\Xr\Interfaces\MessageInterface;
 use Chevere\Xr\Traits\XrClientTrait;
 
-class XrClientTester implements XrClientInterface
+class XrClientTester implements ClientInterface
 {
     use XrClientTrait;
 
-    private XrMessageInterface $lastMessage;
+    private MessageInterface $lastMessage;
 
-    public function getLastMessage(): XrMessageInterface
+    public function getLastMessage(): MessageInterface
     {
         return $this->lastMessage;
     }
 
-    public function sendMessage(XrMessageInterface $message): void
+    public function sendMessage(MessageInterface $message): void
     {
         $this->lastMessage = $message;
     }
 
-    public function sendPause(XrMessageInterface $message): void
+    public function sendPause(MessageInterface $message): void
     {
         $this->lastMessage = $message;
     }

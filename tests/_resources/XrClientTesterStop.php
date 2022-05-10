@@ -14,18 +14,18 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests\_resources;
 
 use function Chevere\Message\message;
-use Chevere\Xr\Exceptions\XrStopException;
-use Chevere\Xr\Interfaces\XrClientInterface;
-use Chevere\Xr\Interfaces\XrMessageInterface;
+use Chevere\Xr\Exceptions\StopException;
+use Chevere\Xr\Interfaces\ClientInterface;
+use Chevere\Xr\Interfaces\MessageInterface;
 use Chevere\Xr\Traits\XrClientTrait;
 
-final class XrClientTesterStop implements XrClientInterface
+final class XrClientTesterStop implements ClientInterface
 {
     use XrClientTrait;
 
-    public function sendPause(XrMessageInterface $message): void
+    public function sendPause(MessageInterface $message): void
     {
-        throw new XrStopException(
+        throw new StopException(
             message('stop')
         );
     }

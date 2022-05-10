@@ -16,7 +16,7 @@ namespace Chevere\Xr\Interfaces;
 /**
  * Describes the component in charge of defining the XR inspector default interface.
  */
-interface XrInspectorInterface
+interface InspectorInterface
 {
     public function pause(
         string $t = '',

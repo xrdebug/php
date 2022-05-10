@@ -13,25 +13,25 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\ThrowableHandler\Formats\ThrowableHandlerHtmlFormat;
-use Chevere\Trace\TraceDocument;
-use Chevere\VarDump\Formats\VarDumpHtmlFormat;
+use Chevere\ThrowableHandler\Formats\HtmlFormat as ThrowableHandlerHtmlFormat;
+use Chevere\Trace\Trace;
+use Chevere\VarDump\Formats\HtmlFormat as VarDumpHtmlFormat;
 use Chevere\VarDump\VarDump;
 use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\NullWriter;
-use Chevere\Xr\Interfaces\XrMessageInterface;
+use Chevere\Xr\Interfaces\MessageInterface;
 use Chevere\Xr\VarDump\Output\XrVarDumpHtmlOutput;
 use Ramsey\Uuid\Provider\Node\RandomNodeProvider;
 use Ramsey\Uuid\Uuid;
 
-final class XrMessage implements XrMessageInterface
+final class Message implements MessageInterface
 {
     private string $body = '';
 
     private string $topic = '';
 
     private string $emote = '';
-    
+
     private string $filePath = '';
 
     private int $fileLine = 0;
@@ -70,7 +70,7 @@ final class XrMessage implements XrMessageInterface
     {
         return $this->emote;
     }
-    
+
     public function filePath(): string
     {
         return $this->filePath;
@@ -129,7 +129,7 @@ final class XrMessage implements XrMessageInterface
     {
         $new = clone $this;
         $new->writer = $writer;
-        
+
         return $new;
     }
 
@@ -137,7 +137,7 @@ final class XrMessage implements XrMessageInterface
     {
         $new = clone $this;
         $new->vars = $vars;
-        
+
         return $new;
     }
 
@@ -155,7 +155,7 @@ final class XrMessage implements XrMessageInterface
     {
         $this->handleDumpVars();
         $this->handleBacktrace();
-        
+
         return [
             'body' => $this->body,
             'file_path' => $this->filePath,
@@ -186,7 +186,7 @@ final class XrMessage implements XrMessageInterface
     private function handleBacktrace(): void
     {
         if ($this->isFlagBacktrace) {
-            $traceDocument = new TraceDocument(
+            $traceDocument = new Trace(
                 $this->backtrace,
                 new ThrowableHandlerHtmlFormat()
             );

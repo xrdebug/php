@@ -4,30 +4,30 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ${{ matrix.operating-system }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        operating-system: [ubuntu-20.04]
-        php-versions: ["8.0", "8.1"]
+        os: [ubuntu-20.04]
+        php: ["8.0", "8.1"]
     env:
-      extensions: pcov
+      extensions: opcache, mbstring, ds, pcov
       tools: composer
-      ini-values: pcov.directory=src
-      key: cache-1641424177283
-    name: PHP ${{ matrix.php-versions }} test on ${{ matrix.operating-system }}
+      ini-values: opcache.enable_cli = 0, precision=16, default_charset='UTF-8', pcov.directory=src
+      key: cache-1650042071225
+    name: PHP ${{ matrix.php }} test on ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
+        with:
+          fetch-depth: 0
       - name: Setup cache environment
         if: ${{ !env.ACT }}
         id: extcache
         uses: shivammathur/cache-extensions@v1
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php }}
           extensions: ${{ env.extensions }}
           key: ${{ env.key }}
-
       - name: Cache extensions
         if: ${{ !env.ACT }}
         uses: actions/cache@v2
@@ -35,37 +35,42 @@ jobs:
           path: ${{ steps.extcache.outputs.dir }}
           key: ${{ steps.extcache.outputs.key }}
           restore-keys: ${{ steps.extcache.outputs.key }}
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php }}
           extensions: ${{ env.extensions }}
           ini-values: ${{ env.ini-values }}
           coverage: pcov
           tools: ${{ env.tools }}
         env:
           fail-fast: true
-
       - name: Setup problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
-
       - name: Validate composer
         run: composer validate
-
       - name: Get composer cache directory
+        if: ${{ !env.ACT }}
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
       - name: Cache dependencies
+        if: ${{ !env.ACT }}
         uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
-
-      - name: Run tests with phpunit
-        run: vendor/bin/phpunit -c phpunit-report.xml
+      - name: Tests (PHPUnit)
+        run: vendor/bin/phpunit --coverage-xml=build/logs/xml-coverage --log-junit=build/logs/junit.xml
+      # - name: Mutation testing (Infection)
+      #   env:
+      #     INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
+      #   run: |
+      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.6/infection.phar
+      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.6/infection.phar.asc
+      #     gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0
+      #     gpg --with-fingerprint --verify infection.phar.asc infection.phar
+      #     chmod +x infection.phar
+      #     ./infection.phar --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github --only-covered

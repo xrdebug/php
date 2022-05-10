@@ -28,7 +28,7 @@ use function Chevere\Writer\streamFor;
 use Chevere\Writer\StreamWriter;
 use Chevere\Writer\Writers;
 use Chevere\Writer\WritersInstance;
-use Chevere\Xr\XrBuild;
+use Chevere\Xr\Build;
 use Clue\React\Sse\BufferedChannel;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop\Loop;
@@ -107,7 +107,7 @@ try {
     dirForPath(__DIR__ . '/locks')->removeContents();
 } catch (Throwable) {
 }
-$build = new XrBuild(
+$build = new Build(
     dirForPath(__DIR__ . '/app/src'),
     XR_VERSION,
     XR_CODENAME

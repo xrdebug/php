@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Inspector;
+namespace Chevere\Xr;
 
-use Chevere\Xr\Inspector\Traits\XrInspectorNullTrait;
-use Chevere\Xr\Interfaces\XrInspectorInterface;
+use Chevere\Xr\Interfaces\ClientInterface;
+use Chevere\Xr\Traits\XrClientTrait;
 
-final class XrInspectorNull implements XrInspectorInterface
+final class Client implements ClientInterface
 {
-    use XrInspectorNullTrait;
+    use XrClientTrait;
 }

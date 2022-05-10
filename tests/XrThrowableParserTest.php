@@ -15,7 +15,7 @@ namespace Chevere\Xr\Tests;
 
 use function Chevere\Message\message;
 use Chevere\Throwable\Errors\TypeError;
-use Chevere\Xr\XrThrowableParser;
+use Chevere\Xr\ThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +24,7 @@ final class XrThrowableParserTest extends TestCase
     public function testTopLevel(): void
     {
         $throwable = new Exception('foo');
-        $parser = new XrThrowableParser($throwable, '');
+        $parser = new ThrowableParser($throwable, '');
         $this->assertSame(Exception::class, $parser->topic());
         $this->assertSame(
             Exception::class,
@@ -33,11 +33,11 @@ final class XrThrowableParserTest extends TestCase
         $this->assertSame('⚠️Throwable', $parser->emote());
         $this->assertStringContainsString(Exception::class, $parser->body());
     }
-    
+
     public function testNamespaced(): void
     {
         $throwable = new TypeError(message: message('foo'));
-        $parser = new XrThrowableParser($throwable, '');
+        $parser = new ThrowableParser($throwable, '');
         $this->assertSame('TypeError', $parser->topic());
         $this->assertSame(
             TypeError::class,
@@ -52,7 +52,7 @@ final class XrThrowableParserTest extends TestCase
     public function testWithPrevious(): void
     {
         $throwable = new Exception('foo', previous: new Exception('bar'));
-        $parser = new XrThrowableParser($throwable, '');
+        $parser = new ThrowableParser($throwable, '');
         $this->assertStringContainsString(
             '<div class="throwable-message">bar</div>',
             $parser->body()
@@ -63,7 +63,7 @@ final class XrThrowableParserTest extends TestCase
     {
         $extra = 'EXTRA EXTRA! TODD SMELLS';
         $throwable = new Exception('foo');
-        $parser = new XrThrowableParser($throwable, $extra);
+        $parser = new ThrowableParser($throwable, $extra);
         $this->assertStringContainsString($extra, $parser->body());
     }
 }

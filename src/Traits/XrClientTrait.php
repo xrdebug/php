@@ -14,23 +14,23 @@ declare(strict_types=1);
 namespace Chevere\Xr\Traits;
 
 use function Chevere\Message\message;
-use Chevere\Xr\Exceptions\XrStopException;
-use Chevere\Xr\Interfaces\XrCurlInterface;
-use Chevere\Xr\Interfaces\XrMessageInterface;
-use Chevere\Xr\XrCurl;
+use Chevere\Xr\Curl;
+use Chevere\Xr\Exceptions\StopException;
+use Chevere\Xr\Interfaces\CurlInterface;
+use Chevere\Xr\Interfaces\MessageInterface;
 
 trait XrClientTrait
 {
-    private XrCurlInterface $curl;
+    private CurlInterface $curl;
 
     public function __construct(
         private string $host = 'localhost',
         private int $port = 27420,
     ) {
-        $this->curl = new XrCurl();
+        $this->curl = new Curl();
     }
 
-    public function withCurl(XrCurlInterface $curl): self
+    public function withCurl(CurlInterface $curl): self
     {
         $new = clone $this;
         $new->curl = $curl;
@@ -38,7 +38,7 @@ trait XrClientTrait
         return $new;
     }
 
-    public function curl(): XrCurlInterface
+    public function curl(): CurlInterface
     {
         return $this->curl;
     }
@@ -48,7 +48,7 @@ trait XrClientTrait
         return "http://{$this->host}:{$this->port}/{$endpoint}";
     }
 
-    public function sendMessage(XrMessageInterface $message): void
+    public function sendMessage(MessageInterface $message): void
     {
         try {
             $curl = $this->getCurlHandle(
@@ -61,7 +61,7 @@ trait XrClientTrait
         }
     }
 
-    public function sendPause(XrMessageInterface $message): void
+    public function sendPause(MessageInterface $message): void
     {
         try {
             $curl = $this->getCurlHandle(
@@ -80,7 +80,7 @@ trait XrClientTrait
         }
     }
 
-    public function isLocked(XrMessageInterface $message): bool
+    public function isLocked(MessageInterface $message): bool
     {
         try {
             $curl = $this->getCurlHandle(
@@ -93,7 +93,7 @@ trait XrClientTrait
             }
             $response = json_decode($curlResult);
             if ($response->stop ?? false) {
-                throw new XrStopException(
+                throw new StopException(
                     message('[STOP EXECUTION] triggered from %remote%')
                         ->strtr('%remote%', $this->host . ':' . $this->port)
                 );
@@ -115,7 +115,7 @@ trait XrClientTrait
         exit($exitCode);
     }
 
-    private function getCurlHandle(string $endpoint, array $data): XrCurlInterface
+    private function getCurlHandle(string $endpoint, array $data): CurlInterface
     {
         $this->curl->setOptArray(
             [

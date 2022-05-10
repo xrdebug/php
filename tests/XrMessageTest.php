@@ -17,7 +17,7 @@ use Chevere\Writer\Interfaces\WriterInterface;
 use function Chevere\Writer\streamTemp;
 use Chevere\Writer\StreamWriter;
 use function Chevere\Xr\getWriter;
-use Chevere\Xr\XrMessage;
+use Chevere\Xr\Message;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Rfc4122\Validator;
 
@@ -37,7 +37,7 @@ final class XrMessageTest extends TestCase
 
     public function testEmptyBacktrace(): void
     {
-        $message = new XrMessage();
+        $message = new Message();
         $line = __LINE__ - 1;
         $this->assertTrue((new Validator())->validate($message->id()));
         $this->assertSame(__FILE__, $message->filePath());
@@ -66,7 +66,7 @@ final class XrMessageTest extends TestCase
                 'line' => $testLine,
             ],
         ];
-        $message = new XrMessage($trace);
+        $message = new Message($trace);
         $this->assertSame($testFile, $message->filePath());
         $this->assertSame($testLine, $message->fileLine());
         $this->assertSame(
@@ -80,7 +80,7 @@ final class XrMessageTest extends TestCase
 
     public function testWithBody(): void
     {
-        $message = new XrMessage();
+        $message = new Message();
         $body = 'the body';
         $withBody = $message->withBody($body);
         $this->assertNotSame($message, $withBody);
@@ -90,7 +90,7 @@ final class XrMessageTest extends TestCase
 
     public function testWithTopic(): void
     {
-        $message = new XrMessage();
+        $message = new Message();
         $topic = 'Topic';
         $withTopic = $message->withTopic($topic);
         $this->assertNotSame($message, $withTopic);
@@ -106,7 +106,7 @@ final class XrMessageTest extends TestCase
 
     public function testWithEmote(): void
     {
-        $message = new XrMessage();
+        $message = new Message();
         $emote = '😎';
         $withEmote = $message->withEmote($emote);
         $this->assertNotSame($message, $withEmote);
@@ -122,7 +122,7 @@ final class XrMessageTest extends TestCase
 
     public function testWithWriter(): void
     {
-        $message = new XrMessage();
+        $message = new Message();
         $writer = new StreamWriter(streamTemp('test'));
         $withWriter = $message->withWriter($writer);
         $this->assertNotSame($message, $withWriter);
@@ -134,7 +134,7 @@ final class XrMessageTest extends TestCase
 
     public function testWithVars(): void
     {
-        $message = (new XrMessage())->withWriter(getWriter());
+        $message = (new Message())->withWriter(getWriter());
         $var = 'Hola, mundo!';
         $length = strlen($var);
         $withVars = $message->withVars($var);
@@ -149,7 +149,7 @@ Arg:0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="co
 
     public function testWithBacktraceFlag(): void
     {
-        $message = new XrMessage();
+        $message = new Message();
         $line = strval(__LINE__ - 1);
         $this->assertFalse($message->isEnableBacktrace());
         $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);

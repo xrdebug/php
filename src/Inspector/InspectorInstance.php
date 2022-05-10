@@ -11,29 +11,29 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\Xr\Inspector;
 
 use Chevere\Message\Message;
 use Chevere\Throwable\Exceptions\LogicException;
-use Chevere\Writer\Interfaces\WriterInterface;
+use Chevere\Xr\Interfaces\InspectorInterface;
 
 /**
  * @codeCoverageIgnore
  */
-final class XrWriterInstance
+final class InspectorInstance
 {
-    private static WriterInterface $instance;
+    private static InspectorInterface $instance;
 
-    public function __construct(WriterInterface $writer)
+    public function __construct(InspectorInterface $xrInspector)
     {
-        self::$instance = $writer;
+        self::$instance = $xrInspector;
     }
 
-    public static function get(): WriterInterface
+    public static function get(): InspectorInterface
     {
         if (!isset(self::$instance)) {
             throw new LogicException(
-                new Message('No writer instance present')
+                new Message('No xr inspector instance present')
             );
         }
 

@@ -16,17 +16,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
         env:
           fail-fast: true
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
-
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -42,20 +39,16 @@ jobs:
             org.opencontainers.image.title=XR dump server
             org.opencontainers.image.description=Dump utility built on top of ReactPHP.
             org.opencontainers.image.vendor=chevere
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-
       - name: Login to GHCR
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build
         uses: docker/bake-action@v1
         with:
@@ -64,11 +57,9 @@ jobs:
             ${{ steps.meta.outputs.bake-file }}
           targets: build
           push: true
-
       - name: Check manifest
         run: |
           docker buildx imagetools inspect ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}
-
       - name: Inspect image
         run: |
           docker pull ${{ env.GHCR_SLUG }}:${{ steps.meta.outputs.version }}

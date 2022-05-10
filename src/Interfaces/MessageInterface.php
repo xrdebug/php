@@ -19,7 +19,7 @@ use Chevere\Writer\Interfaces\WriterInterface;
 /**
  * Describes the component in charge of defining the XR message.
  */
-interface XrMessageInterface extends ToArrayInterface
+interface MessageInterface extends ToArrayInterface
 {
     public function body(): string;
 

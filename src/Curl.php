@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Xr\Interfaces\XrClientInterface;
-use Chevere\Xr\Traits\XrClientTrait;
+use Chevere\Xr\Interfaces\CurlInterface;
+use Chevere\Xr\Traits\XrCurlTrait;
 
-final class XrClient implements XrClientInterface
+class Curl implements CurlInterface
 {
-    use XrClientTrait;
+    use XrCurlTrait;
 }

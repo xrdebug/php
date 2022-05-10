@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests\_resources;
 
-use Chevere\Xr\Interfaces\XrCurlInterface;
+use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Traits\XrCurlTrait;
 
-final class XrCurlLockTrue implements XrCurlInterface
+final class XrCurlLockTrue implements CurlInterface
 {
     use XrCurlTrait;
 

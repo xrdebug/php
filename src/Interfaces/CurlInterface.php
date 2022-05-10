@@ -18,7 +18,7 @@ use CurlHandle;
 /**
  * Describes the component in charge of defining a curl abstraction.
  */
-interface XrCurlInterface
+interface CurlInterface
 {
     public function handle(): ?CurlHandle;
 

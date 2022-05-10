@@ -16,14 +16,14 @@ namespace Chevere\Xr;
 use function Chevere\Filesystem\filePhpReturnForPath;
 use Chevere\Filesystem\Interfaces\DirInterface;
 use function Chevere\Type\typeArray;
-use Chevere\Xr\Interfaces\XrClientInterface;
-use Chevere\Xr\Interfaces\XrCurlInterface;
+use Chevere\Xr\Interfaces\ClientInterface;
+use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\XrInterface;
 use Throwable;
 
 final class Xr implements XrInterface
 {
-    private XrClientInterface $client;
+    private ClientInterface $client;
 
     private DirInterface $configDir;
 
@@ -31,14 +31,14 @@ final class Xr implements XrInterface
 
     private array $configNames = ['xr.php'];
 
-    private XrCurlInterface $curl;
+    private CurlInterface $curl;
 
     public function __construct(
         private bool $enable = true,
         private string $host = 'localhost',
         private int $port = 27420
     ) {
-        $this->curl = new XrCurl();
+        $this->curl = new Curl();
         $this->setClient();
     }
 
@@ -60,7 +60,7 @@ final class Xr implements XrInterface
         return $this->enable;
     }
 
-    public function client(): XrClientInterface
+    public function client(): ClientInterface
     {
         return $this->client;
     }
@@ -113,7 +113,7 @@ final class Xr implements XrInterface
 
     private function setClient(): void
     {
-        $this->client = (new XrClient(
+        $this->client = (new Client(
             host: $this->host,
             port: $this->port,
         ))->withCurl($this->curl);

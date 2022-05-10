@@ -24,7 +24,7 @@ interface XrInterface
 
     public function enable(): bool;
 
-    public function client(): XrClientInterface;
+    public function client(): ClientInterface;
 
     public function host(): string;
 

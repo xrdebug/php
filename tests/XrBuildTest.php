@@ -14,14 +14,14 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests;
 
 use function Chevere\Filesystem\dirForPath;
-use Chevere\Xr\XrBuild;
+use Chevere\Xr\Build;
 use PHPUnit\Framework\TestCase;
 
 final class XrBuildTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $build = new XrBuild(
+        $build = new Build(
             dirForPath(__DIR__ . '/_resources/app/src'),
             '6.6.6',
             'ElNúmeroDeLaBestia'

@@ -16,7 +16,7 @@ namespace Chevere\Xr;
 use Chevere\Filesystem\File;
 use Chevere\Filesystem\Interfaces\DirInterface;
 
-final class XrBuild
+final class Build
 {
     private string $html;
 

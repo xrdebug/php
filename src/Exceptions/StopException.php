@@ -18,6 +18,6 @@ use Chevere\Throwable\Exception;
 /**
  * Exception thrown when STOP, XR TIME.
  */
-final class XrStopException extends Exception
+final class StopException extends Exception
 {
 }

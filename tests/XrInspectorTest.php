@@ -13,26 +13,26 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests;
 
-use Chevere\Xr\Inspector\XrInspector;
+use Chevere\Xr\Client;
+use Chevere\Xr\Inspector\Inspector;
 use Chevere\Xr\Tests\_resources\XrClientTester;
 use Chevere\Xr\Tests\_resources\XrClientTesterStop;
-use Chevere\Xr\XrClient;
 use PHPUnit\Framework\TestCase;
 
 final class XrInspectorTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $client = new XrClient();
+        $client = new Client();
         $this->expectNotToPerformAssertions();
-        new XrInspector($client);
+        new Inspector($client);
     }
 
     public function testMemory(): void
     {
         require_once __DIR__ . '/_resources/XrClientTester.php';
         $client = new XrClientTester();
-        $inspector = new XrInspector($client);
+        $inspector = new Inspector($client);
         $topic = 'topic';
         $emote = 'emote';
         $flags = 0;
@@ -60,7 +60,7 @@ final class XrInspectorTest extends TestCase
     {
         require_once __DIR__ . '/_resources/XrClientTester.php';
         $client = new XrClientTester();
-        $inspector = new XrInspector($client);
+        $inspector = new Inspector($client);
         $topic = 'topic';
         $emote = 'emote';
         $flags = 0;
@@ -83,7 +83,7 @@ final class XrInspectorTest extends TestCase
     {
         require_once __DIR__ . '/_resources/XrClientTesterStop.php';
         $client = new XrClientTesterStop();
-        $inspector = new XrInspector($client);
+        $inspector = new Inspector($client);
         $this->expectOutputString("* stop\nexit 255");
         $inspector->pause();
     }

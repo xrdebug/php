@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests;
 
-use Chevere\Xr\Inspector\XrInspectorNull;
-use Chevere\Xr\XrClient;
+use Chevere\Xr\Client;
+use Chevere\Xr\Inspector\InspectorNull;
 use PHPUnit\Framework\TestCase;
 
 final class XrInspectorNullTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $client = new XrClient();
-        $inspector = new XrInspectorNull($client);
+        $client = new Client();
+        $inspector = new InspectorNull($client);
         foreach (['memory', 'pause'] as $method) {
             $this->assertNull($inspector->$method());
         }

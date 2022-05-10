@@ -11,5 +11,5 @@
 
 declare(strict_types=1);
 
-const XR_VERSION = '0.2.5';
-const XR_CODENAME = 'Egocéntrico';
+const XR_VERSION = '0.3.0';
+const XR_CODENAME = 'Nifty';

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Tests;
 
-use Chevere\Xr\XrCurl;
+use Chevere\Xr\Curl;
 use CurlHandle;
 use PHPUnit\Framework\TestCase;
 
@@ -21,33 +21,33 @@ final class XrCurlTest extends TestCase
 {
     public function testError(): void
     {
-        $curl = new XrCurl();
+        $curl = new Curl();
         $this->assertSame('', $curl->error());
     }
 
     public function testExec(): void
     {
-        $curl = new XrCurl();
+        $curl = new Curl();
         $this->assertFalse($curl->exec());
     }
 
     public function testOptArray(): void
     {
         $this->expectNotToPerformAssertions();
-        $curl = new XrCurl();
+        $curl = new Curl();
         $curl->setOptArray([CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1]);
     }
 
     public function testNoHandleClose(): void
     {
         $this->expectNotToPerformAssertions();
-        $curl = new XrCurl();
+        $curl = new Curl();
         $curl->close();
     }
-    
+
     public function testInitNull(): void
     {
-        $curl = new XrCurl();
+        $curl = new Curl();
         $handle = $curl->handle();
         $this->assertInstanceOf(CurlHandle::class, $handle);
         $this->assertSame('', $curl->error());
@@ -56,9 +56,9 @@ final class XrCurlTest extends TestCase
 
     public function testExecBool(): void
     {
-        $curl = new XrCurl();
+        $curl = new Curl();
         $this->assertFalse($curl->exec());
-        $curl = new XrCurl('https://www.cloudflare.com/ips-v4');
+        $curl = new Curl('https://www.cloudflare.com/ips-v4');
         $this->expectOutputRegex('#.*#');
         $this->assertTrue($curl->exec());
         $curl->close();
@@ -66,7 +66,7 @@ final class XrCurlTest extends TestCase
 
     public function testExecString(): void
     {
-        $curl = new XrCurl('https://www.cloudflare.com/ips-v4');
+        $curl = new Curl('https://www.cloudflare.com/ips-v4');
         $curl->setOptArray([CURLOPT_RETURNTRANSFER => 1]);
         $this->assertIsString($curl->exec());
     }

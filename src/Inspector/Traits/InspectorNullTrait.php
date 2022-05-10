@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Inspector\Traits;
 
-trait XrInspectorNullTrait
+trait InspectorNullTrait
 {
     public function pause(
         string $e = '',

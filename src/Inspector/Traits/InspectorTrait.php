@@ -10,16 +10,17 @@
  */
 
 declare(strict_types=1);
+
 namespace Chevere\Xr\Inspector\Traits;
 
-use Chevere\Xr\Exceptions\XrStopException;
-use Chevere\Xr\Interfaces\XrClientInterface;
-use Chevere\Xr\XrMessage;
+use Chevere\Xr\Exceptions\StopException;
+use Chevere\Xr\Interfaces\ClientInterface;
+use Chevere\Xr\Message;
 
-trait XrInspectorTrait
+trait InspectorTrait
 {
     public function __construct(
-        protected XrClientInterface $client,
+        protected ClientInterface $client,
     ) {
     }
 
@@ -29,7 +30,7 @@ trait XrInspectorTrait
         int $f = 0,
     ): void {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 1);
-        $message = (new XrMessage(
+        $message = (new Message(
             backtrace: $backtrace,
         ))
             ->withTopic($t)
@@ -38,7 +39,7 @@ trait XrInspectorTrait
 
         try {
             $this->client->sendPause($message);
-        } catch (XrStopException $e) {
+        } catch (StopException $e) {
             if (PHP_SAPI === 'cli') {
                 echo '* ' . $e->getMessage() . PHP_EOL;
                 $this->client->exit(255);
@@ -59,7 +60,7 @@ trait XrInspectorTrait
             flags: $f,
         );
     }
-    
+
     private function sendMessage(
         string $body = '',
         string $topic = '',
@@ -68,14 +69,14 @@ trait XrInspectorTrait
     ): void {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
         array_shift($backtrace);
-        $message = (new XrMessage(
+        $message = (new Message(
             backtrace: $backtrace,
         ))
             ->withBody($body)
             ->withTopic($topic)
             ->withEmote($emote)
             ->withFlags($flags);
-        
+
         $this->client->sendMessage($message);
     }
 }

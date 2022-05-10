@@ -16,13 +16,13 @@ namespace Chevere\Xr\Interfaces;
 /**
  * Describes the component in charge of defining the client.
  */
-interface XrClientInterface
+interface ClientInterface
 {
     public function getUrl(string $endpoint): string;
 
-    public function sendMessage(XrMessageInterface $message): void;
+    public function sendMessage(MessageInterface $message): void;
 
-    public function sendPause(XrMessageInterface $message): void;
+    public function sendPause(MessageInterface $message): void;
 
     public function exit(int $exitCode = 0): void;
 }

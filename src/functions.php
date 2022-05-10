@@ -26,7 +26,7 @@ namespace Chevere\Xr {
     function getWriter(): WriterInterface
     {
         try {
-            return XrWriterInstance::get();
+            return WriterInstance::get();
         } catch (LogicException) {
             return new StreamWriter(streamTemp(''));
         }
@@ -83,10 +83,10 @@ namespace Chevere\Xr {
         if (getXr()->enable() === false) {
             return; // @codeCoverageIgnore
         }
-        $parser = new XrThrowableParser($throwable, $extra);
+        $parser = new ThrowableParser($throwable, $extra);
         getXr()->client()
             ->sendMessage(
-                (new XrMessage(
+                (new Message(
                     backtrace: $parser->throwableRead()->trace(),
                 ))
                     ->withBody($parser->body())
@@ -99,11 +99,11 @@ namespace Chevere\Xr {
 namespace {
     use function Chevere\Xr\getWriter;
     use function Chevere\Xr\getXr;
-    use Chevere\Xr\Inspector\XrInspector;
-    use Chevere\Xr\Inspector\XrInspectorInstance;
-    use Chevere\Xr\Inspector\XrInspectorNull;
-    use Chevere\Xr\Interfaces\XrInspectorInterface;
-    use Chevere\Xr\XrMessage;
+    use Chevere\Xr\Inspector\Inspector;
+    use Chevere\Xr\Inspector\InspectorInstance;
+    use Chevere\Xr\Inspector\InspectorNull;
+    use Chevere\Xr\Interfaces\InspectorInterface;
+    use Chevere\Xr\Message;
 
 // @codeCoverageIgnoreStart
     if (!defined('XR_BACKTRACE')) {
@@ -137,7 +137,7 @@ namespace {
             }
             getXr()->client()
                 ->sendMessage(
-                    (new XrMessage(
+                    (new Message(
                         backtrace: debug_backtrace(),
                     ))
                         ->withWriter(getWriter())
@@ -174,7 +174,7 @@ namespace {
             }
             getXr()->client()
                 ->sendMessage(
-                    (new XrMessage(
+                    (new Message(
                         backtrace: debug_backtrace(),
                     ))
                         ->withWriter(getWriter())
@@ -191,17 +191,17 @@ namespace {
          *
          * @codeCoverageIgnore
          */
-        function xri(): XrInspectorInterface
+        function xri(): InspectorInterface
         {
             try {
-                return XrInspectorInstance::get();
+                return InspectorInstance::get();
             } catch (LogicException) {
                 $xrInspector = getXr()->enable()
-                    ? XrInspector::class
-                    : XrInspectorNull::class;
+                    ? Inspector::class
+                    : InspectorNull::class;
                 $xrInspector = new $xrInspector(getXr()->client());
-    
-                return (new XrInspectorInstance($xrInspector))::get();
+
+                return (new InspectorInstance($xrInspector))::get();
             }
         }
     }
