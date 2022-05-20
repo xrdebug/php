@@ -18,9 +18,9 @@
     "require": {
         "php": ">=8.0",
         "chevere/chevere": "^0.7",
-        "chevere/throwable-handler": "^0.5",
-        "chevere/trace": "^0.3",
-        "chevere/var-dump": "^0.3",
+        "chevere/throwable-handler": "^0.6",
+        "chevere/trace": "^0.4",
+        "chevere/var-dump": "^0.4",
         "rodber/php-sse-react": "^0.1",
         "samejack/php-argv": "^1.0"
     },
