@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests\_resources;
 
 use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Traits\XrCurlTrait;
+use Chevere\Xr\Traits\CurlTrait;
 
-final class XrCurlStopTrue implements CurlInterface
+final class CurlStopTrue implements CurlInterface
 {
-    use XrCurlTrait;
+    use CurlTrait;
 
     public function error(): string
     {

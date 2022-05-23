@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Chevere\Xr;
 
 use Chevere\Xr\Interfaces\ClientInterface;
-use Chevere\Xr\Traits\XrClientTrait;
+use Chevere\Xr\Traits\ClientTrait;
 
 final class Client implements ClientInterface
 {
-    use XrClientTrait;
+    use ClientTrait;
 }

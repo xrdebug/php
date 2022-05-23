@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Chevere\Xr;
 
 use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Traits\XrCurlTrait;
+use Chevere\Xr\Traits\CurlTrait;
 
 class Curl implements CurlInterface
 {
-    use XrCurlTrait;
+    use CurlTrait;
 }

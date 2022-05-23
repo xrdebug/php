@@ -19,7 +19,7 @@ use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
 
-trait XrClientTrait
+trait ClientTrait
 {
     private CurlInterface $curl;
 

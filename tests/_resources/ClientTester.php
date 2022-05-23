@@ -15,11 +15,11 @@ namespace Chevere\Xr\Tests\_resources;
 
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
-use Chevere\Xr\Traits\XrClientTrait;
+use Chevere\Xr\Traits\ClientTrait;
 
-class XrClientTester implements ClientInterface
+class ClientTester implements ClientInterface
 {
-    use XrClientTrait;
+    use ClientTrait;
 
     private MessageInterface $lastMessage;
 

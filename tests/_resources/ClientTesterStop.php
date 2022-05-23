@@ -17,11 +17,11 @@ use function Chevere\Message\message;
 use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
-use Chevere\Xr\Traits\XrClientTrait;
+use Chevere\Xr\Traits\ClientTrait;
 
-final class XrClientTesterStop implements ClientInterface
+final class ClientTesterStop implements ClientInterface
 {
-    use XrClientTrait;
+    use ClientTrait;
 
     public function sendPause(MessageInterface $message): void
     {

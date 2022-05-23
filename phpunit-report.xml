@@ -5,9 +5,10 @@
          cacheResultFile=".phpunit.cache/test-results"
          failOnRisky="true"
          failOnWarning="true"
-         testdox="true">
+         testdox="true"
+         executionOrder="default">
     <testsuites>
-        <testsuite name="Chevere/Xr Test suite">
+        <testsuite name="Chevere Test suite">
             <directory suffix="Test.php">tests/</directory>
         </testsuite>
     </testsuites>

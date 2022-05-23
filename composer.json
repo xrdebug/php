@@ -1,6 +1,7 @@
 {
     "name": "chevere/xr",
     "description": "Lightweight debug utility",
+    "homepage": "https://xr-debug.chevere.org",
     "keywords": [
         "chevere",
         "dump",
@@ -12,7 +13,7 @@
         {
             "name": "Rodolfo Berrios",
             "email": "rodolfo@chevere.org",
-            "homepage": "https://chevere.org"
+            "homepage": "https://rodolfoberrios.com"
         }
     ],
     "require": {
@@ -20,13 +21,12 @@
         "chevere/chevere": "^0.7",
         "chevere/throwable-handler": "^0.6",
         "chevere/trace": "^0.4",
-        "chevere/var-dump": "^0.4",
-        "rodber/php-sse-react": "^0.1",
-        "samejack/php-argv": "^1.0"
+        "chevere/var-dump": "^0.4.x-dev",
+        "chevere/xr-server": "^0.3.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "symplify/easy-coding-standard": "^10.1"
+        "symplify/easy-coding-standard": "^10.2"
     },
     "autoload": {
         "files": [
@@ -36,14 +36,12 @@
             "Chevere\\Xr\\": "src/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "config": {
         "optimize-autoloader": true,
         "sort-packages": true
     },
     "scripts": {
-        "update-cs": "curl --create-dirs -O --output-dir .ecs https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php"
+        "update-cs": "mkdir -p .ecs && cd .ecs && curl -O https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php"
     },
     "scripts-descriptions": {
         "update-cs": "Update Chevere code style definition"

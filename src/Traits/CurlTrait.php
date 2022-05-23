@@ -15,7 +15,7 @@ namespace Chevere\Xr\Traits;
 
 use CurlHandle;
 
-trait XrCurlTrait
+trait CurlTrait
 {
     private ?CurlHandle $handle = null;
 

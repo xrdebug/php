@@ -17,7 +17,7 @@ use Chevere\Xr\Client;
 use Chevere\Xr\Inspector\InspectorNull;
 use PHPUnit\Framework\TestCase;
 
-final class XrInspectorNullTest extends TestCase
+final class InspectorNullTest extends TestCase
 {
     public function testConstruct(): void
     {

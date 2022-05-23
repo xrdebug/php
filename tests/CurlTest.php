@@ -17,7 +17,7 @@ use Chevere\Xr\Curl;
 use CurlHandle;
 use PHPUnit\Framework\TestCase;
 
-final class XrCurlTest extends TestCase
+final class CurlTest extends TestCase
 {
     public function testError(): void
     {

@@ -21,7 +21,7 @@ use Chevere\Xr\Message;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Rfc4122\Validator;
 
-final class XrMessageTest extends TestCase
+final class MessageTest extends TestCase
 {
     private WriterInterface $writer;
 

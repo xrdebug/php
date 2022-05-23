@@ -14,19 +14,19 @@ declare(strict_types=1);
 namespace Chevere\Xr\Tests\_resources;
 
 use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Traits\XrCurlTrait;
+use Chevere\Xr\Traits\CurlTrait;
 
-final class XrCurlLockTrue implements CurlInterface
+final class CurlError implements CurlInterface
 {
-    use XrCurlTrait;
+    use CurlTrait;
 
     public function error(): string
     {
-        return '';
+        return 'oops';
     }
 
     public function exec(): string|bool
     {
-        return '{"lock":true}';
+        return '';
     }
 }
