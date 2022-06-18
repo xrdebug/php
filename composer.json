@@ -18,15 +18,15 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "^0.7",
-        "chevere/throwable-handler": "^0.6",
-        "chevere/trace": "^0.4",
-        "chevere/var-dump": "^0.4.x-dev",
+        "chevere/chevere": "^0.8.x-dev",
+        "chevere/throwable-handler": "^0.7.x-dev",
+        "chevere/trace": "^0.5.x-dev",
+        "chevere/var-dump": "^0.5.x-dev",
         "chevere/xr-server": "^0.3.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "symplify/easy-coding-standard": "^10.2"
+        "symplify/easy-coding-standard": "^10.3"
     },
     "autoload": {
         "files": [

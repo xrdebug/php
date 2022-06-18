@@ -36,7 +36,7 @@ xr(
 );
 sleep(4);
 $message = message('Did you heard about %package%?')
-    ->code('%package%', 'spatie/ray');
+    ->withCode('%package%', 'spatie/ray');
 xr(
     inspiration: $message,
     t: 'hello-world',

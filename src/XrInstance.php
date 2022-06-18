@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use Chevere\Message\Message;
+use function Chevere\Message\message;
 use Chevere\Throwable\Exceptions\LogicException;
 use Chevere\Xr\Interfaces\XrInterface;
 
@@ -33,7 +33,7 @@ final class XrInstance
     {
         if (!isset(self::$instance)) {
             throw new LogicException(
-                new Message('No xr instance present')
+                message('No xr instance present')
             );
         }
 

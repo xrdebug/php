@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Inspector;
 
-use Chevere\Message\Message;
+use function Chevere\Message\message;
 use Chevere\Throwable\Exceptions\LogicException;
 use Chevere\Xr\Interfaces\InspectorInterface;
 
@@ -33,7 +33,7 @@ final class InspectorInstance
     {
         if (!isset(self::$instance)) {
             throw new LogicException(
-                new Message('No xr inspector instance present')
+                message('No xr inspector instance present')
             );
         }
 
