@@ -18,10 +18,10 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "^0.8.x-dev",
-        "chevere/throwable-handler": "^0.7.x-dev",
-        "chevere/trace": "^0.5.x-dev",
-        "chevere/var-dump": "^0.5.x-dev",
+        "chevere/chevere": "^0.8",
+        "chevere/throwable-handler": "^0.7",
+        "chevere/trace": "^0.5",
+        "chevere/var-dump": "^0.5",
         "chevere/xr-server": "^0.3.x-dev"
     },
     "require-dev": {
