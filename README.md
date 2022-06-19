@@ -28,7 +28,7 @@ XR Debug is a dump debug utility for PHP. No extras required, **debug** your PHP
 * ✍️ Re-name "XR Debug" to anything you want
 * 🏁 Resume, Pause, Stop and Clear debug window controls
 * 🥷 Keyboard shortcuts (Resume **R**, Pause **P**, Stop **S** and Clear **C**)
-* 😊 Export dump output to clipboard or as **PNG image**
+* 😊 Export dump output to clipboard or as PNG image
 * 📟 Generates dump [backtrace](#flags)
 * ⏸ [Pause](#pause) and resume your code execution
 * 🌚 Dark / 🌝 Light mode follows your system preferences
@@ -38,7 +38,6 @@ XR Debug is a dump debug utility for PHP. No extras required, **debug** your PHP
 * 😅 Handle exceptions (hook or replace your existing handler)
 
 <p align="center">
-    <img alt="XR light demo" src=".screen/xr-0.1.3-light-demo.png">
     <img alt="XR dark demo" src=".screen/xr-0.1.3-dark-demo.png">
 </p>
 
