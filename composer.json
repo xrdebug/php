@@ -21,10 +21,10 @@
         "chevere/chevere": "^0.8",
         "chevere/throwable-handler": "^0.7",
         "chevere/trace": "^0.5",
-        "chevere/var-dump": "^0.5",
-        "chevere/xr-server": "^0.3.x-dev"
+        "chevere/var-dump": "^0.5"
     },
     "require-dev": {
+        "chevere/xr-server": "0.3.x-dev",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^10.3"
     },
