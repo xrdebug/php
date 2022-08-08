@@ -47,7 +47,7 @@ interface MessageInterface extends ToArrayInterface
 
     public function withWriter(WriterInterface $writer): self;
 
-    public function withVars(...$vars): self;
+    public function withVariables(...$variables): self;
 
     public function withFlags(int $flags): self;
 

@@ -132,19 +132,19 @@ final class MessageTest extends TestCase
         );
     }
 
-    public function testWithVars(): void
+    public function testWithVariables(): void
     {
         $message = (new Message())->withWriter(getWriter());
-        $var = 'Hola, mundo!';
-        $length = strlen($var);
-        $withVars = $message->withVars($var);
-        $this->assertNotSame($message, $withVars);
+        $variable = 'Hola, mundo!';
+        $length = strlen($variable);
+        $withVariables = $message->withVariables($variable);
+        $this->assertNotSame($message, $withVariables);
         $this->assertSame(
-            $var,
-            $withVars->vars()[0]
+            $variable,
+            $withVariables->vars()[0]
         );
         $this->assertSame('<div class="dump"><pre>
-Arg•0 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre></div>', $withVars->toArray()['body']);
+Arg•0 <span style="color:#ff8700">string</span> ' . $variable . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre></div>', $withVariables->toArray()['body']);
     }
 
     public function testWithBacktraceFlag(): void

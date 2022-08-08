@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Interfaces;
 
-use Chevere\Filesystem\Interfaces\DirInterface;
+use Chevere\Filesystem\Interfaces\DirectoryInterface;
 
 /**
  * Describes the component in charge of defining XR.
  */
 interface XrInterface
 {
-    public function withConfigDir(DirInterface $configDir): XrInterface;
+    public function withConfigDir(DirectoryInterface $config): XrInterface;
 
     public function enable(): bool;
 

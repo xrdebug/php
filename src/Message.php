@@ -133,10 +133,10 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withVars(...$vars): self
+    public function withVariables(...$variables): self
     {
         $new = clone $this;
-        $new->vars = $vars;
+        $new->vars = $variables;
 
         return $new;
     }
@@ -175,7 +175,7 @@ final class Message implements MessageInterface
             new VarDumpHtmlFormat(),
             new XrVarDumpHtmlOutput()
         ))
-            ->withVars(...$this->vars)
+            ->withVariables(...$this->vars)
             ->process($this->writer);
         $dumpString = $this->writer->__toString();
         if ($dumpString !== '') {

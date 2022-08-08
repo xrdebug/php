@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Chevere\Xr;
 
 use function Chevere\Filesystem\filePhpReturnForPath;
-use Chevere\Filesystem\Interfaces\DirInterface;
+use Chevere\Filesystem\Interfaces\DirectoryInterface;
 use function Chevere\Type\typeArray;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\CurlInterface;
@@ -25,7 +25,7 @@ final class Xr implements XrInterface
 {
     private ClientInterface $client;
 
-    private DirInterface $configDir;
+    private DirectoryInterface $directory;
 
     private string $configFile = '';
 
@@ -42,10 +42,10 @@ final class Xr implements XrInterface
         $this->setClient();
     }
 
-    public function withConfigDir(DirInterface $configDir): XrInterface
+    public function withConfigDir(DirectoryInterface $config): XrInterface
     {
         $new = clone $this;
-        $new->configDir = $configDir;
+        $new->directory = $config;
         $new->configFile = $new->getConfigFile();
         if ($new->configFile !== '') {
             $new->setConfigFromFile();
@@ -79,7 +79,7 @@ final class Xr implements XrInterface
     {
         try {
             $return = filePhpReturnForPath($this->configFile)
-                ->varType(typeArray());
+                ->variableTyped(typeArray());
             foreach (['enable', 'host', 'port'] as $prop) {
                 $this->{$prop} = $return[$prop] ?? $this->{$prop};
             }
@@ -93,7 +93,7 @@ final class Xr implements XrInterface
 
     private function getConfigFile(): string
     {
-        $configDirectory = $this->configDir->path()->__toString();
+        $configDirectory = $this->directory->path()->__toString();
         while (is_dir($configDirectory)) {
             foreach ($this->configNames as $configName) {
                 $configFullPath = $configDirectory . $configName;

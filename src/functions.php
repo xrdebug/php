@@ -12,7 +12,7 @@
 declare(strict_types=1);
 
 namespace Chevere\Xr {
-    use function Chevere\Filesystem\dirForPath;
+    use function Chevere\Filesystem\directoryForPath;
     use Chevere\Writer\Interfaces\WriterInterface;
     use function Chevere\Writer\streamTemp;
     use Chevere\Writer\StreamWriter;
@@ -39,7 +39,7 @@ namespace Chevere\Xr {
         } catch (LogicException) {
             $xr = (new Xr())
                 ->withConfigDir(
-                    dirForPath(getcwd())
+                    directoryForPath(getcwd())
                 );
 
             return (new XrInstance($xr))::get();
@@ -141,7 +141,7 @@ namespace {
                         backtrace: debug_backtrace(),
                     ))
                         ->withWriter(getWriter())
-                        ->withVars(...$vars)
+                        ->withVariables(...$vars)
                         ->withTopic(strval($args['t']))
                         ->withEmote(strval($args['e']))
                         ->withFlags(intval($args['f']))
