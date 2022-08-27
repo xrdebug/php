@@ -37,9 +37,10 @@ final class ClientTest extends TestCase
     {
         $port = 12345;
         $host = 'test-host';
-        $client = new Client(port: $port, host: $host);
+        $isHttps = true;
+        $client = new Client(port: $port, host: $host, isHttps: $isHttps);
         $this->assertSame(
-            "http://$host:$port/endpoint",
+            "https://$host:$port/endpoint",
             $client->getUrl('endpoint')
         );
         $message = new Message();

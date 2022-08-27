@@ -20,13 +20,17 @@ use Chevere\Filesystem\Interfaces\DirectoryInterface;
  */
 interface XrInterface
 {
+    public const CONFIG_NAMES = ['isEnabled', 'isHttps', 'host', 'port'];
+
     public function withConfigDir(DirectoryInterface $config): XrInterface;
 
-    public function enable(): bool;
+    public function isEnabled(): bool;
 
-    public function client(): ClientInterface;
+    public function isHttps(): bool;
 
     public function host(): string;
 
     public function port(): int;
+
+    public function client(): ClientInterface;
 }

@@ -34,7 +34,8 @@ final class Xr implements XrInterface
     private CurlInterface $curl;
 
     public function __construct(
-        private bool $enable = true,
+        private bool $isEnabled = true,
+        private bool $isHttps = false,
         private string $host = 'localhost',
         private int $port = 27420
     ) {
@@ -55,9 +56,14 @@ final class Xr implements XrInterface
         return $new;
     }
 
-    public function enable(): bool
+    public function isEnabled(): bool
     {
-        return $this->enable;
+        return $this->isEnabled;
+    }
+
+    public function isHttps(): bool
+    {
+        return $this->isHttps;
     }
 
     public function client(): ClientInterface
@@ -80,7 +86,7 @@ final class Xr implements XrInterface
         try {
             $return = filePhpReturnForPath($this->configFile)
                 ->variableTyped(typeArray());
-            foreach (['enable', 'host', 'port'] as $prop) {
+            foreach (static::CONFIG_NAMES as $prop) {
                 $this->{$prop} = $return[$prop] ?? $this->{$prop};
             }
         }
@@ -116,6 +122,7 @@ final class Xr implements XrInterface
         $this->client = (new Client(
             host: $this->host,
             port: $this->port,
+            isHttps: $this->isHttps,
         ))->withCurl($this->curl);
     }
 }

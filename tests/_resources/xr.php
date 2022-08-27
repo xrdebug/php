@@ -12,7 +12,8 @@
 declare(strict_types=1);
 
 return [
-    'enable' => false,
+    'isEnabled' => false,
+    'isHttps' => false,
     'host' => 'test',
     'port' => 1234,
 ];

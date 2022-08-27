@@ -24,7 +24,8 @@ final class XrTest extends TestCase
     {
         $xr = new Xr();
         $args = [
-            'enable' => true,
+            'isEnabled' => true,
+            'isHttps' => false,
             'host' => 'localhost',
             'port' => 27420,
         ];
@@ -37,7 +38,8 @@ final class XrTest extends TestCase
     public function testConstructWithArguments(): void
     {
         $args = [
-            'enable' => false,
+            'isEnabled' => false,
+            'isHttps' => false,
             'host' => 'test',
             'port' => 1234,
         ];
@@ -55,7 +57,7 @@ final class XrTest extends TestCase
     {
         $xr = (new Xr())
             ->withConfigDir(directoryForPath(__DIR__ . '/_empty/_empty/'));
-        $this->assertSame(true, $xr->enable());
+        $this->assertSame(true, $xr->isEnabled());
         $this->assertEquals(new Client(), $xr->client());
     }
 
@@ -63,7 +65,7 @@ final class XrTest extends TestCase
     {
         $xr = (new Xr())
             ->withConfigDir(directoryForPath(__DIR__ . '/_not-found/'));
-        $this->assertSame(true, $xr->enable());
+        $this->assertSame(true, $xr->isEnabled());
         $this->assertEquals(new Client(), $xr->client());
     }
 
@@ -72,8 +74,8 @@ final class XrTest extends TestCase
         $configDir = directoryForPath(__DIR__ . '/_resources/');
         $return = include $configDir->path()->getChild('xr.php')->__toString();
         $xr = (new Xr())->withConfigDir($configDir);
-        $this->assertSame($return['enable'], $xr->enable());
-        unset($return['enable']);
+        $this->assertSame($return['isEnabled'], $xr->isEnabled());
+        unset($return['isEnabled']);
         $this->assertEquals(new Client(...$return), $xr->client());
     }
 }

@@ -23,11 +23,17 @@ trait ClientTrait
 {
     private CurlInterface $curl;
 
+    private string $scheme = 'http';
+
     public function __construct(
         private string $host = 'localhost',
         private int $port = 27420,
+        private bool $isHttps = false,
     ) {
         $this->curl = new Curl();
+        if ($isHttps) {
+            $this->scheme = 'https';
+        }
     }
 
     public function withCurl(CurlInterface $curl): self
@@ -45,7 +51,7 @@ trait ClientTrait
 
     public function getUrl(string $endpoint): string
     {
-        return "http://{$this->host}:{$this->port}/{$endpoint}";
+        return "{$this->scheme}://{$this->host}:{$this->port}/{$endpoint}";
     }
 
     public function sendMessage(MessageInterface $message): void

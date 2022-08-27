@@ -80,7 +80,7 @@ namespace Chevere\Xr {
      */
     function throwableHandler(Throwable $throwable, string $extra = ''): void
     {
-        if (getXr()->enable() === false) {
+        if (getXr()->isEnabled() === false) {
             return; // @codeCoverageIgnore
         }
         $parser = new ThrowableParser($throwable, $extra);
@@ -125,7 +125,7 @@ namespace {
          */
         function xr(...$vars): void
         {
-            if (getXr()->enable() === false) {
+            if (getXr()->isEnabled() === false) {
                 return; // @codeCoverageIgnore
             }
             $defaultArgs = ['e' => '', 't' => '', 'f' => 0];
@@ -169,7 +169,7 @@ namespace {
             string $e = '',
             int $f = 0
         ): void {
-            if (getXr()->enable() === false) {
+            if (getXr()->isEnabled() === false) {
                 return;
             }
             getXr()->client()
@@ -196,7 +196,7 @@ namespace {
             try {
                 return InspectorInstance::get();
             } catch (LogicException) {
-                $xrInspector = getXr()->enable()
+                $xrInspector = getXr()->isEnabled()
                     ? Inspector::class
                     : InspectorNull::class;
                 $xrInspector = new $xrInspector(getXr()->client());
