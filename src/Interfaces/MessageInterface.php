@@ -33,6 +33,9 @@ interface MessageInterface extends ToArrayInterface
 
     public function isEnableBacktrace(): bool;
 
+    /**
+     * @return array<int|string, mixed>
+     */
     public function vars(): array;
 
     public function id(): string;
@@ -47,9 +50,12 @@ interface MessageInterface extends ToArrayInterface
 
     public function withWriter(WriterInterface $writer): self;
 
-    public function withVariables(...$variables): self;
+    public function withVariables(mixed ...$variables): self;
 
     public function withFlags(int $flags): self;
 
+    /**
+     * @return array<string, string>
+     */
     public function toArray(): array;
 }

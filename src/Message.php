@@ -38,14 +38,21 @@ final class Message implements MessageInterface
 
     private bool $isFlagBacktrace = false;
 
+    /**
+     * @var array<int|string, mixed>
+     */
     private array $vars = [];
 
     private WriterInterface $writer;
 
     private string $id;
 
-    public function __construct(private array $backtrace = [])
-    {
+    /**
+     * @param array<int, array<string, mixed>> $backtrace
+     */
+    public function __construct(
+        private array $backtrace = []
+    ) {
         if ($backtrace === []) {
             $this->backtrace = debug_backtrace();
         }
@@ -133,7 +140,7 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withVariables(...$variables): self
+    public function withVariables(mixed ...$variables): self
     {
         $new = clone $this;
         $new->vars = $variables;

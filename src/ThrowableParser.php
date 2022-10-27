@@ -22,16 +22,6 @@ use Throwable;
 
 class ThrowableParser
 {
-    private string $topic = '';
-
-    private string $body = '';
-
-    private string $emote = '⚠️Throwable';
-
-    private FormatInterface $format;
-
-    private int $index = 0;
-
     public const OPEN_TEMPLATE = '<div class="throwable">';
 
     public const CLOSE_TEMPLATE = '</div>';
@@ -46,8 +36,20 @@ class ThrowableParser
         </div>
     HTML;
 
+    private string $topic = '';
+
+    private string $body = '';
+
+    private string $emote = '⚠️Throwable';
+
+    private FormatInterface $format;
+
+    private int $index = 0;
+
+    private ThrowableReadInterface $throwableRead;
+
     public function __construct(
-        private Throwable $throwable,
+        private Throwable $throwable, // @phpstan-ignore-line
         private string $extra = '',
     ) {
         $this->throwableRead = new ThrowableRead($throwable);
@@ -103,19 +105,19 @@ class ThrowableParser
                     'function' => '{main}',
                     'file' => $read->file(),
                     'line' => $read->line(),
-                ]
+                ],
             ];
         }
         $traceDocument = new Trace($trace, $this->format);
         $translate = [
-                '%title%' => $read->className(),
-                '%code%' => $read->code(),
-                '%message%' => $read->message(),
-                '%extra%' => $this->index === 1
-                    ? $this->extra
-                    : '',
-                '%trace%' => $traceDocument->__toString(),
-            ];
+            '%title%' => $read->className(),
+            '%code%' => $read->code(),
+            '%message%' => $read->message(),
+            '%extra%' => $this->index === 1
+                ? $this->extra
+                : '',
+            '%trace%' => $traceDocument->__toString(),
+        ];
         $this->appendBodyLine(strtr(static::ITEM_TEMPLATE, $translate));
 
         return $throwable->getPrevious();

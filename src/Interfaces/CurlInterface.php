@@ -20,12 +20,15 @@ use CurlHandle;
  */
 interface CurlInterface
 {
-    public function handle(): ?CurlHandle;
+    public function handle(): CurlHandle;
 
     public function error(): string;
 
     public function exec(): string|bool;
 
+    /**
+     * @param array<int, mixed> $options
+     */
     public function setOptArray(array $options): bool;
 
     public function close(): void;

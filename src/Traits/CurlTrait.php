@@ -13,18 +13,30 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Traits;
 
+use function Chevere\Message\message;
+use Chevere\Throwable\Exceptions\RuntimeException;
 use CurlHandle;
 
 trait CurlTrait
 {
-    private ?CurlHandle $handle = null;
+    private CurlHandle $handle;
 
     public function __construct(string $url = null)
     {
-        $this->handle = curl_init($url);
+        $this->handle = curl_init($url)
+            ?: throw new RuntimeException(
+                message('Unable to initialize curl')
+            );
     }
 
-    public function handle(): ?CurlHandle
+    public function __destruct()
+    {
+        if (isset($this->handle)) {
+            $this->close();
+        }
+    }
+
+    public function handle(): CurlHandle
     {
         return $this->handle;
     }
@@ -47,12 +59,5 @@ trait CurlTrait
     public function close(): void
     {
         curl_close($this->handle);
-    }
-
-    public function __destruct()
-    {
-        if (isset($this->handle)) {
-            $this->close();
-        }
     }
 }

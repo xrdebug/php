@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Xr {
     use function Chevere\Filesystem\directoryForPath;
+    use function Chevere\Message\message;
+    use Chevere\Throwable\Exceptions\RuntimeException;
     use Chevere\Writer\Interfaces\WriterInterface;
     use function Chevere\Writer\streamTemp;
     use Chevere\Writer\StreamWriter;
@@ -39,7 +41,12 @@ namespace Chevere\Xr {
         } catch (LogicException) {
             $xr = (new Xr())
                 ->withConfigDir(
-                    directoryForPath(getcwd())
+                    directoryForPath(
+                        getcwd() ?:
+                        throw new RuntimeException(
+                            message('Unable to get current working directory')
+                        )
+                    )
                 );
 
             return (new XrInstance($xr))::get();
@@ -105,12 +112,12 @@ namespace {
     use Chevere\Xr\Interfaces\InspectorInterface;
     use Chevere\Xr\Message;
 
-// @codeCoverageIgnoreStart
-    if (!defined('XR_BACKTRACE')) {
+    // @codeCoverageIgnoreStart
+    if (! defined('XR_BACKTRACE')) {
         define('XR_BACKTRACE', 1);
     }
     // @codeCoverageIgnoreEnd
-    if (!function_exists('xr')) { // @codeCoverageIgnore
+    if (! function_exists('xr')) { // @codeCoverageIgnore
         /**
          * Dumps information about one or more variables to XR.
          *
@@ -118,17 +125,18 @@ namespace {
          * xr($foo, $bar,...);
          * ```
          *
-         * @param mixed ...$vars Variable(s) to dump
-         * @param string $t Topic
-         * @param string $e Emote
-         * @param int $f `XR_BACKTRACE`
+         * @param mixed $vars Variables to dump
          */
-        function xr(...$vars): void
+        function xr(mixed ...$vars): void
         {
             if (getXr()->isEnabled() === false) {
                 return; // @codeCoverageIgnore
             }
-            $defaultArgs = ['e' => '', 't' => '', 'f' => 0];
+            $defaultArgs = [
+                'e' => '',
+                't' => '',
+                'f' => 0,
+            ];
             $args = array_merge($defaultArgs, $vars);
             foreach (array_keys($defaultArgs) as $name) {
                 if (array_key_exists($name, $vars)) {
@@ -148,7 +156,7 @@ namespace {
                 );
         }
     }
-    if (!function_exists('xrr')) { // @codeCoverageIgnore
+    if (! function_exists('xrr')) { // @codeCoverageIgnore
         /**
          * Send a raw html message to XR.
          *
@@ -185,7 +193,7 @@ namespace {
                 );
         }
     }
-    if (!function_exists('xri')) { // @codeCoverageIgnore
+    if (! function_exists('xri')) { // @codeCoverageIgnore
         /**
          * Access XR inspector to send debug information.
          *
@@ -197,9 +205,8 @@ namespace {
                 return InspectorInstance::get();
             } catch (LogicException) {
                 $xrInspector = getXr()->isEnabled()
-                    ? Inspector::class
-                    : InspectorNull::class;
-                $xrInspector = new $xrInspector(getXr()->client());
+                    ? new Inspector(getXr()->client())
+                    : new InspectorNull();
 
                 return (new InspectorInstance($xrInspector))::get();
             }

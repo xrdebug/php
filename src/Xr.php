@@ -29,6 +29,9 @@ final class Xr implements XrInterface
 
     private string $configFile = '';
 
+    /**
+     * @var array<string>
+     */
     private array $configNames = ['xr.php'];
 
     private CurlInterface $curl;
@@ -84,6 +87,7 @@ final class Xr implements XrInterface
     private function setConfigFromFile(): void
     {
         try {
+            /** @var array<string, string|int|bool> $return */
             $return = filePhpReturnForPath($this->configFile)
                 ->variableTyped(typeArray());
             foreach (static::CONFIG_NAMES as $prop) {

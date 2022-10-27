@@ -91,13 +91,16 @@ trait ClientTrait
         try {
             $curl = $this->getCurlHandle(
                 'locks',
-                ['id' => $message->id()]
+                [
+                    'id' => $message->id(),
+                ]
             );
             $curlResult = $curl->exec();
-            if (!$curlResult || $curl->error() !== '') {
+            if (! $curlResult || $curl->error() !== '') {
                 return false;
             }
-            $response = json_decode($curlResult);
+            /** @var object $response */
+            $response = json_decode(strval($curlResult));
             if ($response->stop ?? false) {
                 throw new StopException(
                     message('[STOP EXECUTION] triggered from %remote%')
@@ -109,8 +112,6 @@ trait ClientTrait
         } finally {
             unset($curl);
         }
-
-        return false;
     }
 
     /**
@@ -121,6 +122,9 @@ trait ClientTrait
         exit($exitCode);
     }
 
+    /**
+     *  @param array<string, string> $data
+     */
     private function getCurlHandle(string $endpoint, array $data): CurlInterface
     {
         $this->curl->setOptArray(
