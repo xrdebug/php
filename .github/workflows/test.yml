@@ -8,7 +8,7 @@ jobs:
         os: [ubuntu-20.04]
         php: ["8.0", "8.1"]
     env:
-      tools: composer
+      tools: composer, phpstan
       ini-values: default_charset='UTF-8'
       key: cache-1652276840262
     name: PHP ${{ matrix.php }} test on ${{ matrix.os }}
@@ -43,6 +43,8 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
+      - name: Run PHPStan
+        run: phpstan analyse src -l 9
       - name: Tests (PHPUnit)
         run: vendor/bin/phpunit --coverage-xml=build/logs/xml-coverage --log-junit=build/logs/junit.xml
       # - name: Mutation testing (Infection)
