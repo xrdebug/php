@@ -50,7 +50,12 @@ final class Xr implements XrInterface
     {
         $new = clone $this;
         $new->directory = $config;
-        $new->configFile = $new->getConfigFile();
+
+        try {
+            $new->configFile = $new->getConfigFile();
+        } catch (Throwable) {
+            // Ignore directory not found
+        }
         if ($new->configFile !== '') {
             $new->setConfigFromFile();
         }
