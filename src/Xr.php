@@ -53,9 +53,12 @@ final class Xr implements XrInterface
 
         try {
             $new->configFile = $new->getConfigFile();
-        } catch (Throwable) {
+        }
+        // @codeCoverageIgnoreStart
+        catch (Throwable) {
             // Ignore directory not found
         }
+        // @codeCoverageIgnoreEnd
         if ($new->configFile !== '') {
             $new->setConfigFromFile();
         }

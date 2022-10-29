@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Chevere\Xr {
     use function Chevere\Filesystem\directoryForPath;
     use function Chevere\Message\message;
-    use Chevere\Throwable\Exceptions\RuntimeException;
     use Chevere\Writer\Interfaces\WriterInterface;
     use function Chevere\Writer\streamTemp;
     use Chevere\Writer\StreamWriter;
     use Chevere\Xr\Interfaces\XrInterface;
     use LogicException;
+    use function Safe\getcwd;
     use Throwable;
 
     /**
@@ -42,10 +42,7 @@ namespace Chevere\Xr {
             $xr = (new Xr())
                 ->withConfigDir(
                     directoryForPath(
-                        getcwd() ?:
-                        throw new RuntimeException(
-                            message('Unable to get current working directory')
-                        )
+                        getcwd()
                     )
                 );
 

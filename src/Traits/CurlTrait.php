@@ -21,10 +21,13 @@ trait CurlTrait
 {
     private CurlHandle $handle;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct(string $url = null)
     {
-        $this->handle = curl_init($url)
-            ?: throw new RuntimeException(
+        $this->handle = curl_init($url) ?:
+            throw new RuntimeException(
                 message('Unable to initialize curl')
             );
     }

@@ -25,7 +25,7 @@ final class XrVarDumpHtmlOutput extends Output
 
     public function prepare(): void
     {
-        // $this->caller = '';
+        //$this->caller = '';
         $this->writer()->write('<pre>');
     }
 
