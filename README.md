@@ -19,18 +19,22 @@ XR Debug is a dump debug utility for PHP. No extras required, **debug** your PHP
     <img alt="XR light" src=".screen/xr-0.1.3-dark-welcome.png">
 </p>
 
+## Documentation
+
+👉 [xr-docs.chevere.org](https://xr-docs.chevere.org)
+
 ## Features
 
-* 💎 [VarDump](https://chevere.org/packages/var-dump.html) driven variable highlight
-* ✨ Dump n arguments
+* 💎 End-to-end encryption (AES-GCM AE)
+* ✨ Dump n arguments with [VarDump](https://chevere.org/packages/var-dump.html) driven variable highlight
 * 🐘 One-click PHP server run (no extras required)
-* 👻 Filter messages by [Topics](#topic) and [Emotes](#emote)
+* 👻 Filter messages by [Topics](https://xr-docs.chevere.org/helpers/xr.html#topic) and [Emotes](https://xr-docs.chevere.org/helpers/xr.html#emote)
 * ✍️ Re-name "XR Debug" to anything you want
 * 🏁 Resume, Pause, Stop and Clear debug window controls
 * 🥷 Keyboard shortcuts (Resume **R**, Pause **P**, Stop **S** and Clear **C**)
 * 😊 Export dump output to clipboard or as PNG image
-* 📟 Generates dump [backtrace](#flags)
-* ⏸ [Pause](#pause) and resume your code execution
+* 📟 Generates dump [backtrace](https://xr-docs.chevere.org/helpers/xr.html#flags)
+* ⏸ [Pause](https://xr-docs.chevere.org/helpers/xri.html#pause) and resume your code execution
 * 🌚 Dark / 🌝 Light mode follows your system preferences
 * 👽 Ephemeral, it doesn't store any persistent data
 * 🍒 Portable & HTML based (save page, search, etc.)
@@ -40,10 +44,6 @@ XR Debug is a dump debug utility for PHP. No extras required, **debug** your PHP
 <p align="center">
     <img alt="XR dark demo" src=".screen/xr-0.1.3-dark-demo.png">
 </p>
-
-## Documentation
-
-👉 [xr-docs.chevere.org](https://xr-docs.chevere.org)
 
 ## License
 

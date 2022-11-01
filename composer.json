@@ -18,13 +18,13 @@
     ],
     "require": {
         "php": ">=8.0",
-        "chevere/chevere": "^1.1.x-dev",
+        "chevere/chevere": "^1.0",
         "chevere/throwable-handler": "^0.8",
         "chevere/trace": "^0.6",
         "chevere/var-dump": "^0.6"
     },
     "require-dev": {
-        "chevere/xr-server": "^0.4",
+        "chevere/xr-server": "^0.5",
         "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
