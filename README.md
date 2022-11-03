@@ -14,6 +14,20 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 
 XR Debug is a dump debug utility for PHP. No extras required, **debug** your PHP code **anywhere**. It uses a ReactPHP SSE server to provide a web-based debug application.
 
+## Quick start
+
+* Install using [Composer](https://getcomposer.org/)
+
+```sh
+composer require --dev chevere/xr
+```
+
+* Run the XR application [server](https://xr-docs.chevere.org/server/)
+
+```sh
+vendor/bin/xrserver
+```
+
 <p align="center">
     <img alt="XR light" src=".screen/xr-0.1.3-light-welcome.png">
     <img alt="XR light" src=".screen/xr-0.1.3-dark-welcome.png">
