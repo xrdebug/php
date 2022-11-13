@@ -152,11 +152,12 @@ trait ClientTrait
      * @param array<string, string> $data
      * @param array<int, mixed>     $options
      */
-    private function handleSignature(array $data, array $options): void
+    private function handleSignature(array $data, array &$options): void
     {
         if ($this->privateKey !== null) {
+            $serialize = serialize($data);
             /** @var string $signature */
-            $signature = $this->privateKey->sign(serialize($data));
+            $signature = $this->privateKey->sign($serialize);
             $signatureDisplay = base64_encode($signature);
             $options[CURLOPT_HTTPHEADER] = [
                 'X-Signature: ' . $signatureDisplay,
