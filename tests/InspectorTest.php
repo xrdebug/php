@@ -46,11 +46,11 @@ final class InspectorTest extends TestCase
         $this->assertSame(
             [
                 'body' => $body,
-                'file_path' => __FILE__,
-                'file_line' => $line,
                 'emote' => $emote,
-                'topic' => $topic,
+                'file_line' => $line,
+                'file_path' => __FILE__,
                 'id' => $client->getLastMessage()->toArray()['id'],
+                'topic' => $topic,
             ],
             $client->getLastMessage()->toArray()
         );
@@ -69,11 +69,11 @@ final class InspectorTest extends TestCase
         $this->assertSame(
             [
                 'body' => '',
-                'file_path' => __FILE__,
-                'file_line' => $line,
                 'emote' => $emote,
-                'topic' => $topic,
+                'file_line' => $line,
+                'file_path' => __FILE__,
                 'id' => $client->getLastMessage()->toArray()['id'],
+                'topic' => $topic,
             ],
             $client->getLastMessage()->toArray()
         );

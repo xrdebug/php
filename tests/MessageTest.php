@@ -25,11 +25,6 @@ final class MessageTest extends TestCase
 {
     private WriterInterface $writer;
 
-    private function filterArray(array $array, string ...$filterKey): array
-    {
-        return array_intersect_key($array, array_flip($filterKey));
-    }
-
     protected function setUp(): void
     {
         $this->writer = new StreamWriter(streamTemp(''));
@@ -46,11 +41,11 @@ final class MessageTest extends TestCase
         $this->assertSame(
             [
                 'body' => '',
-                'file_path' => __FILE__,
-                'file_line' => strval($line),
                 'emote' => '',
-                'topic' => '',
+                'file_line' => strval($line),
+                'file_path' => __FILE__,
                 'id' => $message->id(),
+                'topic' => '',
             ],
             $message->toArray()
         );
@@ -71,8 +66,8 @@ final class MessageTest extends TestCase
         $this->assertSame($testLine, $message->fileLine());
         $this->assertSame(
             [
-                'file_path' => $testFile,
                 'file_line' => strval($testLine),
+                'file_path' => $testFile,
             ],
             $this->filterArray($message->toArray(), 'file_path', 'file_line')
         );
@@ -163,5 +158,10 @@ Arg•0 <span style="color:#ff8700">string</span> ' . $variable . ' <em><span st
             __FILE__ . ':' . $line,
             $withBacktraceFlag->toArray()['body']
         );
+    }
+
+    private function filterArray(array $array, string ...$filterKey): array
+    {
+        return array_intersect_key($array, array_flip($filterKey));
     }
 }

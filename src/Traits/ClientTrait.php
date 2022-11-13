@@ -18,6 +18,7 @@ use Chevere\Xr\Curl;
 use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
+use phpseclib3\Crypt\EC\PrivateKey;
 
 trait ClientTrait
 {
@@ -29,6 +30,7 @@ trait ClientTrait
         private string $host = 'localhost',
         private int $port = 27420,
         private bool $isHttps = false,
+        private ?PrivateKey $privateKey = null,
     ) {
         $this->curl = new Curl();
         if ($isHttps) {
@@ -127,6 +129,7 @@ trait ClientTrait
      */
     private function getCurlHandle(string $endpoint, array $data): CurlInterface
     {
+        $this->handleSignature($data);
         $this->curl->setOptArray(
             [
                 CURLINFO_HEADER_OUT => true,
@@ -144,5 +147,17 @@ trait ClientTrait
         );
 
         return $this->curl;
+    }
+
+    /**
+     * @param array<string, string> $data
+     */
+    private function handleSignature(array &$data): void
+    {
+        if ($this->privateKey !== null) {
+            /** @var string $signature */
+            $signature = $this->privateKey->sign(serialize($data));
+            $data['p_signature'] = base64_encode($signature);
+        }
     }
 }

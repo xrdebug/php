@@ -21,7 +21,7 @@ foreach (['/../', '/../../../../'] as $path) {
 }
 xrr('Hola, mundo! 🇨🇱');
 sleep(5);
-// xri()->pause();
+xri()->pause();
 xr(
     🤓: 'XR Debug is a remote PHP debugger',
     t: 'hello-world',

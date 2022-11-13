@@ -19,6 +19,7 @@ use function Chevere\Type\typeArray;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\XrInterface;
+use phpseclib3\Crypt\EC\PrivateKey;
 use Throwable;
 
 final class Xr implements XrInterface
@@ -36,13 +37,21 @@ final class Xr implements XrInterface
 
     private CurlInterface $curl;
 
+    private ?PrivateKey $privateKey = null;
+
     public function __construct(
         private bool $isEnabled = true,
         private bool $isHttps = false,
         private string $host = 'localhost',
-        private int $port = 27420
+        private int $port = 27420,
+        private string $key = '',
     ) {
         $this->curl = new Curl();
+        if ($this->key !== '') {
+            /** @var ?PrivateKey $loadKey */
+            $loadKey = PrivateKey::load($this->key);
+            $this->privateKey = $loadKey;
+        }
         $this->setClient();
     }
 
@@ -92,6 +101,11 @@ final class Xr implements XrInterface
         return $this->port;
     }
 
+    public function key(): string
+    {
+        return $this->key;
+    }
+
     private function setConfigFromFile(): void
     {
         try {
@@ -135,6 +149,7 @@ final class Xr implements XrInterface
             host: $this->host,
             port: $this->port,
             isHttps: $this->isHttps,
+            privateKey: $this->privateKey,
         ))->withCurl($this->curl);
     }
 }

@@ -20,6 +20,7 @@ use Chevere\Xr\Message;
 use Chevere\Xr\Tests\_resources\CurlError;
 use Chevere\Xr\Tests\_resources\CurlLockTrue;
 use Chevere\Xr\Tests\_resources\CurlStopTrue;
+use phpseclib3\Crypt\EC;
 use PHPUnit\Framework\TestCase;
 
 final class ClientTest extends TestCase
@@ -38,9 +39,10 @@ final class ClientTest extends TestCase
         $port = 12345;
         $host = 'test-host';
         $isHttps = true;
-        $client = new Client(port: $port, host: $host, isHttps: $isHttps);
+        $key = EC::createKey('Ed25519');
+        $client = new Client(port: $port, host: $host, isHttps: $isHttps, privateKey: $key);
         $this->assertSame(
-            "https://$host:$port/endpoint",
+            "https://{$host}:{$port}/endpoint",
             $client->getUrl('endpoint')
         );
         $message = new Message();

@@ -165,11 +165,11 @@ final class Message implements MessageInterface
 
         return [
             'body' => $this->body,
-            'file_path' => $this->filePath,
-            'file_line' => strval($this->fileLine),
             'emote' => $this->emote,
-            'topic' => $this->topic,
+            'file_line' => strval($this->fileLine),
+            'file_path' => $this->filePath,
             'id' => $this->id,
+            'topic' => $this->topic,
         ];
     }
 

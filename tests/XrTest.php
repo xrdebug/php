@@ -16,6 +16,7 @@ namespace Chevere\Xr\Tests;
 use function Chevere\Filesystem\directoryForPath;
 use Chevere\Xr\Client;
 use Chevere\Xr\Xr;
+use phpseclib3\Crypt\EC;
 use PHPUnit\Framework\TestCase;
 
 final class XrTest extends TestCase
@@ -37,20 +38,18 @@ final class XrTest extends TestCase
 
     public function testConstructWithArguments(): void
     {
+        $key = EC::createKey('Ed25519');
         $args = [
             'isEnabled' => false,
             'isHttps' => false,
             'host' => 'test',
             'port' => 1234,
+            'key' => $key->toString('PKCS8'),
         ];
         $xr = new Xr(...$args);
         foreach ($args as $prop => $value) {
             $this->assertSame($value, $xr->{$prop}());
         }
-        $this->assertEquals(
-            new Client($args['host'], $args['port']),
-            $xr->client()
-        );
     }
 
     public function testConstructWithoutSettingsFileSubfolder(): void
@@ -61,7 +60,7 @@ final class XrTest extends TestCase
         $this->assertEquals(new Client(), $xr->client());
     }
 
-    public function testConstructWithDirNotExitst(): void
+    public function testConstructWithDirNotExists(): void
     {
         $xr = (new Xr())
             ->withConfigDir(directoryForPath(__DIR__ . '/_not-found/'));
@@ -75,7 +74,7 @@ final class XrTest extends TestCase
         $return = include $configDir->path()->getChild('xr.php')->__toString();
         $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['isEnabled'], $xr->isEnabled());
-        unset($return['isEnabled']);
+        unset($return['isEnabled'], $return['key']);
         $this->assertEquals(new Client(...$return), $xr->client());
     }
 }
