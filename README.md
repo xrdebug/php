@@ -25,7 +25,7 @@ composer require --dev chevere/xr
 * Run the XR application [server](https://xr-docs.chevere.org/server/)
 
 ```sh
-vendor/bin/xrserver
+vendor/bin/xr
 ```
 
 <p align="center">
@@ -39,6 +39,7 @@ vendor/bin/xrserver
 
 ## Features
 
+* 🔏 Signed requests (Ed25519)
 * 💎 End-to-end encryption (AES-GCM AE)
 * ✨ Dump n arguments with [VarDump](https://chevere.org/packages/var-dump.html) driven variable highlight
 * 🐘 One-click PHP server run (no extras required)

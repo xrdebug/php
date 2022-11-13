@@ -25,7 +25,7 @@
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
-        "chevere/xr-server": "^0.5",
+        "chevere/xr-server": "^0.6",
         "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
