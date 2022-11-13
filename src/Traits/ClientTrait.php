@@ -129,35 +129,38 @@ trait ClientTrait
      */
     private function getCurlHandle(string $endpoint, array $data): CurlInterface
     {
-        $this->handleSignature($data);
-        $this->curl->setOptArray(
-            [
-                CURLINFO_HEADER_OUT => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_FAILONERROR => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => http_build_query($data),
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_SSL_VERIFYPEER => true,
-                CURLOPT_TIMEOUT => 2,
-                CURLOPT_URL => $this->getUrl($endpoint),
-                CURLOPT_USERAGENT => 'chevere/xr 1.0',
-            ]
-        );
+        $options = [
+            CURLINFO_HEADER_OUT => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_FAILONERROR => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => http_build_query($data),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_TIMEOUT => 2,
+            CURLOPT_URL => $this->getUrl($endpoint),
+            CURLOPT_USERAGENT => 'chevere/xr 1.0',
+        ];
+        $this->handleSignature($data, $options);
+        $this->curl->setOptArray($options);
 
         return $this->curl;
     }
 
     /**
      * @param array<string, string> $data
+     * @param array<int, mixed>     $options
      */
-    private function handleSignature(array &$data): void
+    private function handleSignature(array $data, array $options): void
     {
         if ($this->privateKey !== null) {
             /** @var string $signature */
             $signature = $this->privateKey->sign(serialize($data));
-            $data['p_signature'] = base64_encode($signature);
+            $signatureDisplay = base64_encode($signature);
+            $options[CURLOPT_HTTPHEADER] = [
+                'X-Signature: ' . $signatureDisplay,
+            ];
         }
     }
 }
