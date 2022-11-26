@@ -75,7 +75,7 @@ namespace Chevere\Xr {
     }
 
     /**
-     * Register XR throwable handler.
+     * Register XR Debug throwable handler.
      *
      * @param bool $callPrevious True to call the previous handler.
      * False to disable the previous handler.
@@ -99,20 +99,21 @@ namespace Chevere\Xr {
     }
 
     /**
-     * Handle a Throwable using XR.
+     * Handle a Throwable using XR Debug.
      *
      * @param Throwable $throwable The throwable to handle
-     * @param string $extra Extra contents to append to the XR message
+     * @param string $extra Extra contents to append to the XR Debug message
      *
      * @codeCoverageIgnore
      */
     function throwableHandler(Throwable $throwable, string $extra = ''): void
     {
-        if (getXr()->isEnabled() === false) {
+        $xr = getXrFailover();
+        if ($xr === null || $xr->isEnabled() === false) {
             return; // @codeCoverageIgnore
         }
         $parser = new ThrowableParser($throwable, $extra);
-        getXr()->client()
+        $xr->client()
             ->sendMessage(
                 (new Message(
                     backtrace: $parser->throwableRead()->trace(),
@@ -126,7 +127,6 @@ namespace Chevere\Xr {
 
 namespace {
     use function Chevere\Xr\getWriter;
-    use function Chevere\Xr\getXr;
     use function Chevere\Xr\getXrFailover;
     use Chevere\Xr\Inspector\Inspector;
     use Chevere\Xr\Inspector\InspectorInstance;
@@ -141,7 +141,7 @@ namespace {
     // @codeCoverageIgnoreEnd
     if (! function_exists('xr')) { // @codeCoverageIgnore
         /**
-         * Dumps information about one or more variables to XR.
+         * Dumps information about one or more variables to XR Debug.
          *
          * ```php
          * xr($foo, $bar,...);
@@ -151,7 +151,8 @@ namespace {
          */
         function xr(mixed ...$vars): void
         {
-            if (getXrFailover() === null || getXr()->isEnabled() === false) {
+            $xr = getXrFailover();
+            if ($xr === null || $xr->isEnabled() === false) {
                 return; // @codeCoverageIgnore
             }
             $defaultArgs = [
@@ -165,7 +166,7 @@ namespace {
                     unset($vars[$name]);
                 }
             }
-            getXr()->client()
+            $xr->client()
                 ->sendMessage(
                     (new Message(
                         backtrace: debug_backtrace(),
@@ -180,7 +181,7 @@ namespace {
     }
     if (! function_exists('xrr')) { // @codeCoverageIgnore
         /**
-         * Send a raw html message to XR.
+         * Send a raw html message to XR Debug.
          *
          * ```php
          * xrr($html, ...);
@@ -199,10 +200,11 @@ namespace {
             string $e = '',
             int $f = 0
         ): void {
-            if (getXrFailover() === null || getXr()->isEnabled() === false) {
+            $xr = getXrFailover();
+            if ($xr === null || $xr->isEnabled() === false) {
                 return;
             }
-            getXr()->client()
+            $xr->client()
                 ->sendMessage(
                     (new Message(
                         backtrace: debug_backtrace(),
@@ -217,21 +219,22 @@ namespace {
     }
     if (! function_exists('xri')) { // @codeCoverageIgnore
         /**
-         * Access XR inspector to send debug information.
+         * Access XR Debug inspector to send debug information.
          *
          * @codeCoverageIgnore
          */
         function xri(): InspectorInterface
         {
-            if (getXrFailover() === null) {
+            $xr = getXrFailover();
+            if ($xr === null) {
                 return new InspectorNull();
             }
 
             try {
                 return InspectorInstance::get();
             } catch (LogicException) {
-                $xrInspector = getXr()->isEnabled()
-                    ? new Inspector(getXr()->client())
+                $xrInspector = $xr->isEnabled()
+                    ? new Inspector($xr->client())
                     : new InspectorNull();
 
                 return (new InspectorInstance($xrInspector))::get();

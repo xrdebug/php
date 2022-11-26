@@ -21,6 +21,9 @@ trait CurlTrait
 {
     private CurlHandle $handle;
 
+    /**
+     * @var string[]
+     */
     private array $functions = [
         'curl_close',
         'curl_error',
