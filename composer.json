@@ -18,6 +18,8 @@
     ],
     "require": {
         "php": ">=8.0",
+        "ext-curl": "*",
+        "ext-json": "*",
         "chevere/chevere": "^1.0",
         "chevere/throwable-handler": "^0.8",
         "chevere/trace": "^0.6",

@@ -31,9 +31,9 @@ final class XrInstance
 
     public static function get(): XrInterface
     {
-        if (!isset(self::$instance)) {
+        if (! isset(self::$instance)) {
             throw new LogicException(
-                message('No xr instance present')
+                message('No XR Debug instance present')
             );
         }
 
