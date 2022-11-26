@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Xr {
     use function Chevere\Filesystem\directoryForPath;
-    use function Chevere\Message\message;
     use Chevere\Writer\Interfaces\WriterInterface;
     use function Chevere\Writer\streamTemp;
     use Chevere\Writer\StreamWriter;
@@ -47,6 +46,31 @@ namespace Chevere\Xr {
                 );
 
             return (new XrInstance($xr))::get();
+        }
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    function getXrFailover(): ?XrInterface
+    {
+        try {
+            return getXr();
+        } catch(Throwable $e) {
+            $caller = debug_backtrace(0, 2)[1];
+            $file = $caller['file'] ?? '@unknown';
+            $line = strval($caller['line'] ?? 0);
+            error_log(
+                strtr(
+                    'Unable to use XR Debug at %s: %e',
+                    [
+                        '%s' => "{$file}:{$line}",
+                        '%e' => $e->getMessage(),
+                    ]
+                )
+            );
+
+            return null;
         }
     }
 
@@ -103,6 +127,7 @@ namespace Chevere\Xr {
 namespace {
     use function Chevere\Xr\getWriter;
     use function Chevere\Xr\getXr;
+    use function Chevere\Xr\getXrFailover;
     use Chevere\Xr\Inspector\Inspector;
     use Chevere\Xr\Inspector\InspectorInstance;
     use Chevere\Xr\Inspector\InspectorNull;
@@ -126,7 +151,7 @@ namespace {
          */
         function xr(mixed ...$vars): void
         {
-            if (getXr()->isEnabled() === false) {
+            if (getXrFailover() === null || getXr()->isEnabled() === false) {
                 return; // @codeCoverageIgnore
             }
             $defaultArgs = [
@@ -174,7 +199,7 @@ namespace {
             string $e = '',
             int $f = 0
         ): void {
-            if (getXr()->isEnabled() === false) {
+            if (getXrFailover() === null || getXr()->isEnabled() === false) {
                 return;
             }
             getXr()->client()
@@ -198,6 +223,10 @@ namespace {
          */
         function xri(): InspectorInterface
         {
+            if (getXrFailover() === null) {
+                return new InspectorNull();
+            }
+
             try {
                 return InspectorInstance::get();
             } catch (LogicException) {

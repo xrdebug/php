@@ -21,14 +21,23 @@ trait CurlTrait
 {
     private CurlHandle $handle;
 
+    private array $functions = [
+        'curl_close',
+        'curl_error',
+        'curl_exec',
+        'curl_init',
+        'curl_setopt_array',
+    ];
+
     /**
      * @codeCoverageIgnore
      */
     public function __construct(string $url = null)
     {
+        $this->assertCurl();
         $this->handle = curl_init($url) ?:
             throw new RuntimeException(
-                message('Unable to initialize curl')
+                message('Unable to initialize cURL session')
             );
     }
 
@@ -62,5 +71,19 @@ trait CurlTrait
     public function close(): void
     {
         curl_close($this->handle);
+    }
+
+    private function assertCurl(): void
+    {
+        foreach ($this->functions as $function) {
+            if (! function_exists($function)) {
+                // @codeCoverageIgnoreStart
+                throw new RuntimeException(
+                    message('Function %function% is not available')
+                        ->withCode('%function%', $function)
+                );
+                // @codeCoverageIgnoreEnd
+            }
+        }
     }
 }
