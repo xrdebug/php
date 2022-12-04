@@ -20,6 +20,7 @@ trait InspectorNullTrait
         string $t = '',
         int $f = 0,
     ): void {
+        // dummy
     }
 
     public function memory(
@@ -27,5 +28,6 @@ trait InspectorNullTrait
         string $t = '',
         int $f = 0,
     ): void {
+        // dummy
     }
 }

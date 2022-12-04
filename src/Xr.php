@@ -145,11 +145,13 @@ final class Xr implements XrInterface
 
     private function setClient(): void
     {
-        $this->client = (new Client(
-            host: $this->host,
-            port: $this->port,
-            isHttps: $this->isHttps,
-            privateKey: $this->privateKey,
-        ))->withCurl($this->curl);
+        $this->client = (
+            new Client(
+                host: $this->host,
+                port: $this->port,
+                isHttps: $this->isHttps,
+                privateKey: $this->privateKey,
+            )
+        )->withCurl($this->curl);
     }
 }
