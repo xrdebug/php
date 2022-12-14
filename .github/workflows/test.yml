@@ -6,17 +6,15 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        php: ["8.0", "8.1"]
+        php: ["8.0", "8.1", "8.2"]
     env:
       tools: composer, phpstan
       ini-values: default_charset='UTF-8'
-      key: cache-1652276840262
+      key: cache-1670860310383
     name: PHP ${{ matrix.php }} test on ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -33,16 +31,16 @@ jobs:
       - name: Get composer cache directory
         if: ${{ !env.ACT }}
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache dependencies
         if: ${{ !env.ACT }}
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
+        run: composer install --no-progress
       - name: Run PHPStan
         run: phpstan analyse src -l 9
       - name: Tests (PHPUnit)
@@ -51,8 +49,8 @@ jobs:
       #   env:
       #     INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
       #   run: |
-      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.13/infection.phar
-      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.13/infection.phar.asc
+      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.16/infection.phar
+      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.16/infection.phar.asc
       #     gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0
       #     gpg --with-fingerprint --verify infection.phar.asc infection.phar
       #     chmod +x infection.phar

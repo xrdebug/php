@@ -106,7 +106,7 @@ trait ClientTrait
             if ($response->stop ?? false) {
                 throw new StopException(
                     message('[STOP EXECUTION] triggered from %remote%')
-                        ->withStrtr('%remote%', $this->host . ':' . $this->port)
+                        ->withTranslate('%remote%', $this->host . ':' . $this->port)
                 );
             }
 

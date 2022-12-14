@@ -1,22 +1,20 @@
 name: SonarCloud
 on: [push]
 jobs:
-  test:
+  sonarcloud:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        php: ["8.1"]
+        php: ["8.2"]
     env:
       tools: composer
       ini-values: default_charset='UTF-8'
-      key: cache-1643898725440
+      key: cache-1670860310383
     name: PHP ${{ matrix.php }} test on ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -31,16 +29,18 @@ jobs:
       - name: Validate composer
         run: composer validate
       - name: Get composer cache directory
+        if: ${{ !env.ACT }}
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
       - name: Cache dependencies
-        uses: actions/cache@v2
+        if: ${{ !env.ACT }}
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --classmap-authoritative --ignore-platform-reqs
+        run: composer install --no-progress
       - name: Tests (PHPUnit)
         run: vendor/bin/phpunit --coverage-clover=build/logs/clover.xml --log-junit=build/logs/junit.xml
       - name: Fix paths for sonar-scanner

@@ -15,7 +15,6 @@ namespace Chevere\Xr;
 
 use function Chevere\Filesystem\filePhpReturnForPath;
 use Chevere\Filesystem\Interfaces\DirectoryInterface;
-use function Chevere\Type\typeArray;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\XrInterface;
@@ -110,8 +109,7 @@ final class Xr implements XrInterface
     {
         try {
             /** @var array<string, string|int|bool> $return */
-            $return = filePhpReturnForPath($this->configFile)
-                ->variableTyped(typeArray());
+            $return = filePhpReturnForPath($this->configFile)->getArray();
             foreach (static::CONFIG_NAMES as $prop) {
                 $this->{$prop} = $return[$prop] ?? $this->{$prop};
             }
