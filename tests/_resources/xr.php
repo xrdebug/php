@@ -16,4 +16,9 @@ return [
     'isHttps' => false,
     'host' => 'test',
     'port' => 1234,
+    'key' => <<<ED25519
+    -----BEGIN PRIVATE KEY-----
+    MC4CAQAwBQYDK2VwBCIEIFeJCk3D4oi5vuIo+nuGR0dcu7itYM7n5G0FbBs/ZDhd
+    -----END PRIVATE KEY-----
+    ED25519,
 ];

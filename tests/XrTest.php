@@ -15,8 +15,10 @@ namespace Chevere\Xr\Tests;
 
 use function Chevere\Filesystem\directoryForPath;
 use Chevere\Xr\Client;
+use Chevere\Xr\Message;
 use Chevere\Xr\Xr;
 use phpseclib3\Crypt\EC;
+use phpseclib3\Crypt\EC\PrivateKey;
 use PHPUnit\Framework\TestCase;
 
 final class XrTest extends TestCase
@@ -74,7 +76,18 @@ final class XrTest extends TestCase
         $return = include $configDir->path()->getChild('xr.php')->__toString();
         $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['isEnabled'], $xr->isEnabled());
+        $return['privateKey'] = PrivateKey::load($return['key']);
         unset($return['isEnabled'], $return['key']);
-        $this->assertEquals(new Client(...$return), $xr->client());
+        $client = new Client(...$return);
+        $this->assertEquals($client->getUrl('test'), $xr->client()->getUrl('test'));
+        $message = new Message([
+            [
+                'path' => 'test',
+                'line' => '123',
+            ],
+        ]);
+        $client->sendMessage($message);
+        $xr->client()->sendMessage($message);
+        $this->assertSame($client->options(), $xr->client()->options());
     }
 }

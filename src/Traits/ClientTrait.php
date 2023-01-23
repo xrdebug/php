@@ -26,6 +26,11 @@ trait ClientTrait
 
     private string $scheme = 'http';
 
+    /**
+     * @var array <int, mixed>
+     */
+    private array $options = [];
+
     public function __construct(
         private string $host = 'localhost',
         private int $port = 27420,
@@ -116,6 +121,11 @@ trait ClientTrait
         }
     }
 
+    public function options(): array
+    {
+        return $this->options;
+    }
+
     /**
      * @codeCoverageIgnore
      */
@@ -129,7 +139,7 @@ trait ClientTrait
      */
     private function getCurlHandle(string $endpoint, array $data): CurlInterface
     {
-        $options = [
+        $this->options = [
             CURLINFO_HEADER_OUT => true,
             CURLOPT_ENCODING => '',
             CURLOPT_FAILONERROR => true,
@@ -142,24 +152,23 @@ trait ClientTrait
             CURLOPT_URL => $this->getUrl($endpoint),
             CURLOPT_USERAGENT => 'chevere/xr 1.0',
         ];
-        $this->handleSignature($data, $options);
-        $this->curl->setOptArray($options);
+        $this->handleSignature($data);
+        $this->curl->setOptArray($this->options);
 
         return $this->curl;
     }
 
     /**
      * @param array<string, string> $data
-     * @param array<int, mixed>     $options
      */
-    private function handleSignature(array $data, array &$options): void
+    private function handleSignature(array $data): void
     {
         if ($this->privateKey !== null) {
             $serialize = serialize($data);
             /** @var string $signature */
             $signature = $this->privateKey->sign($serialize);
             $signatureDisplay = base64_encode($signature);
-            $options[CURLOPT_HTTPHEADER] = [
+            $this->options[CURLOPT_HTTPHEADER] = [
                 'X-Signature: ' . $signatureDisplay,
             ];
         }

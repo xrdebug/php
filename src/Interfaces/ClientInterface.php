@@ -24,5 +24,10 @@ interface ClientInterface
 
     public function sendPause(MessageInterface $message): void;
 
+    /**
+     * @return array<int, mixed>
+     */
+    public function options(): array;
+
     public function exit(int $exitCode = 0): void;
 }
