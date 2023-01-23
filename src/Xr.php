@@ -46,11 +46,6 @@ final class Xr implements XrInterface
         private string $key = '',
     ) {
         $this->curl = new Curl();
-        if ($this->key !== '') {
-            /** @var ?PrivateKey $loadKey */
-            $loadKey = PrivateKey::load($this->key);
-            $this->privateKey = $loadKey;
-        }
         $this->setClient();
     }
 
@@ -143,6 +138,11 @@ final class Xr implements XrInterface
 
     private function setClient(): void
     {
+        if ($this->key !== '') {
+            /** @var ?PrivateKey $loadKey */
+            $loadKey = PrivateKey::load($this->key);
+            $this->privateKey = $loadKey;
+        }
         $this->client = (
             new Client(
                 host: $this->host,
