@@ -20,7 +20,7 @@
         "php": "^8.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/chevere": "^2.0.x-dev",
+        "chevere/chevere": "^2.0",
         "chevere/throwable-handler": "^0.9",
         "chevere/trace": "^0.7",
         "chevere/var-dump": "^0.7",
