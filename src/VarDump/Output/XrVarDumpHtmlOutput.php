@@ -18,6 +18,8 @@ use Chevere\VarDump\Outputs\Output;
 
 final class XrVarDumpHtmlOutput extends Output
 {
+    private string $caller;
+    
     public function tearDown(): void
     {
         $this->writer()->write('</pre>');
