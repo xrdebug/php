@@ -8,7 +8,7 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 
 🦄 [View demo](https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-b7b6-bd8733e623a2.mp4)
 
-[![Build](https://img.shields.io/github/workflow/status/chevere/xr/Test?style=flat-square)](https://github.com/chevere/xr/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/chevere/xr/test.yml?branch=0.7&style=flat-square)](https://github.com/chevere/xr/actions)
 ![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square)
 [![Apache-2.0](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%209-blueviolet?style=flat-square)](https://phpstan.org/)
