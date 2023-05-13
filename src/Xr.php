@@ -19,6 +19,7 @@ use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\XrInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
+use phpseclib3\Crypt\PublicKeyLoader;
 use Throwable;
 
 final class Xr implements XrInterface
@@ -140,7 +141,7 @@ final class Xr implements XrInterface
     {
         if ($this->key !== '') {
             /** @var ?PrivateKey $loadKey */
-            $loadKey = PrivateKey::load($this->key);
+            $loadKey = PublicKeyLoader::load($this->key);
             $this->privateKey = $loadKey;
         }
         $this->client = (

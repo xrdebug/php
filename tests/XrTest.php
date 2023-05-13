@@ -18,7 +18,7 @@ use Chevere\Xr\Client;
 use Chevere\Xr\Message;
 use Chevere\Xr\Xr;
 use phpseclib3\Crypt\EC;
-use phpseclib3\Crypt\EC\PrivateKey;
+use phpseclib3\Crypt\PublicKeyLoader;
 use PHPUnit\Framework\TestCase;
 
 final class XrTest extends TestCase
@@ -76,7 +76,7 @@ final class XrTest extends TestCase
         $return = include $configDir->path()->getChild('xr.php')->__toString();
         $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['isEnabled'], $xr->isEnabled());
-        $return['privateKey'] = PrivateKey::load($return['key']);
+        $return['privateKey'] = PublicKeyLoader::load($return['key']);
         unset($return['isEnabled'], $return['key']);
         $client = new Client(...$return);
         $this->assertEquals($client->getUrl('test'), $xr->client()->getUrl('test'));
