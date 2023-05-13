@@ -57,8 +57,12 @@ final class Message implements MessageInterface
             $this->backtrace = debug_backtrace();
         }
         $this->writer = new NullWriter();
-        $this->filePath = strval($this->backtrace[0]['file'] ?? '');
-        $this->fileLine = intval($this->backtrace[0]['line'] ?? 0);
+        /** @var string $file */
+        $file = $this->backtrace[0]['file'] ?? '';
+        /** @var int $line */
+        $line = $this->backtrace[0]['line'] ?? 0;
+        $this->filePath = strval($file);
+        $this->fileLine = intval($line);
         $node = (new RandomNodeProvider())->getNode();
         $this->id = Uuid::uuid1($node)->__toString();
     }

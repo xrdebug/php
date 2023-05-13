@@ -160,6 +160,7 @@ namespace {
                 't' => '',
                 'f' => 0,
             ];
+            /** @var array<string|int, string> */
             $args = array_merge($defaultArgs, $vars);
             foreach (array_keys($defaultArgs) as $name) {
                 if (array_key_exists($name, $vars)) {
