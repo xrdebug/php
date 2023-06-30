@@ -32,10 +32,10 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 composer require --dev chevere/xr
 ```
 
-* Run the XR application [server](https://xr-docs.chevere.org/server/)
+* Run the XR Debug [server](https://xr-docs.chevere.org/server/)
 
 ```sh
-vendor/bin/xr
+docker run -t --init --rm ghcr.io/chevere/xr-server
 ```
 
 <p align="center">
@@ -72,7 +72,7 @@ vendor/bin/xr
 
 ## License
 
-Copyright 2022 [Rodolfo Berrios A.](https://rodolfoberrios.com/)
+Copyright 2023 [Rodolfo Berrios A.](https://rodolfoberrios.com/)
 
 XR is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
 
