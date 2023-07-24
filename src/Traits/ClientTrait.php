@@ -104,10 +104,8 @@ trait ClientTrait
         try {
             $curl = $this->getCurlHandle(
                 new GetMethod(),
-                'locks',
-                [
-                    'id' => $message->id(),
-                ]
+                'locks/' . $message->id(),
+                []
             );
             $curlResult = $curl->exec();
             if (! $curlResult || $curl->error() !== '') {
