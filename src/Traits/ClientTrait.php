@@ -14,6 +14,10 @@ declare(strict_types=1);
 namespace Chevere\Xr\Traits;
 
 use function Chevere\Message\message;
+
+use Chevere\Http\Interfaces\MethodInterface;
+use Chevere\Http\Methods\GetMethod;
+use Chevere\Http\Methods\PostMethod;
 use Chevere\Xr\Curl;
 use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\CurlInterface;
@@ -65,6 +69,7 @@ trait ClientTrait
     {
         try {
             $curl = $this->getCurlHandle(
+                new PostMethod(),
                 'message',
                 $message->toArray()
             );
@@ -78,8 +83,9 @@ trait ClientTrait
     {
         try {
             $curl = $this->getCurlHandle(
-                'lock-post',
-                $message->toArray()
+                new PostMethod(),
+                'locks',
+                $message->toArray(),
             );
             $curl->exec();
             $curlError = $curl->error();
@@ -97,6 +103,7 @@ trait ClientTrait
     {
         try {
             $curl = $this->getCurlHandle(
+                new GetMethod(),
                 'locks',
                 [
                     'id' => $message->id(),
@@ -137,19 +144,19 @@ trait ClientTrait
     /**
      *  @param array<string, string> $data
      */
-    private function getCurlHandle(string $endpoint, array $data): CurlInterface
+    private function getCurlHandle(MethodInterface $method, string $url, array $data): CurlInterface
     {
         $this->options = [
             CURLINFO_HEADER_OUT => true,
             CURLOPT_ENCODING => '',
             CURLOPT_FAILONERROR => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_POST => true,
+            CURLOPT_CUSTOMREQUEST => $method::name(),
             CURLOPT_POSTFIELDS => http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT => 2,
-            CURLOPT_URL => $this->getUrl($endpoint),
+            CURLOPT_URL => $this->getUrl($url),
             CURLOPT_USERAGENT => 'chevere/xr 1.0',
         ];
         $this->handleSignature($data);

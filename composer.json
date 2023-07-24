@@ -2,6 +2,7 @@
     "name": "chevere/xr",
     "description": "Lightweight debug utility",
     "homepage": "https://xr-debug.chevere.org",
+    "minimum-stability": "dev",
     "keywords": [
         "chevere",
         "dump",
@@ -17,17 +18,18 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/chevere": "^2.0",
-        "chevere/throwable-handler": "^0.9",
-        "chevere/trace": "^0.7",
-        "chevere/var-dump": "^0.7",
+        "chevere/chevere": "^3.1.x-dev",
+        "chevere/http": "0.2.x-dev",
+        "chevere/throwable-handler": "^0.10",
+        "chevere/trace": "^0.8",
+        "chevere/var-dump": "^0.8",
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
-        "chevere/xr-server": "^0.7",
+        "chevere/xr-server": "^0.8.x-dev",
         "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
