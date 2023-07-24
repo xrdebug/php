@@ -35,7 +35,7 @@ composer require --dev chevere/xr
 * Run the XR Debug [server](https://xr-docs.chevere.org/server/)
 
 ```sh
-docker run -t --init --rm ghcr.io/chevere/xr-server
+docker run -t --init --rm -p 27420:27420 ghcr.io/chevere/xr-server
 ```
 
 <p align="center">
