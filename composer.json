@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.1",
         "ext-curl": "*",
         "ext-json": "*",
         "chevere/chevere": "^3.1.x-dev",

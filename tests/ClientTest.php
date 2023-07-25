@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
+use Chevere\Tests\src\CurlError;
+use Chevere\Tests\src\CurlLockPauseTrue;
+use Chevere\Tests\src\CurlStopTrue;
 use Chevere\Xr\Client;
 use Chevere\Xr\Curl;
 use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Message;
-use Chevere\Xr\Tests\_resources\CurlError;
-use Chevere\Xr\Tests\_resources\CurlLockTrue;
-use Chevere\Xr\Tests\_resources\CurlStopTrue;
 use phpseclib3\Crypt\EC;
 use PHPUnit\Framework\TestCase;
 
@@ -47,7 +47,7 @@ final class ClientTest extends TestCase
         );
         $message = new Message();
         $client->sendMessage($message);
-        $this->assertFalse($client->isLocked($message));
+        $this->assertFalse($client->isLocked($message->id()));
     }
 
     public function testWithCurl(): void
@@ -59,16 +59,18 @@ final class ClientTest extends TestCase
 
     public function testPauseLocked()
     {
-        require_once __DIR__ . '/_resources/CurlLockTrue.php';
-        $curl = new CurlLockTrue();
+        require_once __DIR__ . '/src/CurlLockPauseTrue.php';
+        $curl = new CurlLockPauseTrue();
         $client = (new Client())->withCurl($curl);
         $message = new Message();
-        $this->assertTrue($client->isLocked($message));
+        $this->assertTrue(
+            $client->isLocked($message->id())
+        );
     }
 
     public function testPauseStop()
     {
-        require_once __DIR__ . '/_resources/CurlStopTrue.php';
+        require_once __DIR__ . '/src/CurlStopTrue.php';
         $curl = new CurlStopTrue();
         $client = (new Client())->withCurl($curl);
         $message = new Message();
@@ -78,11 +80,13 @@ final class ClientTest extends TestCase
 
     public function testPauseError()
     {
-        require_once __DIR__ . '/_resources/CurlError.php';
+        require_once __DIR__ . '/src/CurlError.php';
         $curl = new CurlError();
         $client = (new Client())->withCurl($curl);
         $message = new Message();
         $client->sendPause($message);
-        $this->assertFalse($client->isLocked($message));
+        $this->assertFalse(
+            $client->isLocked($message->id())
+        );
     }
 }

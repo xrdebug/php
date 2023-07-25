@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
 use Chevere\Xr\Curl;
 use CurlHandle;
@@ -35,7 +35,9 @@ final class CurlTest extends TestCase
     {
         $this->expectNotToPerformAssertions();
         $curl = new Curl();
-        $curl->setOptArray([CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1]);
+        $curl->setOptArray([
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        ]);
     }
 
     public function testNoHandleClose(): void
@@ -67,7 +69,9 @@ final class CurlTest extends TestCase
     public function testExecString(): void
     {
         $curl = new Curl('https://www.cloudflare.com/ips-v4');
-        $curl->setOptArray([CURLOPT_RETURNTRANSFER => 1]);
+        $curl->setOptArray([
+            CURLOPT_RETURNTRANSFER => 1,
+        ]);
         $this->assertIsString($curl->exec());
     }
 }

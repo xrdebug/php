@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests\_resources;
+namespace Chevere\Tests\src;
 
-use function Chevere\Message\message;
 use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
 use Chevere\Xr\Traits\ClientTrait;
+use function Chevere\Message\message;
 
 final class ClientTesterStop implements ClientInterface
 {
@@ -32,6 +32,6 @@ final class ClientTesterStop implements ClientInterface
 
     public function exit(int $exitCode = 0): void
     {
-        echo "exit $exitCode";
+        echo "exit {$exitCode}";
     }
 }

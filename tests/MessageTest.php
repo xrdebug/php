@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
 use Chevere\Writer\Interfaces\WriterInterface;
-use function Chevere\Writer\streamTemp;
 use Chevere\Writer\StreamWriter;
-use function Chevere\Xr\getWriter;
 use Chevere\Xr\Message;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Rfc4122\Validator;
+use function Chevere\Writer\streamTemp;
+use function Chevere\Xr\getWriter;
 
 final class MessageTest extends TestCase
 {

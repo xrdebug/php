@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests\_resources;
+namespace Chevere\Tests\src;
 
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\MessageInterface;

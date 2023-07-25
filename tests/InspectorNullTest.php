@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
 use Chevere\Xr\Client;
 use Chevere\Xr\Inspector\InspectorNull;
@@ -24,7 +24,7 @@ final class InspectorNullTest extends TestCase
         $client = new Client();
         $inspector = new InspectorNull($client);
         foreach (['memory', 'pause'] as $method) {
-            $this->assertNull($inspector->$method());
+            $this->assertNull($inspector->{$method}());
         }
     }
 }

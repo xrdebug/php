@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
-use function Chevere\Message\message;
 use Chevere\Throwable\Errors\TypeError;
 use Chevere\Xr\ThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use function Chevere\Message\message;
 
 final class ThrowableParserTest extends TestCase
 {

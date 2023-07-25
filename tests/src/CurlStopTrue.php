@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests\_resources;
+namespace Chevere\Tests\src;
 
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Traits\CurlTrait;
 
-final class CurlLockTrue implements CurlInterface
+final class CurlStopTrue implements CurlInterface
 {
     use CurlTrait;
 
@@ -27,6 +27,6 @@ final class CurlLockTrue implements CurlInterface
 
     public function exec(): string|bool
     {
-        return '{"lock":true}';
+        return '{"stop":true}';
     }
 }

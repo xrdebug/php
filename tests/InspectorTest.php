@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
+use Chevere\Tests\src\ClientTester;
+use Chevere\Tests\src\ClientTesterStop;
 use Chevere\Xr\Client;
 use Chevere\Xr\Inspector\Inspector;
-use Chevere\Xr\Tests\_resources\ClientTester;
-use Chevere\Xr\Tests\_resources\ClientTesterStop;
 use PHPUnit\Framework\TestCase;
 
 final class InspectorTest extends TestCase
@@ -30,7 +30,7 @@ final class InspectorTest extends TestCase
 
     public function testMemory(): void
     {
-        require_once __DIR__ . '/_resources/ClientTester.php';
+        require_once __DIR__ . '/src/ClientTester.php';
         $client = new ClientTester();
         $inspector = new Inspector($client);
         $topic = 'topic';
@@ -58,7 +58,7 @@ final class InspectorTest extends TestCase
 
     public function testPause(): void
     {
-        require_once __DIR__ . '/_resources/ClientTester.php';
+        require_once __DIR__ . '/src/ClientTester.php';
         $client = new ClientTester();
         $inspector = new Inspector($client);
         $topic = 'topic';
@@ -81,7 +81,7 @@ final class InspectorTest extends TestCase
 
     public function testPauseStop(): void
     {
-        require_once __DIR__ . '/_resources/ClientTesterStop.php';
+        require_once __DIR__ . '/src/ClientTesterStop.php';
         $client = new ClientTesterStop();
         $inspector = new Inspector($client);
         $this->expectOutputString("* stop\nexit 255");

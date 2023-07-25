@@ -92,19 +92,19 @@ trait ClientTrait
             if ($curlError === '') {
                 do {
                     sleep(1);
-                } while ($this->isLocked($message));
+                } while ($this->isLocked($message->id()));
             }
         } finally {
             unset($curl);
         }
     }
 
-    public function isLocked(MessageInterface $message): bool
+    public function isLocked(string $id): bool
     {
         try {
             $curl = $this->getCurlHandle(
                 new GetMethod(),
-                'locks/' . $message->id(),
+                'locks/' . $id,
                 []
             );
             $curlResult = $curl->exec();
@@ -120,7 +120,7 @@ trait ClientTrait
                 );
             }
 
-            return boolval($response->lock ?? false);
+            return boolval($response->pause ?? false);
         } finally {
             unset($curl);
         }

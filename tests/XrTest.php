@@ -11,15 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Tests;
+namespace Chevere\Tests;
 
-use function Chevere\Filesystem\directoryForPath;
 use Chevere\Xr\Client;
 use Chevere\Xr\Message;
 use Chevere\Xr\Xr;
 use phpseclib3\Crypt\EC;
 use phpseclib3\Crypt\PublicKeyLoader;
 use PHPUnit\Framework\TestCase;
+use function Chevere\Filesystem\directoryForPath;
 
 final class XrTest extends TestCase
 {
@@ -72,7 +72,7 @@ final class XrTest extends TestCase
 
     public function testConstructWithSettingsFile(): void
     {
-        $configDir = directoryForPath(__DIR__ . '/_resources/');
+        $configDir = directoryForPath(__DIR__ . '/src/');
         $return = include $configDir->path()->getChild('xr.php')->__toString();
         $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['isEnabled'], $xr->isEnabled());
