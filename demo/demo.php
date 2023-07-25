@@ -19,23 +19,22 @@ foreach (['/../', '/../../../../'] as $path) {
         break;
     }
 }
-xrr('Hola, mundo! 🇨🇱');
-sleep(5);
+xrr('👋 Welcome to XR Debug!');
 xri()->pause();
 xr(
-    🤓: 'XR Debug is a remote PHP debugger',
+    🤓: 'XR Debug is a remote debugger. A lightweight application server built entirely on PHP.',
     t: 'hello-world',
     e: '🐘'
 );
 sleep(5);
 xr(
-    👆: 'Edit the title by clicking on "XR Debug" up there.',
+    👆: 'Edit session title by clicking on "XR Debug" up there.',
     t: 'how-to',
     e: '😜'
 );
 sleep(5);
 xr(
-    😉: 'Use controls to Resume (R), pause (P), stop (S) and clear (C) the debug session.',
+    😉: 'Use keyboard keys to Resume (R), pause (P), stop (S) and clear (C) the debug session.',
     t: 'how-to',
     e: '🕹️'
 );
@@ -66,6 +65,6 @@ xr(
 );
 sleep(5);
 xrr(
-    '🎉 Enjoy <b>chevere/xr</b>',
+    '🎉 Enjoy <b>XR Debug</b>',
     e: '😊'
 );
