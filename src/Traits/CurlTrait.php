@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Traits;
 
-use function Chevere\Message\message;
 use Chevere\Throwable\Exceptions\RuntimeException;
 use CurlHandle;
+use function Chevere\Message\message;
 
 trait CurlTrait
 {

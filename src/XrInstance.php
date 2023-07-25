@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use function Chevere\Message\message;
 use Chevere\Throwable\Exceptions\LogicException;
 use Chevere\Xr\Interfaces\XrInterface;
+use function Chevere\Message\message;
 
 /**
  * @codeCoverageIgnore

@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Traits;
 
-use function Chevere\Message\message;
-
 use Chevere\Http\Interfaces\MethodInterface;
 use Chevere\Http\Methods\GetMethod;
 use Chevere\Http\Methods\PostMethod;
@@ -23,6 +21,7 @@ use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
+use function Chevere\Message\message;
 
 trait ClientTrait
 {

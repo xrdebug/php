@@ -12,14 +12,14 @@
 declare(strict_types=1);
 
 namespace Chevere\Xr {
-    use function Chevere\Filesystem\directoryForPath;
     use Chevere\Writer\Interfaces\WriterInterface;
-    use function Chevere\Writer\streamTemp;
     use Chevere\Writer\StreamWriter;
     use Chevere\Xr\Interfaces\XrInterface;
     use LogicException;
-    use function Safe\getcwd;
     use Throwable;
+    use function Chevere\Filesystem\directoryForPath;
+    use function Chevere\Writer\streamTemp;
+    use function Safe\getcwd;
 
     /**
      * @codeCoverageIgnore
@@ -56,7 +56,7 @@ namespace Chevere\Xr {
     {
         try {
             return getXr();
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             $caller = debug_backtrace(0, 2)[1];
             $file = $caller['file'] ?? '@unknown';
             $line = strval($caller['line'] ?? 0);
@@ -126,13 +126,13 @@ namespace Chevere\Xr {
 }
 
 namespace {
-    use function Chevere\Xr\getWriter;
-    use function Chevere\Xr\getXrFailover;
     use Chevere\Xr\Inspector\Inspector;
     use Chevere\Xr\Inspector\InspectorInstance;
     use Chevere\Xr\Inspector\InspectorNull;
     use Chevere\Xr\Interfaces\InspectorInterface;
     use Chevere\Xr\Message;
+    use function Chevere\Xr\getWriter;
+    use function Chevere\Xr\getXrFailover;
 
     // @codeCoverageIgnoreStart
     if (! defined('XR_BACKTRACE')) {

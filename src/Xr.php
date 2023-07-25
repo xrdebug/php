@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Xr;
 
-use function Chevere\Filesystem\filePhpReturnForPath;
 use Chevere\Filesystem\Interfaces\DirectoryInterface;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\CurlInterface;
@@ -21,6 +20,7 @@ use Chevere\Xr\Interfaces\XrInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
 use phpseclib3\Crypt\PublicKeyLoader;
 use Throwable;
+use function Chevere\Filesystem\filePhpReturnForPath;
 
 final class Xr implements XrInterface
 {
