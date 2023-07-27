@@ -62,7 +62,7 @@ namespace Chevere\Xr {
             $line = strval($caller['line'] ?? 0);
             error_log(
                 strtr(
-                    'Unable to use XR Debug at %s: %e',
+                    'Unable to use XrDebug at %s: %e',
                     [
                         '%s' => "{$file}:{$line}",
                         '%e' => $e->getMessage(),
@@ -75,7 +75,7 @@ namespace Chevere\Xr {
     }
 
     /**
-     * Register XR Debug throwable handler.
+     * Register XrDebug throwable handler.
      *
      * @param bool $callPrevious True to call the previous handler.
      * False to disable the previous handler.
@@ -99,10 +99,10 @@ namespace Chevere\Xr {
     }
 
     /**
-     * Handle a Throwable using XR Debug.
+     * Handle a Throwable using XrDebug.
      *
      * @param Throwable $throwable The throwable to handle
-     * @param string $extra Extra contents to append to the XR Debug message
+     * @param string $extra Extra contents to append to the XrDebug message
      *
      * @codeCoverageIgnore
      */
@@ -141,7 +141,7 @@ namespace {
     // @codeCoverageIgnoreEnd
     if (! function_exists('xr')) { // @codeCoverageIgnore
         /**
-         * Dumps information about one or more variables to XR Debug.
+         * Dumps information about one or more variables to XrDebug.
          *
          * ```php
          * xr($foo, $bar,...);
@@ -182,7 +182,7 @@ namespace {
     }
     if (! function_exists('xrr')) { // @codeCoverageIgnore
         /**
-         * Send a raw html message to XR Debug.
+         * Send a raw html message to XrDebug.
          *
          * ```php
          * xrr($html, ...);
@@ -220,7 +220,7 @@ namespace {
     }
     if (! function_exists('xri')) { // @codeCoverageIgnore
         /**
-         * Access XR Debug inspector to send debug information.
+         * Access XrDebug inspector to send debug information.
          *
          * @codeCoverageIgnore
          */

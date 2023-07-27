@@ -1,4 +1,4 @@
-# XR Debug
+# XrDebug
 
 > 🔔 Subscribe to the [newsletter](https://chv.to/chevere-newsletter) to don't miss any update regarding Chevere.
 
@@ -22,7 +22,7 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/xr/badge)](https://www.codefactor.io/repository/github/chevere/xr)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://www.codacy.com/gh/chevere/xr/dashboard)
 
-[XR Debug](https://xr-docs.chevere.org/) is a dump debug utility for PHP. No extras required, **debug** your PHP code **anywhere**. It uses a ReactPHP SSE server to provide a web-based debug application.
+[XrDebug](https://xr-docs.chevere.org/) is a dump debug utility for PHP. No extras required, **debug** your PHP code **anywhere**. It uses a ReactPHP SSE server to provide a web-based debug application.
 
 ## Quick start
 
@@ -32,7 +32,7 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 composer require --dev chevere/xr
 ```
 
-* Run the XR Debug [server](https://xr-docs.chevere.org/server/)
+* Run the XrDebug [server](https://xr-docs.chevere.org/server/)
 
 ```sh
 docker run -t --init --rm -p 27420:27420 ghcr.io/chevere/xr-server
@@ -54,7 +54,7 @@ docker run -t --init --rm -p 27420:27420 ghcr.io/chevere/xr-server
 * ✨ Dump n arguments with [VarDump](https://chevere.org/packages/var-dump.html) driven variable highlight
 * 🐘 One-click PHP server run (no extras required)
 * 👻 Filter messages by [Topics](https://xr-docs.chevere.org/helpers/xr.html#topic) and [Emotes](https://xr-docs.chevere.org/helpers/xr.html#emote)
-* ✍️ Re-name "XR Debug" to anything you want
+* ✍️ Re-name "XrDebug" to anything you want
 * 🏁 Resume, Pause, Stop and Clear debug window controls
 * 🥷 Keyboard shortcuts (Resume **R**, Pause **P**, Stop **S** and Clear **C**)
 * 😊 Export dump output to clipboard or as PNG image

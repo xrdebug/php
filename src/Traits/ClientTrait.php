@@ -69,7 +69,7 @@ trait ClientTrait
         try {
             $curl = $this->getCurlHandle(
                 new PostMethod(),
-                'message',
+                'messages',
                 $message->toArray()
             );
             $curl->exec();
@@ -83,7 +83,7 @@ trait ClientTrait
         try {
             $curl = $this->getCurlHandle(
                 new PostMethod(),
-                'locks',
+                'pauses',
                 $message->toArray(),
             );
             $curl->exec();
@@ -103,7 +103,7 @@ trait ClientTrait
         try {
             $curl = $this->getCurlHandle(
                 new GetMethod(),
-                'locks/' . $id,
+                'pauses/' . $id,
                 []
             );
             $curlResult = $curl->exec();
