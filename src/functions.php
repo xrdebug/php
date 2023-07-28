@@ -131,6 +131,8 @@ namespace {
     use Chevere\Xr\Inspector\InspectorNull;
     use Chevere\Xr\Interfaces\InspectorInterface;
     use Chevere\Xr\Message;
+    use Chevere\Xr\Xr;
+    use Chevere\Xr\XrInstance;
     use function Chevere\Xr\getWriter;
     use function Chevere\Xr\getXrFailover;
 
@@ -240,6 +242,25 @@ namespace {
 
                 return (new InspectorInstance($xrInspector))::get();
             }
+        }
+    }
+    if (! function_exists('xrConfig')) { // @codeCoverageIgnore
+        function xrConfig(
+            bool $isEnabled = true,
+            bool $isHttps = false,
+            string $host = 'localhost',
+            int $port = 27420,
+            string $key = '',
+        ): void {
+            new XrInstance(
+                new Xr(
+                    isEnabled: $isEnabled,
+                    isHttps: $isHttps,
+                    host: $host,
+                    port: $port,
+                    key: $key
+                )
+            );
         }
     }
 }
