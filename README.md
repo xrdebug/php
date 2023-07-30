@@ -1,4 +1,4 @@
-# xrDebug
+# xr
 
 > 🔔 Subscribe to the [newsletter](https://chv.to/chevere-newsletter) to don't miss any update regarding Chevere.
 
@@ -22,7 +22,7 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/xr/badge)](https://www.codefactor.io/repository/github/chevere/xr)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://www.codacy.com/gh/chevere/xr/dashboard)
 
-[xrDebug](https://xr-docs.chevere.org/) is a dump debug utility for PHP. No extras required, **debug** your PHP code **anywhere**. It uses a ReactPHP SSE server to provide a web-based debug application.
+`xr` is the PHP client library for [xrDebug](https://xr-docs.chevere.org/).
 
 ## Quick start
 
@@ -35,41 +35,19 @@ composer require --dev chevere/xr
 * Run the xrDebug [server](https://xr-docs.chevere.org/server/)
 
 ```sh
-docker run -t --init --rm -p 27420:27420 ghcr.io/chevere/xr-server
+docker run -t --init --rm -p 27420:27420 ghcr.io/chevere/xrdebug
 ```
 
-<p align="center">
-    <img alt="xrDebug light" src=".screen/xr-0.1.3-light-welcome.png">
-    <img alt="xrDebug dark" src=".screen/xr-0.1.3-dark-welcome.png">
-</p>
+* Debug your code using [helpers](https://xr-docs.chevere.org/helpers/)
+
+```php
+xr($var, 'Hola, mundo!');
+xri()->pause();
+```
 
 ## Documentation
 
-👉 [xr-docs.chevere.org](https://xr-docs.chevere.org)
-
-## Features
-
-* Signed requests (Ed25519)
-* End-to-end encryption (AES-GCM AE)
-* Dump arguments using [VarDump](https://chevere.org/packages/var-dump.html)
-* One-click disposable debug PHP server (no extras required)
-* Filter messages by [Topics](https://xr-docs.chevere.org/helpers/xr.html#topic) and [Emotes](https://xr-docs.chevere.org/helpers/xr.html#emote)
-* Resume, Pause, Stop and Clear debug window controls
-* Keyboard shortcuts (Resume **R**, Pause **P**, Stop **S** and Clear **C**)
-* Re-name "xrDebug" session to anything you want
-* Export dump output to clipboard or as PNG image
-* Generates dump [backtrace](https://xr-docs.chevere.org/helpers/xr.html#flags)
-* [Pause](https://xr-docs.chevere.org/helpers/xri.html#pause) and resume your code execution
-* Dark / 🌝 Light mode follows your system preferences
-* Ephemeral, it doesn't store any persistent data
-* Portable & HTML based (save page, search, etc.)
-* Uses [FiraCode](https://github.com/tonsky/FiraCode) font for displaying _beautiful looking dumps_ ™
-* Handle exceptions (hook or replace your existing handler)
-* Open with editor links
-
-<p align="center">
-    <img alt="xrDebug dark demo" src=".screen/xr-0.1.3-dark-demo.png">
-</p>
+Documentation available at [xr-docs.chevere.org](https://xr-docs.chevere.org/).
 
 ## License
 
