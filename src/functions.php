@@ -245,6 +245,11 @@ namespace {
         }
     }
     if (! function_exists('xrConfig')) { // @codeCoverageIgnore
+        /**
+         * Init a new XrInstance with provided config.
+         *
+         * @codeCoverageIgnore
+         */
         function xrConfig(
             bool $isEnabled = true,
             bool $isHttps = false,
