@@ -33,7 +33,7 @@ final class XrInstance
     {
         if (! isset(self::$instance)) {
             throw new LogicException(
-                message('No XrDebug instance present')
+                message('No xrDebug instance present')
             );
         }
 
