@@ -91,14 +91,14 @@ trait ClientTrait
             if ($curlError === '') {
                 do {
                     sleep(1);
-                } while ($this->isLocked($message->id()));
+                } while ($this->isPaused($message->id()));
             }
         } finally {
             unset($curl);
         }
     }
 
-    public function isLocked(string $id): bool
+    public function isPaused(string $id): bool
     {
         try {
             $curl = $this->getCurlHandle(
@@ -119,7 +119,7 @@ trait ClientTrait
                 );
             }
 
-            return boolval($response->pause ?? false);
+            return true;
         } finally {
             unset($curl);
         }

@@ -47,7 +47,7 @@ final class ClientTest extends TestCase
         );
         $message = new Message();
         $client->sendMessage($message);
-        $this->assertFalse($client->isLocked($message->id()));
+        $this->assertFalse($client->isPaused($message->id()));
     }
 
     public function testWithCurl(): void
@@ -64,7 +64,7 @@ final class ClientTest extends TestCase
         $client = (new Client())->withCurl($curl);
         $message = new Message();
         $this->assertTrue(
-            $client->isLocked($message->id())
+            $client->isPaused($message->id())
         );
     }
 
@@ -86,7 +86,7 @@ final class ClientTest extends TestCase
         $message = new Message();
         $client->sendPause($message);
         $this->assertFalse(
-            $client->isLocked($message->id())
+            $client->isPaused($message->id())
         );
     }
 }
