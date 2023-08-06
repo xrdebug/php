@@ -16,6 +16,7 @@ namespace Chevere\Xr\Inspector\Traits;
 trait InspectorNullTrait
 {
     public function pause(
+        string $body = '',
         string $e = '',
         string $t = '',
         int $f = 0,
