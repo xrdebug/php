@@ -43,13 +43,7 @@ jobs:
         run: composer phpstan
       - name: Tests (PHPUnit)
         run: vendor/bin/phpunit --coverage-xml=build/logs/xml-coverage --log-junit=build/logs/junit.xml
-      # - name: Mutation testing (Infection)
-      #   env:
-      #     INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
-      #   run: |
-      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.16/infection.phar
-      #     curl -sLOJ https://github.com/infection/infection/releases/download/0.26.16/infection.phar.asc
-      #     gpg --recv-keys C6D76C329EBADE2FB9C458CFC5095986493B4AA0
-      #     gpg --with-fingerprint --verify infection.phar.asc infection.phar
-      #     chmod +x infection.phar
-      #     ./infection.phar --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github --only-covered
+      - name: Mutation testing (Infection)
+        env:
+          INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
+        run: infection --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github --only-covered
