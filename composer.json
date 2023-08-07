@@ -2,7 +2,6 @@
     "name": "chevere/xr",
     "description": "Lightweight debug utility",
     "homepage": "https://xr-debug.chevere.org",
-    "minimum-stability": "dev",
     "keywords": [
         "chevere",
         "dump",
@@ -18,18 +17,16 @@
         }
     ],
     "require": {
-        "php": "^8.1",
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/chevere": "^3.1.x-dev",
-        "chevere/http": "0.2.x-dev",
+        "chevere/chevere": "^3.1",
+        "chevere/http": "^0.2",
         "chevere/throwable-handler": "^0.10",
         "chevere/trace": "^0.8",
-        "chevere/var-dump": "^0.8.x-dev",
+        "chevere/var-dump": "^0.8",
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
-        "chevere/xr-server": "^0.8.x-dev",
         "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
@@ -49,21 +46,24 @@
     "scripts": {
         "all": [
             "composer phpstan",
-            "composer test-rep",
+            "composer test",
+            "composer test-coverage",
             "composer infection"
         ],
         "infection": "infection --only-covered -j10",
         "phpstan": "vendor/bin/phpstan analyze src/ --memory-limit 512M --level 9",
         "test": "vendor/bin/phpunit -c phpunit.xml",
-        "test-rep": "vendor/bin/phpunit -c phpunit-report.xml",
-        "update-cs": "mkdir -p .ecs && cd .ecs && curl -O https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php"
+        "test-coverage": "vendor/bin/phpunit -c phpunit-coverage.xml",
+        "cs-update": "mkdir -p .ecs && cd .ecs && curl -O https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php",
+        "cs-fix": "vendor/bin/ecs --config='.ecs/ecs.php' check src --fix"
     },
     "scripts-descriptions": {
         "all": "Runs all checks",
         "infection": "Runs infection",
         "phpstan": "Runs phpstan",
         "test": "Run test suite",
-        "test-rep": "Run test suite (report)",
-        "update-cs": "Update Chevere code style definition"
+        "test-coverage": "Run test suite (coverage)",
+        "cs-update": "Update Chevere code style definition",
+        "cs-fix": "Update Chevere code style definition"
     }
 }

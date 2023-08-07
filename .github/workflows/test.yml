@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: composer install --no-progress
       - name: Run PHPStan
-        run: phpstan analyse src -l 9
+        run: composer phpstan
       - name: Tests (PHPUnit)
         run: vendor/bin/phpunit --coverage-xml=build/logs/xml-coverage --log-junit=build/logs/junit.xml
       # - name: Mutation testing (Infection)
