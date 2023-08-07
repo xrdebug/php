@@ -1,5 +1,5 @@
 {
-    "$schema": "https://raw.githubusercontent.com/infection/infection/0.26.13/resources/schema.json",
+    "$schema": "https://raw.githubusercontent.com/infection/infection/0.27.0/resources/schema.json",
     "source": {
         "directories": [
             "src/"
@@ -14,5 +14,5 @@
     "mutators": {
         "@default": true
     },
-    "testFrameworkOptions": "--configuration=phpunit-report.xml"
+    "testFrameworkOptions": "--configuration=phpunit-coverage.xml"
 }

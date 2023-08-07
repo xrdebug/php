@@ -7,7 +7,7 @@
 /.gitignore export-ignore
 /docker-bake.hcl export-ignore
 /Dockerfile export-ignore
-/phpunit-report.xml export-ignore
+/phpunit-coverage.xml export-ignore
 /phpunit.xml export-ignore
 /sonar-project.properties export-ignore
 /DOCKER.md export-ignore

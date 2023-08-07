@@ -16,12 +16,12 @@ namespace Chevere\Tests\src;
 use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
-use Chevere\Xr\Traits\ClientTrait;
+use Chevere\Xr\Traits\ClientTrait as TraitsClientTrait;
 use function Chevere\Message\message;
 
 final class ClientTesterStop implements ClientInterface
 {
-    use ClientTrait;
+    use TraitsClientTrait;
 
     public function sendPause(MessageInterface $message): void
     {
