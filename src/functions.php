@@ -12,6 +12,7 @@
 declare(strict_types=1);
 
 namespace Chevere\Xr {
+    use Chevere\ThrowableHandler\ThrowableRead;
     use Chevere\Writer\Interfaces\WriterInterface;
     use Chevere\Writer\StreamWriter;
     use Chevere\Xr\Interfaces\XrInterface;
@@ -112,7 +113,8 @@ namespace Chevere\Xr {
         if ($xr === null || $xr->isEnabled() === false) {
             return; // @codeCoverageIgnore
         }
-        $parser = new ThrowableParser($throwable, $extra);
+        $read = new ThrowableRead($throwable);
+        $parser = new ThrowableParser($read, $extra);
         $xr->client()
             ->sendMessage(
                 (new Message(

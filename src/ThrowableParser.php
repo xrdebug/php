@@ -24,7 +24,7 @@ final class ThrowableParser
 {
     public const OPEN_TEMPLATE = '<div class="throwable">';
 
-    public const CLOSE_TEMPLATE = '</div>';
+    public const CLOSE_TEMPLATE = '</div><!-- t -->';
 
     public const ITEM_TEMPLATE = <<<HTML
         <div class="throwable-item">
@@ -42,18 +42,16 @@ final class ThrowableParser
 
     private string $emote = '⚠️Throwable';
 
-    private FormatInterface $format;
-
     private int $index = 0;
 
-    private ThrowableReadInterface $throwableRead;
+    private FormatInterface $format;
 
     public function __construct(
-        private Throwable $throwable, // @phpstan-ignore-line
+        private ThrowableReadInterface $throwableRead,
         private string $extra = '',
     ) {
-        $this->throwableRead = new ThrowableRead($throwable);
         $this->format = new HtmlFormat();
+        $throwable = $this->throwableRead->throwable();
         $this->topic = basename(
             str_replace(
                 '\\',
@@ -118,7 +116,9 @@ final class ThrowableParser
                 : '',
             '%trace%' => $traceDocument->__toString(),
         ];
-        $this->appendBodyLine(strtr(static::ITEM_TEMPLATE, $translate));
+        $this->appendBodyLine(
+            strtr(static::ITEM_TEMPLATE, $translate)
+        );
 
         return $throwable->getPrevious();
     }

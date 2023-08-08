@@ -21,7 +21,7 @@
         "ext-json": "*",
         "chevere/chevere": "^3.1",
         "chevere/http": "^0.2",
-        "chevere/throwable-handler": "^0.10",
+        "chevere/throwable-handler": "^0.10.x-dev",
         "chevere/trace": "^0.8",
         "chevere/var-dump": "^0.8",
         "phpseclib/phpseclib": "~3.0"

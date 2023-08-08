@@ -127,7 +127,9 @@ final class Xr implements XrInterface
                     return $configFullPath;
                 }
             }
+            // @infection-ignore-all
             $parentDirectory = dirname($configDirectory) . DIRECTORY_SEPARATOR;
+            // @infection-ignore-all
             if ($parentDirectory === $configDirectory) {
                 return '';
             }

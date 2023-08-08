@@ -51,6 +51,23 @@ final class MessageTest extends TestCase
         );
     }
 
+    public function testMissingFileLine(): void
+    {
+        $trace = [
+            [],
+        ];
+        $message = new Message($trace);
+        $this->assertSame('', $message->filePath());
+        $this->assertSame(0, $message->fileLine());
+        $this->assertSame(
+            [
+                'file_line' => '0',
+                'file_path' => '',
+            ],
+            $this->filterArray($message->toArray(), 'file_path', 'file_line')
+        );
+    }
+
     public function testDeclaredBacktrace(): void
     {
         $testFile = 'test';
@@ -127,9 +144,12 @@ final class MessageTest extends TestCase
         );
     }
 
-    public function testWithVariables(): void
+    public function testWithDumpVars(): void
     {
-        $message = (new Message())->withWriter(getWriter());
+        $body = 'body string';
+        $message = (new Message())
+            ->withBody($body)
+            ->withWriter(getWriter());
         $variable = 'Hola, mundo!';
         $length = strlen($variable);
         $withVariables = $message->withVariables($variable);
@@ -138,20 +158,25 @@ final class MessageTest extends TestCase
             $variable,
             $withVariables->vars()[0]
         );
-        $this->assertSame('<div class="dump"><pre>
-Arg•1 <span style="color:#ff8700">string</span> ' . $variable . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre></div>', $withVariables->toArray()['body']);
+        $expected = $body . <<<HTML
+        <div class="dump"><pre>
+        Arg•1 <span style="color:#ff8700">string</span> {$variable} <em><span style="color:rgb(108 108 108 / 65%);">(length={$length})</span></em></pre></div>
+        HTML;
+        $this->assertSame($expected, $withVariables->toArray()['body']);
     }
 
     public function testWithBacktraceFlag(): void
     {
-        $message = new Message();
+        $body = 'body string';
+        $message = (new Message())->withBody($body);
         $line = strval(__LINE__ - 1);
         $this->assertFalse($message->isEnableBacktrace());
         $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);
         $this->assertNotSame($message, $withBacktraceFlag);
         $this->assertTrue($withBacktraceFlag->isEnableBacktrace());
+        $expected = $body . '<div class="backtrace">';
         $this->assertStringContainsString(
-            '<div class="backtrace">',
+            $expected,
             $withBacktraceFlag->toArray()['body']
         );
         $this->assertStringContainsString(

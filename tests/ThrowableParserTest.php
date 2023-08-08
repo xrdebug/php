@@ -14,21 +14,48 @@ declare(strict_types=1);
 namespace Chevere\Tests;
 
 use Chevere\Throwable\Errors\TypeError;
+use Chevere\ThrowableHandler\Formats\HtmlFormat;
+use Chevere\ThrowableHandler\Formats\PlainFormat;
+use Chevere\ThrowableHandler\ThrowableRead;
+use Chevere\Trace\Trace;
 use Chevere\Xr\ThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
-use function Chevere\Message\message;
 
 final class ThrowableParserTest extends TestCase
 {
     public function testTopLevel(): void
     {
         $throwable = new Exception('foo');
-        $parser = new ThrowableParser($throwable, '');
+        $read = new ThrowableRead($throwable);
+        $parser = new ThrowableParser($read);
         $this->assertSame(Exception::class, $parser->topic());
         $this->assertSame(
             Exception::class,
             $parser->throwableRead()->className()
+        );
+        $this->assertStringStartsWith(
+            ThrowableParser::OPEN_TEMPLATE . "\n",
+            $parser->body()
+        );
+        $this->assertStringEndsWith(
+            ThrowableParser::CLOSE_TEMPLATE . "\n",
+            $parser->body()
+        );
+        $this->assertStringContainsString(
+            '<div class="throwable-code">0</div>',
+            $parser->body()
+        );
+        $trace = new Trace(
+            $parser->throwableRead()->trace(),
+            new HtmlFormat()
+        );
+        $trace = (string) $trace;
+        $this->assertStringContainsString(
+            <<<HTML
+            <div class="throwable-backtrace backtrace">{$trace}</div>
+            HTML,
+            $parser->body()
         );
         $this->assertSame('⚠️Throwable', $parser->emote());
         $this->assertStringContainsString(Exception::class, $parser->body());
@@ -36,8 +63,9 @@ final class ThrowableParserTest extends TestCase
 
     public function testNamespaced(): void
     {
-        $throwable = new TypeError(message: message('foo'));
-        $parser = new ThrowableParser($throwable, '');
+        $throwable = new TypeError('foo');
+        $read = new ThrowableRead($throwable);
+        $parser = new ThrowableParser($read);
         $this->assertSame('TypeError', $parser->topic());
         $this->assertSame(
             TypeError::class,
@@ -51,11 +79,19 @@ final class ThrowableParserTest extends TestCase
 
     public function testWithPrevious(): void
     {
-        $throwable = new Exception('foo', previous: new Exception('bar'));
-        $parser = new ThrowableParser($throwable, '');
+        $file = __FILE__;
+        $line = __LINE__ + 1;
+        $previous = new Exception('bar');
+        $throwable = new Exception('foo', previous: $previous);
+        $read = new ThrowableRead($throwable);
+        $parser = new ThrowableParser($read);
+        $body = strip_tags($parser->body());
         $this->assertStringContainsString(
-            '<div class="throwable-message">bar</div>',
-            $parser->body()
+            <<<PLAIN
+            #0 {$file}:{$line}
+            {main}()
+            PLAIN,
+            $body
         );
     }
 
@@ -63,7 +99,9 @@ final class ThrowableParserTest extends TestCase
     {
         $extra = 'EXTRA EXTRA! TODD SMELLS';
         $throwable = new Exception('foo');
-        $parser = new ThrowableParser($throwable, $extra);
+        $read = new ThrowableRead($throwable);
+        $format = new PlainFormat();
+        $parser = new ThrowableParser($read, $extra);
         $this->assertStringContainsString($extra, $parser->body());
     }
 }

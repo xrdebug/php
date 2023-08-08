@@ -188,23 +188,26 @@ final class Message implements MessageInterface
         ))
             ->withVariables(...$this->vars)
             ->process($this->writer);
-        $dumpString = $this->writer->__toString();
-        if ($dumpString !== '') {
-            $this->body .= '<div class="dump">' . $dumpString . '</div>';
+        $dump = $this->writer->__toString();
+        if ($dump === '') {
+            return;
         }
+        $this->body .= <<<HTML
+        <div class="dump">{$dump}</div>
+        HTML;
     }
 
     private function handleBacktrace(): void
     {
-        if ($this->isFlagBacktrace) {
-            $traceDocument = new Trace(
-                $this->backtrace,
-                new ThrowableHandlerHtmlFormat()
-            );
-            $this->body .= '<div class="backtrace">'
-                . "\n"
-                . $traceDocument->__toString()
-                . '</div>';
+        if (! $this->isFlagBacktrace) {
+            return;
         }
+        $trace = new Trace(
+            $this->backtrace,
+            new ThrowableHandlerHtmlFormat()
+        );
+        $this->body .= <<<HTML
+        <div class="backtrace">{$trace->__toString()}</div>
+        HTML;
     }
 }
