@@ -53,8 +53,10 @@ final class ClientTest extends TestCase
     public function testWithCurl(): void
     {
         $curl = new Curl();
-        $client = (new Client())->withCurl($curl);
-        $this->assertSame($curl, $client->curl());
+        $client = new Client();
+        $with = $client->withCurl($curl);
+        $this->assertNotSame($client, $with);
+        $this->assertSame($curl, $with->curl());
     }
 
     public function testPauseLocked()

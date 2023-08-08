@@ -11,12 +11,8 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+use DG\BypassFinals;
 
-use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Traits\CurlTrait;
+require_once __DIR__ . '/../vendor/autoload.php';
 
-final class Curl implements CurlInterface
-{
-    use CurlTrait;
-}
+BypassFinals::enable();

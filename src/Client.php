@@ -16,7 +16,7 @@ namespace Chevere\Xr;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Traits\ClientTrait;
 
-class Client implements ClientInterface
+final class Client implements ClientInterface
 {
     use ClientTrait;
 }

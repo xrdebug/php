@@ -56,16 +56,20 @@ final class XrTest extends TestCase
 
     public function testConstructWithoutSettingsFileSubfolder(): void
     {
-        $xr = (new Xr())
-            ->withConfigDir(directoryForPath(__DIR__ . '/_empty/_empty/'));
-        $this->assertSame(true, $xr->isEnabled());
-        $this->assertEquals(new Client(), $xr->client());
+        $xr = new Xr();
+        $with = $xr->withConfigDir(
+            directoryForPath(__DIR__ . '/_empty/_empty/')
+        );
+        $this->assertNotSame($xr, $with);
+        $this->assertSame(true, $with->isEnabled());
+        $this->assertEquals(new Client(), $with->client());
     }
 
     public function testConstructWithDirNotExists(): void
     {
-        $xr = (new Xr())
-            ->withConfigDir(directoryForPath(__DIR__ . '/_not-found/'));
+        $xr = (new Xr())->withConfigDir(
+            directoryForPath(__DIR__ . '/_not-found/')
+        );
         $this->assertSame(true, $xr->isEnabled());
         $this->assertEquals(new Client(), $xr->client());
     }

@@ -20,7 +20,7 @@ use function Chevere\Message\message;
 /**
  * @codeCoverageIgnore
  */
-class XrInstance
+final class XrInstance
 {
     private static XrInterface $instance;
 

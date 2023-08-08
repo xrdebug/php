@@ -13,15 +13,16 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Inspector\Traits;
 
+/**
+ * @infection-ignore-all
+ */
 trait InspectorNullTrait
 {
     public function pause(
-        string $body = '',
         string $e = '',
         string $t = '',
         int $f = 0,
     ): void {
-        // dummy
     }
 
     public function memory(
@@ -29,6 +30,5 @@ trait InspectorNullTrait
         string $t = '',
         int $f = 0,
     ): void {
-        // dummy
     }
 }

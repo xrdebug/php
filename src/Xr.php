@@ -22,7 +22,7 @@ use phpseclib3\Crypt\PublicKeyLoader;
 use Throwable;
 use function Chevere\Filesystem\filePhpReturnForPath;
 
-class Xr implements XrInterface
+final class Xr implements XrInterface
 {
     private ClientInterface $client;
 

@@ -6,7 +6,8 @@
          failOnRisky="true"
          failOnWarning="true"
          testdox="true"
-         executionOrder="default">
+         executionOrder="default"
+         bootstrap="tests/bootstrap.php">
     <testsuites>
         <testsuite name="Chevere Test suite">
             <directory suffix="Test.php">tests/</directory>

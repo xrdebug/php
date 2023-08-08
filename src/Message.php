@@ -24,7 +24,7 @@ use Chevere\Xr\VarDump\Output\XrVarDumpHtmlOutput;
 use Ramsey\Uuid\Provider\Node\RandomNodeProvider;
 use Ramsey\Uuid\Uuid;
 
-class Message implements MessageInterface
+final class Message implements MessageInterface
 {
     private string $body = '';
 

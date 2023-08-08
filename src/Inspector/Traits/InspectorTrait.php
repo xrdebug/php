@@ -25,14 +25,12 @@ trait InspectorTrait
     }
 
     public function pause(
-        string $body = '',
         string $t = '',
         string $e = '',
         int $f = 0,
     ): void {
         $this->sendCommand(
-            command: 'sendPause',
-            body: $body,
+            command: 'pause',
             topic: $t,
             emote: $e,
             flags: $f,
@@ -46,7 +44,7 @@ trait InspectorTrait
     ): void {
         $memory = memory_get_usage(true);
         $this->sendCommand(
-            command: 'sendMessage',
+            command: 'message',
             body: sprintf('%.2F MB', $memory / 1000000),
             topic: $t,
             emote: $e,
@@ -70,6 +68,7 @@ trait InspectorTrait
             ->withTopic($topic)
             ->withEmote($emote)
             ->withFlags($flags);
+        $command = 'send' . ucfirst($command);
 
         try {
             $this->client->{$command}($message);

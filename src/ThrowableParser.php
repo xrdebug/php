@@ -20,7 +20,7 @@ use Chevere\ThrowableHandler\ThrowableRead;
 use Chevere\Trace\Trace;
 use Throwable;
 
-class ThrowableParser
+final class ThrowableParser
 {
     public const OPEN_TEMPLATE = '<div class="throwable">';
 

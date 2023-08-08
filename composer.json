@@ -27,6 +27,7 @@
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
+        "dg/bypass-finals": "^1.4",
         "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
@@ -37,6 +38,11 @@
         ],
         "psr-4": {
             "Chevere\\Xr\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Chevere\\Tests\\": "tests/"
         }
     },
     "config": {

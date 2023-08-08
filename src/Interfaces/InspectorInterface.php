@@ -19,7 +19,6 @@ namespace Chevere\Xr\Interfaces;
 interface InspectorInterface
 {
     public function pause(
-        string $body = '',
         string $t = '',
         string $e = '',
         int $f = 0,
