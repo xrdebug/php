@@ -17,6 +17,7 @@ namespace Chevere\Xr {
     use Chevere\Writer\StreamWriter;
     use Chevere\Xr\Interfaces\XrInterface;
     use LogicException;
+    use phpseclib3\Crypt\EC\PrivateKey;
     use Throwable;
     use function Chevere\Filesystem\directoryForPath;
     use function Chevere\Writer\streamTemp;
@@ -124,6 +125,18 @@ namespace Chevere\Xr {
                     ->withTopic($parser->topic())
                     ->withEmote($parser->emote())
             );
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    function sign(PrivateKey $privateKey, array $data): string
+    {
+        $serialize = serialize($data);
+        /** @var string $signature */
+        $signature = $privateKey->sign($serialize);
+
+        return base64_encode($signature);
     }
 }
 

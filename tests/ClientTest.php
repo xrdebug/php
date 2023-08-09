@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Tests;
 
+use Chevere\Http\Methods\PostMethod;
 use Chevere\Tests\src\CurlError;
 use Chevere\Tests\src\CurlLockPauseTrue;
 use Chevere\Tests\src\CurlStopTrue;
@@ -22,6 +23,8 @@ use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Message;
 use phpseclib3\Crypt\EC;
 use PHPUnit\Framework\TestCase;
+use function Chevere\Standard\arrayFromKey;
+use function Chevere\Xr\sign;
 
 final class ClientTest extends TestCase
 {
@@ -32,6 +35,30 @@ final class ClientTest extends TestCase
             'http://localhost:27420/endpoint',
             $client->getUrl('endpoint')
         );
+    }
+
+    public function testPost(): void
+    {
+        $port = 12345;
+        $host = 'test-host';
+        $isHttps = true;
+        $client = new Client(port: $port, host: $host, isHttps: $isHttps);
+        $message = new Message();
+        $client->sendMessage($message);
+        $options = [
+            CURLINFO_HEADER_OUT => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_FAILONERROR => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => PostMethod::name(),
+            CURLOPT_POSTFIELDS => http_build_query($message->toArray()),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_TIMEOUT => 2,
+            CURLOPT_URL => $client->getUrl('messages'),
+            CURLOPT_USERAGENT => 'chevere/xr 1.0',
+        ];
+        $this->assertSame($options, $client->options());
     }
 
     public function testCustom(): void
@@ -47,6 +74,14 @@ final class ClientTest extends TestCase
         );
         $message = new Message();
         $client->sendMessage($message);
+        $signatureDisplay = sign($key, $message->toArray());
+        $options = [
+            CURLOPT_HTTPHEADER => [
+                "X-Signature: {$signatureDisplay}",
+            ],
+        ];
+        $result = arrayFromKey($client->options(), CURLOPT_HTTPHEADER);
+        $this->assertSame($options, $result);
         $this->assertFalse($client->isPaused($message->id()));
     }
 
@@ -61,7 +96,6 @@ final class ClientTest extends TestCase
 
     public function testPauseLocked()
     {
-        require_once __DIR__ . '/src/CurlLockPauseTrue.php';
         $curl = new CurlLockPauseTrue();
         $client = (new Client())->withCurl($curl);
         $message = new Message();
@@ -72,7 +106,6 @@ final class ClientTest extends TestCase
 
     public function testPauseStop()
     {
-        require_once __DIR__ . '/src/CurlStopTrue.php';
         $curl = new CurlStopTrue();
         $client = (new Client())->withCurl($curl);
         $message = new Message();
@@ -82,7 +115,6 @@ final class ClientTest extends TestCase
 
     public function testPauseError()
     {
-        require_once __DIR__ . '/src/CurlError.php';
         $curl = new CurlError();
         $client = (new Client())->withCurl($curl);
         $message = new Message();

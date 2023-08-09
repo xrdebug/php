@@ -22,6 +22,7 @@ use Chevere\Xr\Interfaces\CurlInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
 use function Chevere\Message\message;
+use function Chevere\Xr\sign;
 
 trait ClientTrait
 {
@@ -168,10 +169,7 @@ trait ClientTrait
     private function handleSignature(array $data): void
     {
         if ($this->privateKey !== null) {
-            $serialize = serialize($data);
-            /** @var string $signature */
-            $signature = $this->privateKey->sign($serialize);
-            $signatureDisplay = base64_encode($signature);
+            $signatureDisplay = sign($this->privateKey, $data);
             $this->options[CURLOPT_HTTPHEADER] = [
                 'X-Signature: ' . $signatureDisplay,
             ];
