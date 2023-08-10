@@ -20,7 +20,9 @@ use CurlHandle;
  */
 interface CurlInterface
 {
-    public function handle(): CurlHandle;
+    public function __destruct();
+
+    public function handle(): ?CurlHandle;
 
     public function error(): string;
 

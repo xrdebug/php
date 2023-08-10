@@ -51,9 +51,9 @@ trait CurlTrait
         }
     }
 
-    public function handle(): CurlHandle
+    public function handle(): ?CurlHandle
     {
-        return $this->handle;
+        return isset($this->handle) ? $this->handle : null;
     }
 
     public function error(): string
@@ -73,7 +73,7 @@ trait CurlTrait
 
     public function close(): void
     {
-        curl_close($this->handle);
+        unset($this->handle);
     }
 
     private function assertCurl(): void

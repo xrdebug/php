@@ -59,6 +59,12 @@ final class ClientTest extends TestCase
             CURLOPT_USERAGENT => 'chevere/xr 1.0',
         ];
         $this->assertSame($options, $client->options());
+        $curl = $this->createMock(Curl::class);
+        $curl->expects($this->once())
+            ->method('setOptArray')
+            ->with($options);
+        $client = $client->withCurl($curl);
+        $client->sendMessage($message);
     }
 
     public function testCustom(): void
