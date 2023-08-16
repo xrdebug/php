@@ -1,4 +1,4 @@
-# xr
+# xrDebug (PHP)
 
 > 🔔 Subscribe to the [newsletter](https://chv.to/chevere-newsletter) to don't miss any update regarding Chevere.
 
@@ -23,7 +23,7 @@ https://user-images.githubusercontent.com/20590102/153045551-619c74cc-c4ae-41da-
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/xr/badge)](https://www.codefactor.io/repository/github/chevere/xr)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://www.codacy.com/gh/chevere/xr/dashboard)
 
-`xr` is the PHP client library for [xrDebug](https://xr-docs.chevere.org/).
+PHP client library for [xrDebug](https://xr-docs.chevere.org/).
 
 ## Quick start
 
@@ -36,7 +36,7 @@ composer require --dev chevere/xr
 * Run the xrDebug [server](https://xr-docs.chevere.org/server/)
 
 ```sh
-docker run -t --init --rm -p 27420:27420 ghcr.io/chevere/xrdebug
+xrdebug
 ```
 
 * Debug your code using [helpers](https://xr-docs.chevere.org/helpers/)
