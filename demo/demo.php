@@ -22,7 +22,7 @@ foreach (['/../', '/../../../../'] as $path) {
 xrr('👋 Welcome to xrDebug!');
 xri()->pause();
 xr(
-    🤓: 'xrDebug is a lightweight remote debugger.',
+    🤓: 'xrDebug is a lightweight debugger.',
     t: 'hello-world',
     e: '🐘'
 );
