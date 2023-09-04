@@ -23,6 +23,7 @@ trait InspectorNullTrait
         string $t = '',
         int $f = 0,
     ): void {
+        // null
     }
 
     public function memory(
@@ -30,5 +31,6 @@ trait InspectorNullTrait
         string $t = '',
         int $f = 0,
     ): void {
+        // null
     }
 }
