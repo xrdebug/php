@@ -28,6 +28,7 @@
         <report>
             <clover outputFile="build/logs/clover.xml"/>
             <html outputDirectory="build/logs/html" lowUpperBound="50" highLowerBound="90"/>
+            <xml outputDirectory="build/logs/xml-coverage"/>
         </report>
     </coverage>
 </phpunit>
