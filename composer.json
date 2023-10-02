@@ -19,11 +19,11 @@
     "require": {
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/chevere": "^3.1",
-        "chevere/http": "^0.2",
-        "chevere/throwable-handler": "^0.10.x-dev",
-        "chevere/trace": "^0.8",
-        "chevere/var-dump": "^0.8",
+        "chevere/chevere": "^3.2",
+        "chevere/http": "^0.3",
+        "chevere/throwable-handler": "^0.11",
+        "chevere/trace": "^0.9",
+        "chevere/var-dump": "^0.9",
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
@@ -54,18 +54,29 @@
             "composer phpstan",
             "composer test",
             "composer test-coverage",
-            "composer infection"
+            "composer infection -- --skip-initial-tests --coverage=build/logs"
         ],
-        "infection": "infection --only-covered -j10",
+        "infection": [
+            "Composer\\Config::disableProcessTimeout",
+            "infection --only-covered -j10"
+        ],
+        "infection-filter": "sh -c 'sh -c \"composer infection -- --filter=$0 --test-framework-options=--filter=$0\"' $1",
         "phpstan": "vendor/bin/phpstan analyze src/ --memory-limit 512M --level 9",
-        "test": "vendor/bin/phpunit -c phpunit.xml",
-        "test-coverage": "vendor/bin/phpunit -c phpunit-coverage.xml",
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpunit -c phpunit.xml"
+        ],
+        "test-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "vendor/bin/phpunit -c phpunit-coverage.xml"
+        ],
         "cs-update": "mkdir -p .ecs && cd .ecs && curl -O https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php",
         "cs-fix": "vendor/bin/ecs --config='.ecs/ecs.php' check src --fix"
     },
     "scripts-descriptions": {
         "all": "Runs all checks",
         "infection": "Runs infection",
+        "infection-filter": "Runs infection (filtered)",
         "phpstan": "Runs phpstan",
         "test": "Run test suite",
         "test-coverage": "Run test suite (coverage)",
