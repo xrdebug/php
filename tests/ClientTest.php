@@ -56,7 +56,7 @@ final class ClientTest extends TestCase
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT => 2,
             CURLOPT_URL => $client->getUrl('messages'),
-            CURLOPT_USERAGENT => 'chevere/xr 1.0',
+            CURLOPT_USERAGENT => 'xrdebug/php 1.0',
         ];
         $this->assertSame($options, $client->options());
         $curl = $this->createMock(Curl::class);

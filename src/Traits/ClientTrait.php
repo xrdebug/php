@@ -155,7 +155,7 @@ trait ClientTrait
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT => 2,
             CURLOPT_URL => $this->getUrl($url),
-            CURLOPT_USERAGENT => 'chevere/xr 1.0',
+            CURLOPT_USERAGENT => 'xrdebug/php 1.0',
         ];
         $this->handleSignature($data);
         $this->curl->setOptArray($this->options);

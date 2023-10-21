@@ -1,7 +1,7 @@
 {
-    "name": "chevere/xr",
+    "name": "xrdebug/php",
     "description": "Lightweight debug utility",
-    "homepage": "https://xr-debug.chevere.org",
+    "homepage": "https://github.com/xrdebug/php",
     "keywords": [
         "chevere",
         "dump",

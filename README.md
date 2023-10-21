@@ -2,11 +2,11 @@
 
 > 🔔 Subscribe to the [newsletter](https://chv.to/chevere-newsletter) to don't miss any update regarding Chevere.
 
-[![Build](https://img.shields.io/github/actions/workflow/status/chevere/xr/test.yml?branch=1.0&style=flat-square)](https://github.com/chevere/xr/actions)
-![Code size](https://img.shields.io/github/languages/code-size/chevere/xr?style=flat-square)
-[![Apache-2.0](https://img.shields.io/github/license/chevere/xr?style=flat-square)](LICENSE)
+[![Build](https://img.shields.io/github/actions/workflow/status/xrdebug/php/test.yml?branch=1.0&style=flat-square)](https://github.com/xrdebug/php/actions)
+![Code size](https://img.shields.io/github/languages/code-size/xrdebug/php?style=flat-square)
+[![Apache-2.0](https://img.shields.io/github/license/xrdebug/php?style=flat-square)](LICENSE)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%209-blueviolet?style=flat-square)](https://phpstan.org/)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchevere%2Fxr%2F1.0)](https://dashboard.stryker-mutator.io/reports/github.com/chevere/xr/1.0)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchevere%2Fxr%2F1.0)](https://dashboard.stryker-mutator.io/reports/github.com/xrdebug/php/1.0)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=alert_status)](https://sonarcloud.io/dashboard?id=chevere_xr)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chevere_xr)
@@ -14,8 +14,8 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=security_rating)](https://sonarcloud.io/dashboard?id=chevere_xr)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=coverage)](https://sonarcloud.io/dashboard?id=chevere_xr)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_xr)
-[![CodeFactor](https://www.codefactor.io/repository/github/chevere/xr/badge)](https://www.codefactor.io/repository/github/chevere/xr)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://app.codacy.com/gh/chevere/xr/dashboard)
+[![CodeFactor](https://www.codefactor.io/repository/github/xrdebug/php/badge)](https://www.codefactor.io/repository/github/xrdebug/php)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://app.codacy.com/gh/xrdebug/php/dashboard)
 
 PHP client library for [xrDebug](https://docs.xrdebug.com/).
 
@@ -24,7 +24,7 @@ PHP client library for [xrDebug](https://docs.xrdebug.com/).
 * Install using [Composer](https://getcomposer.org/)
 
 ```sh
-composer require --dev chevere/xr
+composer require --dev xrdebug/php
 ```
 
 ## Helpers
