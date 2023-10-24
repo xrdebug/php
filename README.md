@@ -21,7 +21,7 @@ PHP client library for [xrDebug](https://docs.xrdebug.com/).
 
 ## Quick start
 
-* Install using [Composer](https://getcomposer.org/)
+* Install using [Composer](https://packagist.org/packages/xrdebug/php)
 
 ```sh
 composer require --dev xrdebug/php
