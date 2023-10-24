@@ -8,14 +8,14 @@
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%209-blueviolet?style=flat-square)](https://phpstan.org/)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fchevere%2Fxr%2F1.0)](https://dashboard.stryker-mutator.io/reports/github.com/xrdebug/php/1.0)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=alert_status)](https://sonarcloud.io/dashboard?id=chevere_xr)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=chevere_xr)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=chevere_xr)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=security_rating)](https://sonarcloud.io/dashboard?id=chevere_xr)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=coverage)](https://sonarcloud.io/dashboard?id=chevere_xr)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_xr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_xr)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=alert_status)](https://sonarcloud.io/dashboard?id=xrdebug_php)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=xrdebug_php)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=xrdebug_php)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=security_rating)](https://sonarcloud.io/dashboard?id=xrdebug_php)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=coverage)](https://sonarcloud.io/dashboard?id=xrdebug_php)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=sqale_index)](https://sonarcloud.io/dashboard?id=xrdebug_php)
 [![CodeFactor](https://www.codefactor.io/repository/github/xrdebug/php/badge)](https://www.codefactor.io/repository/github/xrdebug/php)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/89c64d17be684818b21d44c658c735d0)](https://app.codacy.com/gh/xrdebug/php/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3d9cc2776d324442a465d7ef5991191b)](https://app.codacy.com/gh/xrdebug/php/dashboard)
 
 PHP client library for [xrDebug](https://docs.xrdebug.com/).
 
