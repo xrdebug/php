@@ -19,11 +19,11 @@
     "require": {
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/chevere": "^3.2",
-        "chevere/http": "^0.3",
-        "chevere/throwable-handler": "^0.11",
-        "chevere/trace": "^0.9",
-        "chevere/var-dump": "^0.9",
+        "chevere/chevere": "^4.0.x-dev",
+        "chevere/http": "^0.4.x-dev",
+        "chevere/throwable-handler": "^0.12.x-dev",
+        "chevere/trace": "^0.10.x-dev",
+        "chevere/var-dump": "^0.10.x-dev",
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {

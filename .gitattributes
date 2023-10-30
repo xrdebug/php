@@ -10,6 +10,7 @@
 /phpunit-coverage.xml export-ignore
 /phpunit.xml export-ignore
 /sonar-project.properties export-ignore
+/infection.json.dist export-ignore
 /DOCKER.md export-ignore
 
 *.php diff=php
