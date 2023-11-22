@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Traits;
 
-use Chevere\Throwable\Exceptions\RuntimeException;
 use CurlHandle;
+use RuntimeException;
 use function Chevere\Message\message;
 
 trait CurlTrait
@@ -38,9 +38,12 @@ trait CurlTrait
     public function __construct(string $url = null)
     {
         $this->assertCurl();
-        $this->handle = curl_init($url) ?:
-            throw new RuntimeException(
-                message('Unable to initialize cURL session')
+        $this->handle = curl_init($url)
+            ?: throw new RuntimeException(
+                (string) message(
+                    'No `%class%` instance present',
+                    class: static::class
+                )
             );
     }
 
@@ -82,8 +85,10 @@ trait CurlTrait
             if (! function_exists($function)) {
                 // @codeCoverageIgnoreStart
                 throw new RuntimeException(
-                    message('Function %function% is not available')
-                        ->withCode('%function%', $function)
+                    (string) message(
+                        'Function `%function%` is not available',
+                        function: $function
+                    )
                 );
                 // @codeCoverageIgnoreEnd
             }

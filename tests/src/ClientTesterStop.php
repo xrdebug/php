@@ -17,7 +17,6 @@ use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Interfaces\ClientInterface;
 use Chevere\Xr\Interfaces\MessageInterface;
 use Chevere\Xr\Traits\ClientTrait as TraitsClientTrait;
-use function Chevere\Message\message;
 
 final class ClientTesterStop implements ClientInterface
 {
@@ -25,9 +24,7 @@ final class ClientTesterStop implements ClientInterface
 
     public function sendPause(MessageInterface $message): void
     {
-        throw new StopException(
-            message('stop')
-        );
+        throw new StopException('stop');
     }
 
     public function exit(int $exitCode = 0): void

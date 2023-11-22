@@ -24,7 +24,8 @@
         "chevere/throwable-handler": "^0.12.x-dev",
         "chevere/trace": "^0.10.x-dev",
         "chevere/var-dump": "^0.10.x-dev",
-        "phpseclib/phpseclib": "~3.0"
+        "phpseclib/phpseclib": "~3.0",
+        "ramsey/uuid": "^4.7"
     },
     "require-dev": {
         "dg/bypass-finals": "^1.4",

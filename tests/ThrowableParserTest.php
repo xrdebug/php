@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\Tests;
 
-use Chevere\Throwable\Errors\TypeError;
 use Chevere\ThrowableHandler\Formats\HtmlFormat;
 use Chevere\ThrowableHandler\Formats\PlainFormat;
 use Chevere\ThrowableHandler\ThrowableRead;
@@ -21,6 +20,7 @@ use Chevere\Trace\Trace;
 use Chevere\Xr\ThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 final class ThrowableParserTest extends TestCase
 {

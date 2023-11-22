@@ -115,8 +115,10 @@ trait ClientTrait
             $response = json_decode(strval($curlResult));
             if ($response->stop ?? false) {
                 throw new StopException(
-                    message('[STOP EXECUTION] triggered from %remote%')
-                        ->withTranslate('%remote%', $this->host . ':' . $this->port)
+                    (string) message(
+                        '[STOP EXECUTION] triggered from %remote%',
+                        remote: $this->host . ':' . $this->port
+                    )
                 );
             }
 

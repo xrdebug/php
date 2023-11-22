@@ -11,13 +11,12 @@
 
 declare(strict_types=1);
 
-use function Chevere\Message\message;
-use Chevere\Throwable\Exceptions\RuntimeException;
 use Chevere\ThrowableHandler\ThrowableHandler;
-use function Chevere\Writer\streamFor;
 use Chevere\Writer\StreamWriter;
 use Chevere\Writer\Writers;
 use Chevere\Writer\WritersInstance;
+use RuntimeException;
+use function Chevere\Writer\streamFor;
 use function Chevere\Xr\registerThrowableHandler;
 
 foreach (['/../', '/../../../../'] as $path) {
@@ -54,13 +53,13 @@ set_exception_handler(
 registerThrowableHandler(true);
 
 throw new RuntimeException(
-    message: message("Ch bah puta la güeá"),
+    message: 'Ch bah puta la güeá',
     code: 12345,
     previous: new Exception(
-        message: "A la chuchesumare",
+        message: 'A la chuchesumare',
         code: 678,
         previous: new LogicException(
-            message: "Ese conchesumare",
+            message: 'Ese conchesumare',
             code: 0,
         )
     )
