@@ -13,13 +13,12 @@ declare(strict_types=1);
 
 namespace Chevere\Xr\Interfaces;
 
-use Chevere\Common\Interfaces\ToArrayInterface;
 use Chevere\Writer\Interfaces\WriterInterface;
 
 /**
  * Describes the component in charge of defining the XR message.
  */
-interface MessageInterface extends ToArrayInterface
+interface MessageInterface
 {
     public function body(): string;
 

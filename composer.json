@@ -19,11 +19,16 @@
     "require": {
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/chevere": "^4.0.x-dev",
+        "chevere/action": "^1.0.x-dev",
+        "chevere/filesystem": "^1.0.x-dev",
         "chevere/http": "^0.4.x-dev",
+        "chevere/iterator": "^1.0.x-dev",
+        "chevere/message": "^0.1.x-dev",
+        "chevere/parameter": "^1.0.x-dev",
         "chevere/throwable-handler": "^0.12.x-dev",
         "chevere/trace": "^0.10.x-dev",
         "chevere/var-dump": "^0.10.x-dev",
+        "chevere/writer": "^1.0.x-dev",
         "phpseclib/phpseclib": "~3.0",
         "ramsey/uuid": "^4.7"
     },

@@ -23,7 +23,6 @@ use Chevere\Xr\Exceptions\StopException;
 use Chevere\Xr\Message;
 use phpseclib3\Crypt\EC;
 use PHPUnit\Framework\TestCase;
-use function Chevere\Standard\arrayFromKey;
 use function Chevere\Xr\sign;
 
 final class ClientTest extends TestCase
@@ -86,7 +85,9 @@ final class ClientTest extends TestCase
                 "X-Signature: {$signatureDisplay}",
             ],
         ];
-        $result = arrayFromKey($client->options(), CURLOPT_HTTPHEADER);
+        $result = [
+            CURLOPT_HTTPHEADER => $client->options()[CURLOPT_HTTPHEADER],
+        ];
         $this->assertSame($options, $result);
         $this->assertFalse($client->isPaused($message->id()));
     }
