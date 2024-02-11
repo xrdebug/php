@@ -2,6 +2,8 @@
 
 > 🔔 Subscribe to the [newsletter](https://chv.to/chevere-newsletter) to don't miss any update regarding Chevere.
 
+<a href="https://xrdebug.com"><img alt="xrDebug" src="xr.svg" width="40%"></a>
+
 [![Build](https://img.shields.io/github/actions/workflow/status/xrdebug/php/test.yml?branch=1.0&style=flat-square)](https://github.com/xrdebug/php/actions)
 ![Code size](https://img.shields.io/github/languages/code-size/xrdebug/php?style=flat-square)
 [![Apache-2.0](https://img.shields.io/github/license/xrdebug/php?style=flat-square)](LICENSE)
@@ -15,23 +17,45 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=coverage)](https://sonarcloud.io/dashboard?id=xrdebug_php)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=sqale_index)](https://sonarcloud.io/dashboard?id=xrdebug_php)
 [![CodeFactor](https://www.codefactor.io/repository/github/xrdebug/php/badge)](https://www.codefactor.io/repository/github/xrdebug/php)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3d9cc2776d324442a465d7ef5991191b)](https://app.codacy.com/gh/xrdebug/php/dashboard)
 
-PHP client library for [xrDebug](https://docs.xrdebug.com/).
+PHP client library for [xrDebug](https://xrdebug.com/).
 
 ## Quick start
 
-* Install using [Composer](https://packagist.org/packages/xrdebug/php)
+Install using [Composer](https://packagist.org/packages/xrdebug/php).
 
 ```sh
 composer require --dev xrdebug/php
 ```
 
-## Helpers
+Make sure to load the Composer `autoload.php` file in your project's entry point file, usually at `index.php`.
+
+```php
+require_once __DIR__ . '/vendor/autoload.php';
+```
+
+Use `xr()` directly in your code to dump any variable. For example for a WordPress plugin:
+
+```php
+add_action('plugins_loaded', function () {
+    $userCanManageOptions = current_user_can('manage_options');
+    xr($userCanManageOptions);
+});
+```
+
+## Debug Helpers
+
+This xrDebug PHP client provides the following helper functions in the root namespace.
+
+| Function    | Purpose                      |
+| ----------- | ---------------------------- |
+| [xr](#xr)   | Dump one or more variables   |
+| [xrr](#xrr) | Dump raw message argument    |
+| [xri](#xri) | Dump inspector (pauses, etc) |
 
 ### xr
 
-Use `xr($var1, $var2,...)` to dump any variable(s).
+Use function `xr($var1, $var2,...)` to dump one or more variable(s).
 
 ```php
 xr($var, 'Hola, mundo!');
@@ -59,7 +83,7 @@ xr($var, f: XR_BACKTRACE);
 
 ### xrr
 
-Use `xrr()` to send a raw message.
+Use function `xrr()` to send a raw message.
 
 ```php
 xrr('<h1>Hola, mundo!</h1>');
@@ -70,7 +94,7 @@ xrr('some string<br>', f: XR_BACKTRACE);
 
 ### xri
 
-Use `xri()` to interact with the inspector.
+Use function `xri()` to interact with the inspector.
 
 Use `pause` to pause code execution.
 
