@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Chevere\Xr\Traits;
 
 use CurlHandle;
-use RuntimeException;
+use LogicException;
 use function Chevere\Message\message;
 
 trait CurlTrait
@@ -39,7 +39,7 @@ trait CurlTrait
     {
         $this->assertCurl();
         $this->handle = curl_init($url)
-            ?: throw new RuntimeException(
+            ?: throw new LogicException(
                 (string) message(
                     'No `%class%` instance present',
                     class: static::class
@@ -84,7 +84,7 @@ trait CurlTrait
         foreach ($this->functions as $function) {
             if (! function_exists($function)) {
                 // @codeCoverageIgnoreStart
-                throw new RuntimeException(
+                throw new LogicException(
                     (string) message(
                         'Function `%function%` is not available',
                         function: $function
