@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Chevere\Tests;
 
 use Chevere\Writer\StreamWriter;
-use Chevere\Xr\WriterInstance;
+use Chevere\xrDebug\PHP\WriterInstance;
 use PHPUnit\Framework\TestCase;
 use function Chevere\Writer\streamTemp;
-use function Chevere\Xr\getWriter;
+use function Chevere\xrDebug\PHP\getWriter;
 
 final class FunctionsTest extends TestCase
 {

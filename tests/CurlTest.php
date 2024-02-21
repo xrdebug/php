@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Tests;
 
-use Chevere\Xr\Curl;
+use Chevere\xrDebug\PHP\Curl;
 use CurlHandle;
 use PHPUnit\Framework\TestCase;
 

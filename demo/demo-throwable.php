@@ -17,7 +17,7 @@ use Chevere\Writer\Writers;
 use Chevere\Writer\WritersInstance;
 use RuntimeException;
 use function Chevere\Writer\streamFor;
-use function Chevere\Xr\registerThrowableHandler;
+use function Chevere\xrDebug\PHP\registerThrowableHandler;
 
 foreach (['/../', '/../../../../'] as $path) {
     $autoload = __DIR__ . $path . 'vendor/autoload.php';

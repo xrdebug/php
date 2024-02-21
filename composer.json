@@ -21,12 +21,10 @@
         "ext-curl": "*",
         "ext-json": "*",
         "chevere/filesystem": "^1.0.x-dev",
-        "chevere/http": "^0.4.x-dev",
         "chevere/message": "^1.0.0",
         "chevere/throwable-handler": "^0.12.x-dev",
         "chevere/trace": "^1.0.0",
         "chevere/var-dump": "^1.0.0",
-        "chevere/writer": "^1.0.1",
         "phpseclib/phpseclib": "~3.0",
         "ramsey/uuid": "^4.7"
     },
@@ -41,7 +39,7 @@
             "src/functions.php"
         ],
         "psr-4": {
-            "Chevere\\Xr\\": "src/"
+            "Chevere\\xrDebug\\PHP\\": "src/"
         }
     },
     "autoload-dev": {

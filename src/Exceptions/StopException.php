@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Exceptions;
+namespace Chevere\xrDebug\PHP\Exceptions;
 
 use Exception;
 

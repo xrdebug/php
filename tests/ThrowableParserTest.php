@@ -17,7 +17,7 @@ use Chevere\ThrowableHandler\Formats\HtmlFormat;
 use Chevere\ThrowableHandler\Formats\PlainFormat;
 use Chevere\ThrowableHandler\ThrowableRead;
 use Chevere\Trace\Trace;
-use Chevere\Xr\ThrowableParser;
+use Chevere\xrDebug\PHP\ThrowableParser;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use TypeError;

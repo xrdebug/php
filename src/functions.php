@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr {
+namespace Chevere\xrDebug\PHP {
     use Chevere\ThrowableHandler\ThrowableRead;
     use Chevere\Writer\Interfaces\WriterInterface;
     use Chevere\Writer\StreamWriter;
-    use Chevere\Xr\Interfaces\XrInterface;
+    use Chevere\xrDebug\PHP\Interfaces\XrInterface;
     use LogicException;
     use phpseclib3\Crypt\EC\PrivateKey;
     use Throwable;
@@ -141,15 +141,15 @@ namespace Chevere\Xr {
 }
 
 namespace {
-    use Chevere\Xr\Inspector\Inspector;
-    use Chevere\Xr\Inspector\InspectorInstance;
-    use Chevere\Xr\Inspector\InspectorNull;
-    use Chevere\Xr\Interfaces\InspectorInterface;
-    use Chevere\Xr\Message;
-    use Chevere\Xr\Xr;
-    use Chevere\Xr\XrInstance;
-    use function Chevere\Xr\getWriter;
-    use function Chevere\Xr\getXrFailover;
+    use Chevere\xrDebug\PHP\Inspector\Inspector;
+    use Chevere\xrDebug\PHP\Inspector\InspectorInstance;
+    use Chevere\xrDebug\PHP\Inspector\InspectorNull;
+    use Chevere\xrDebug\PHP\Interfaces\InspectorInterface;
+    use Chevere\xrDebug\PHP\Message;
+    use Chevere\xrDebug\PHP\Xr;
+    use Chevere\xrDebug\PHP\XrInstance;
+    use function Chevere\xrDebug\PHP\getWriter;
+    use function Chevere\xrDebug\PHP\getXrFailover;
 
     // @codeCoverageIgnoreStart
     if (! defined('XR_BACKTRACE')) {

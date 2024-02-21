@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\VarDump\Output;
+namespace Chevere\xrDebug\PHP\VarDump\Output;
 
 use Chevere\VarDump\Interfaces\FormatInterface as VarDumpFormatInterface;
 use Chevere\VarDump\Outputs\Output;

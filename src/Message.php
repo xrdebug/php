@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\xrDebug\PHP;
 
 use Chevere\ThrowableHandler\Formats\HtmlFormat as ThrowableHandlerHtmlFormat;
 use Chevere\Trace\Trace;
@@ -19,8 +19,8 @@ use Chevere\VarDump\Formats\HtmlFormat as VarDumpHtmlFormat;
 use Chevere\VarDump\VarDump;
 use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\NullWriter;
-use Chevere\Xr\Interfaces\MessageInterface;
-use Chevere\Xr\VarDump\Output\XrVarDumpHtmlOutput;
+use Chevere\xrDebug\PHP\Interfaces\MessageInterface;
+use Chevere\xrDebug\PHP\VarDump\Output\XrVarDumpHtmlOutput;
 use Ramsey\Uuid\Provider\Node\RandomNodeProvider;
 use Ramsey\Uuid\Uuid;
 

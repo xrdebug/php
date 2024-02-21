@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\xrDebug\PHP;
 
 use Chevere\Filesystem\Interfaces\DirectoryInterface;
-use Chevere\Xr\Interfaces\ClientInterface;
-use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Interfaces\XrInterface;
+use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
+use Chevere\xrDebug\PHP\Interfaces\CurlInterface;
+use Chevere\xrDebug\PHP\Interfaces\XrInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
 use phpseclib3\Crypt\PublicKeyLoader;
 use Throwable;

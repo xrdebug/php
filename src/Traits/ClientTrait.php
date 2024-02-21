@@ -11,18 +11,15 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Traits;
+namespace Chevere\xrDebug\PHP\Traits;
 
-use Chevere\Http\Interfaces\MethodInterface;
-use Chevere\Http\Methods\GetMethod;
-use Chevere\Http\Methods\PostMethod;
-use Chevere\Xr\Curl;
-use Chevere\Xr\Exceptions\StopException;
-use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Interfaces\MessageInterface;
+use Chevere\xrDebug\PHP\Curl;
+use Chevere\xrDebug\PHP\Exceptions\StopException;
+use Chevere\xrDebug\PHP\Interfaces\CurlInterface;
+use Chevere\xrDebug\PHP\Interfaces\MessageInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
 use function Chevere\Message\message;
-use function Chevere\Xr\sign;
+use function Chevere\xrDebug\PHP\sign;
 
 trait ClientTrait
 {
@@ -69,7 +66,7 @@ trait ClientTrait
     {
         try {
             $curl = $this->getCurlHandle(
-                new PostMethod(),
+                'POST',
                 'messages',
                 $message->toArray()
             );
@@ -83,7 +80,7 @@ trait ClientTrait
     {
         try {
             $curl = $this->getCurlHandle(
-                new PostMethod(),
+                'POST',
                 'pauses',
                 $message->toArray(),
             );
@@ -103,7 +100,7 @@ trait ClientTrait
     {
         try {
             $curl = $this->getCurlHandle(
-                new GetMethod(),
+                'GET',
                 'pauses/' . $id,
                 []
             );
@@ -144,14 +141,14 @@ trait ClientTrait
     /**
      *  @param array<string, string> $data
      */
-    private function getCurlHandle(MethodInterface $method, string $url, array $data): CurlInterface
+    private function getCurlHandle(string $method, string $url, array $data): CurlInterface
     {
         $this->options = [
             CURLINFO_HEADER_OUT => true,
             CURLOPT_ENCODING => '',
             CURLOPT_FAILONERROR => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => $method::name(),
+            CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_POSTFIELDS => http_build_query($data),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Traits;
+namespace Chevere\xrDebug\PHP\Traits;
 
 use CurlHandle;
 use LogicException;

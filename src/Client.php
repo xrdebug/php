@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\xrDebug\PHP;
 
-use Chevere\Xr\Interfaces\ClientInterface;
-use Chevere\Xr\Traits\ClientTrait;
+use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
+use Chevere\xrDebug\PHP\Traits\ClientTrait;
 
 final class Client implements ClientInterface
 {

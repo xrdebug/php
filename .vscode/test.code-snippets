@@ -5,7 +5,7 @@
         "body": [
             "<?php",
             "",
-            "namespace Chevere\\Xr\\Tests\\\\${TM_DIRECTORY/.*tests\\/(([^\\/]*)(\\/)?)|(\\/)([^\\/]*)/$2${3:+\\\\}${5:+\\\\}$5/g};",
+            "namespace Chevere\\xrDebug\\PHP\\Tests\\\\${TM_DIRECTORY/.*tests\\/(([^\\/]*)(\\/)?)|(\\/)([^\\/]*)/$2${3:+\\\\}${5:+\\\\}$5/g};",
             "",
             "use PHPUnit\\Framework\\TestCase;",
             "",
@@ -31,7 +31,7 @@
         "body": [
             "<?php",
             "",
-            "namespace Chevere\\Xr\\Tests\\\\${TM_DIRECTORY/.*tests\\/(([^\\/]*)(\\/)?)|(\\/)([^\\/]*)/$2${3:+\\\\}${5:+\\\\}$5/g};",
+            "namespace Chevere\\xrDebug\\PHP\\Tests\\\\${TM_DIRECTORY/.*tests\\/(([^\\/]*)(\\/)?)|(\\/)([^\\/]*)/$2${3:+\\\\}${5:+\\\\}$5/g};",
             "",
             "final class $TM_FILENAME_BASE",
             "{",

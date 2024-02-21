@@ -13,17 +13,16 @@ declare(strict_types=1);
 
 namespace Chevere\Tests;
 
-use Chevere\Http\Methods\PostMethod;
 use Chevere\Tests\src\CurlError;
 use Chevere\Tests\src\CurlLockPauseTrue;
 use Chevere\Tests\src\CurlStopTrue;
-use Chevere\Xr\Client;
-use Chevere\Xr\Curl;
-use Chevere\Xr\Exceptions\StopException;
-use Chevere\Xr\Message;
+use Chevere\xrDebug\PHP\Client;
+use Chevere\xrDebug\PHP\Curl;
+use Chevere\xrDebug\PHP\Exceptions\StopException;
+use Chevere\xrDebug\PHP\Message;
 use phpseclib3\Crypt\EC;
 use PHPUnit\Framework\TestCase;
-use function Chevere\Xr\sign;
+use function Chevere\xrDebug\PHP\sign;
 
 final class ClientTest extends TestCase
 {
@@ -49,7 +48,7 @@ final class ClientTest extends TestCase
             CURLOPT_ENCODING => '',
             CURLOPT_FAILONERROR => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => PostMethod::name(),
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => http_build_query($message->toArray()),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,

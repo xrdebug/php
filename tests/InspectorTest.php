@@ -15,9 +15,9 @@ namespace Chevere\Tests;
 
 use Chevere\Tests\src\ClientTester;
 use Chevere\Tests\src\ClientTesterStop;
-use Chevere\Xr\Client;
-use Chevere\Xr\Inspector\Inspector;
-use Chevere\Xr\Message;
+use Chevere\xrDebug\PHP\Client;
+use Chevere\xrDebug\PHP\Inspector\Inspector;
+use Chevere\xrDebug\PHP\Message;
 use PHPUnit\Framework\TestCase;
 
 final class InspectorTest extends TestCase

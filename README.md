@@ -175,7 +175,7 @@ Use `registerThrowableHandler` to enable xrDebug throwable handling.
 
 ```php
 
-use Chevere\Xr\registerThrowableHandler;
+use Chevere\xrDebug\PHP\registerThrowableHandler;
 
 // True append xrDebug to your existing handler
 // False use only xrDebug handler
@@ -187,7 +187,7 @@ registerThrowableHandler(true);
 Use `throwableHandler` in any existing exception handler logic:
 
 ```php
-use Chevere\Xr\throwableHandler;
+use Chevere\xrDebug\PHP\throwableHandler;
 
 set_exception_handler(
     function(Throwable $throwable) {
@@ -210,8 +210,8 @@ For code below, `myDump` defines a method that will stream data from your applic
 ```php
 <?php
 
-use Chevere\Xr\Inspector\Traits\XrInspectorTrait;
-use Chevere\Xr\Interfaces\XrInspectorInterface;
+use Chevere\xrDebug\PHP\Inspector\Traits\XrInspectorTrait;
+use Chevere\xrDebug\PHP\Interfaces\XrInspectorInterface;
 
 class MyInspector implements XrInspectorInterface
 {
@@ -264,8 +264,8 @@ A null inspector is required to void any inspection call **if xrDebug is disable
 ```php
 <?php
 
-use Chevere\Xr\Inspector\Traits\XrInspectorNullTrait;
-use Chevere\Xr\Interfaces\XrInspectorInterface;
+use Chevere\xrDebug\PHP\Inspector\Traits\XrInspectorNullTrait;
+use Chevere\xrDebug\PHP\Interfaces\XrInspectorInterface;
 
 class MyInspectorNull implements XrInspectorInterface
 {
@@ -288,8 +288,8 @@ class MyInspectorNull implements XrInspectorInterface
 ### Helper function for custom inspector
 
 ```php
-use Chevere\Xr\Inspector\XrInspectorInstance;
-use Chevere\Xr\Interfaces\XrInspectorInterface;
+use Chevere\xrDebug\PHP\Inspector\XrInspectorInstance;
+use Chevere\xrDebug\PHP\Interfaces\XrInspectorInterface;
 use LogicException;
 use MyInspector;
 use MyInspectorNull;
@@ -324,7 +324,7 @@ Documentation available at [docs.xrdebug.com](https://docs.xrdebug.com/).
 
 ## License
 
-Copyright 2023 [Rodolfo Berrios A.](https://rodolfoberrios.com/)
+Copyright [Rodolfo Berrios A.](https://rodolfoberrios.com/)
 
 xrDebug is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for the full license text.
 

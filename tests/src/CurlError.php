@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Chevere\Tests\src;
 
-use Chevere\Xr\Interfaces\CurlInterface;
-use Chevere\Xr\Traits\CurlTrait;
+use Chevere\xrDebug\PHP\Interfaces\CurlInterface;
+use Chevere\xrDebug\PHP\Traits\CurlTrait;
 
 final class CurlError implements CurlInterface
 {

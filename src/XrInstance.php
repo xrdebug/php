@@ -11,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\xrDebug\PHP;
 
-use Chevere\Xr\Interfaces\XrInterface;
+use Chevere\xrDebug\PHP\Interfaces\XrInterface;
 use LogicException;
 use function Chevere\Message\message;
 

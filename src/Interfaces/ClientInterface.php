@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Interfaces;
+namespace Chevere\xrDebug\PHP\Interfaces;
 
 /**
  * Describes the component in charge of defining the client.

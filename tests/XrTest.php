@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Tests;
 
-use Chevere\Xr\Client;
-use Chevere\Xr\Message;
-use Chevere\Xr\Xr;
+use Chevere\xrDebug\PHP\Client;
+use Chevere\xrDebug\PHP\Message;
+use Chevere\xrDebug\PHP\Xr;
 use phpseclib3\Crypt\EC;
 use phpseclib3\Crypt\PublicKeyLoader;
 use PHPUnit\Framework\TestCase;

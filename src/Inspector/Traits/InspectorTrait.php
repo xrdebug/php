@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr\Inspector\Traits;
+namespace Chevere\xrDebug\PHP\Inspector\Traits;
 
-use Chevere\Xr\Interfaces\ClientInterface;
-use Chevere\Xr\Message;
+use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
+use Chevere\xrDebug\PHP\Message;
 use Throwable;
 
 trait InspectorTrait

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\Xr;
+namespace Chevere\xrDebug\PHP;
 
 use Chevere\ThrowableHandler\Formats\HtmlFormat;
 use Chevere\ThrowableHandler\Interfaces\FormatInterface;

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Chevere\Tests\src;
 
-use Chevere\Xr\Interfaces\ClientInterface;
-use Chevere\Xr\Interfaces\MessageInterface;
-use Chevere\Xr\Traits\ClientTrait as TraitsClientTrait;
+use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
+use Chevere\xrDebug\PHP\Interfaces\MessageInterface;
+use Chevere\xrDebug\PHP\Traits\ClientTrait as TraitsClientTrait;
 
 class ClientTester implements ClientInterface
 {
