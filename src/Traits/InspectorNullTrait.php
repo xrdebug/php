@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\xrDebug\PHP\Inspector\Traits;
+namespace Chevere\xrDebug\PHP\Traits;
 
 /**
  * @infection-ignore-all

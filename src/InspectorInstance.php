@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\xrDebug\PHP\Inspector;
+namespace Chevere\xrDebug\PHP;
 
 use Chevere\xrDebug\PHP\Interfaces\InspectorInterface;
 use LogicException;

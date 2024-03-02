@@ -141,9 +141,9 @@ namespace Chevere\xrDebug\PHP {
 }
 
 namespace {
-    use Chevere\xrDebug\PHP\Inspector\Inspector;
-    use Chevere\xrDebug\PHP\Inspector\InspectorInstance;
-    use Chevere\xrDebug\PHP\Inspector\InspectorNull;
+    use Chevere\xrDebug\PHP\Inspector;
+    use Chevere\xrDebug\PHP\InspectorInstance;
+    use Chevere\xrDebug\PHP\InspectorNull;
     use Chevere\xrDebug\PHP\Interfaces\InspectorInterface;
     use Chevere\xrDebug\PHP\Message;
     use Chevere\xrDebug\PHP\Xr;

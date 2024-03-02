@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Chevere\xrDebug\PHP\Inspector;
+namespace Chevere\xrDebug\PHP;
 
-use Chevere\xrDebug\PHP\Inspector\Traits\InspectorTrait;
 use Chevere\xrDebug\PHP\Interfaces\InspectorInterface;
+use Chevere\xrDebug\PHP\Traits\InspectorNullTrait;
 
-final class Inspector implements InspectorInterface
+final class InspectorNull implements InspectorInterface
 {
-    use InspectorTrait;
+    use InspectorNullTrait;
 }

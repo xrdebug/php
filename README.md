@@ -210,7 +210,7 @@ For code below, `myDump` defines a method that will stream data from your applic
 ```php
 <?php
 
-use Chevere\xrDebug\PHP\Inspector\Traits\XrInspectorTrait;
+use Chevere\xrDebug\PHP\Traits\XrInspectorTrait;
 use Chevere\xrDebug\PHP\Interfaces\XrInspectorInterface;
 
 class MyInspector implements XrInspectorInterface
@@ -264,7 +264,7 @@ A null inspector is required to void any inspection call **if xrDebug is disable
 ```php
 <?php
 
-use Chevere\xrDebug\PHP\Inspector\Traits\XrInspectorNullTrait;
+use Chevere\xrDebug\PHP\Traits\XrInspectorNullTrait;
 use Chevere\xrDebug\PHP\Interfaces\XrInspectorInterface;
 
 class MyInspectorNull implements XrInspectorInterface
@@ -288,7 +288,7 @@ class MyInspectorNull implements XrInspectorInterface
 ### Helper function for custom inspector
 
 ```php
-use Chevere\xrDebug\PHP\Inspector\XrInspectorInstance;
+use Chevere\xrDebug\PHP\XrInspectorInstance;
 use Chevere\xrDebug\PHP\Interfaces\XrInspectorInterface;
 use LogicException;
 use MyInspector;

@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Chevere\xrDebug\PHP\Inspector\Traits;
+namespace Chevere\xrDebug\PHP\Traits;
 
 use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
 use Chevere\xrDebug\PHP\Message;
@@ -43,9 +43,10 @@ trait InspectorTrait
         int $f = 0,
     ): void {
         $memory = memory_get_usage(true);
+        $body = sprintf('%.2F MB', $memory / 1000000);
         $this->sendCommand(
             command: 'message',
-            body: sprintf('%.2F MB', $memory / 1000000),
+            body: $body,
             topic: $t,
             emote: $e,
             flags: $f,
@@ -61,9 +62,8 @@ trait InspectorTrait
     ): void {
         $backtrace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
         array_shift($backtrace);
-        $message = (new Message(
-            backtrace: $backtrace,
-        ))
+        $message = new Message(backtrace: $backtrace);
+        $message = $message
             ->withBody($body)
             ->withTopic($topic)
             ->withEmote($emote)

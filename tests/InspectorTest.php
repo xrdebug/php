@@ -16,7 +16,7 @@ namespace Chevere\Tests;
 use Chevere\Tests\src\ClientTester;
 use Chevere\Tests\src\ClientTesterStop;
 use Chevere\xrDebug\PHP\Client;
-use Chevere\xrDebug\PHP\Inspector\Inspector;
+use Chevere\xrDebug\PHP\Inspector;
 use Chevere\xrDebug\PHP\Message;
 use PHPUnit\Framework\TestCase;
 

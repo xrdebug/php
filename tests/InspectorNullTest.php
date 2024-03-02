@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Chevere\Tests;
 
 use Chevere\xrDebug\PHP\Client;
-use Chevere\xrDebug\PHP\Inspector\InspectorNull;
+use Chevere\xrDebug\PHP\InspectorNull;
 use PHPUnit\Framework\TestCase;
 
 final class InspectorNullTest extends TestCase
