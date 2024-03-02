@@ -45,8 +45,9 @@ final class Xr implements XrInterface
         private string $host = 'localhost',
         private int $port = 27420,
         private string $key = '',
+        ?CurlInterface $curl = null
     ) {
-        $this->curl = new Curl();
+        $this->curl = $curl ?? new Curl();
         $this->setClient();
     }
 
@@ -146,13 +147,12 @@ final class Xr implements XrInterface
             $loadKey = PublicKeyLoader::load($this->key);
             $this->privateKey = $loadKey;
         }
-        $this->client = (
-            new Client(
-                host: $this->host,
-                port: $this->port,
-                isHttps: $this->isHttps,
-                privateKey: $this->privateKey,
-            )
-        )->withCurl($this->curl);
+        $this->client = new Client(
+            curl: $this->curl,
+            host: $this->host,
+            port: $this->port,
+            isHttps: $this->isHttps,
+            privateKey: $this->privateKey,
+        );
     }
 }

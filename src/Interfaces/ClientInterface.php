@@ -14,15 +14,20 @@ declare(strict_types=1);
 namespace Chevere\xrDebug\PHP\Interfaces;
 
 /**
- * Describes the component in charge of defining the client.
+ * Describes the component in charge of defining the client which send messages
+ * to the xrDebug server.
  */
 interface ClientInterface
 {
-    public function getUrl(string $endpoint): string;
-
     public function sendMessage(MessageInterface $message): void;
 
     public function sendPause(MessageInterface $message): void;
+
+    public function isPaused(string $id): bool;
+
+    public function curl(): CurlInterface;
+
+    public function getUrl(string $endpoint): string;
 
     /**
      * @return array<int, mixed>

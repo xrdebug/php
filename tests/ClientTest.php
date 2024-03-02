@@ -40,9 +40,8 @@ final class ClientTest extends TestCase
         $port = 12345;
         $host = 'test-host';
         $isHttps = true;
-        $client = new Client(port: $port, host: $host, isHttps: $isHttps);
+        $scheme = $isHttps ? 'https' : 'http';
         $message = new Message();
-        $client->sendMessage($message);
         $options = [
             CURLINFO_HEADER_OUT => true,
             CURLOPT_ENCODING => '',
@@ -53,15 +52,16 @@ final class ClientTest extends TestCase
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT => 2,
-            CURLOPT_URL => $client->getUrl('messages'),
-            CURLOPT_USERAGENT => 'xrdebug/php 1.0',
+            CURLOPT_URL => "{$scheme}://{$host}:{$port}/messages",
+            CURLOPT_USERAGENT => 'xrdebug/php',
         ];
-        $this->assertSame($options, $client->options());
         $curl = $this->createMock(Curl::class);
-        $curl->expects($this->once())
+        $curl->expects($this->exactly(2))
             ->method('setOptArray')
             ->with($options);
-        $client = $client->withCurl($curl);
+        $client = new Client(curl: $curl, port: $port, host: $host, isHttps: $isHttps);
+        $client->sendMessage($message);
+        $this->assertSame($options, $client->options());
         $client->sendMessage($message);
     }
 
@@ -71,7 +71,12 @@ final class ClientTest extends TestCase
         $host = 'test-host';
         $isHttps = true;
         $key = EC::createKey('Ed25519');
-        $client = new Client(port: $port, host: $host, isHttps: $isHttps, privateKey: $key);
+        $client = new Client(
+            port: $port,
+            host: $host,
+            isHttps: $isHttps,
+            privateKey: $key
+        );
         $this->assertSame(
             "https://{$host}:{$port}/endpoint",
             $client->getUrl('endpoint')
@@ -91,19 +96,10 @@ final class ClientTest extends TestCase
         $this->assertFalse($client->isPaused($message->id()));
     }
 
-    public function testWithCurl(): void
-    {
-        $curl = new Curl();
-        $client = new Client();
-        $with = $client->withCurl($curl);
-        $this->assertNotSame($client, $with);
-        $this->assertSame($curl, $with->curl());
-    }
-
     public function testPauseLocked()
     {
         $curl = new CurlLockPauseTrue();
-        $client = (new Client())->withCurl($curl);
+        $client = new Client(curl: $curl);
         $message = new Message();
         $this->assertTrue(
             $client->isPaused($message->id())
@@ -113,7 +109,7 @@ final class ClientTest extends TestCase
     public function testPauseStop()
     {
         $curl = new CurlStopTrue();
-        $client = (new Client())->withCurl($curl);
+        $client = new Client(curl: $curl);
         $message = new Message();
         $this->expectException(StopException::class);
         $client->sendPause($message);
@@ -122,7 +118,7 @@ final class ClientTest extends TestCase
     public function testPauseError()
     {
         $curl = new CurlError();
-        $client = (new Client())->withCurl($curl);
+        $client = new Client(curl: $curl);
         $message = new Message();
         $client->sendPause($message);
         $this->assertFalse(

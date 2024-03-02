@@ -37,19 +37,12 @@ trait ClientTrait
         private int $port = 27420,
         bool $isHttps = false,
         private ?PrivateKey $privateKey = null,
+        ?CurlInterface $curl = null,
     ) {
-        $this->curl = new Curl();
+        $this->curl = $curl ?? new Curl();
         if ($isHttps) {
             $this->scheme = 'https';
         }
-    }
-
-    public function withCurl(CurlInterface $curl): self
-    {
-        $new = clone $this;
-        $new->curl = $curl;
-
-        return $new;
     }
 
     public function curl(): CurlInterface
@@ -154,7 +147,7 @@ trait ClientTrait
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_TIMEOUT => 2,
             CURLOPT_URL => $this->getUrl($url),
-            CURLOPT_USERAGENT => 'xrdebug/php 1.0',
+            CURLOPT_USERAGENT => 'xrdebug/php',
         ];
         $this->handleSignature($data);
         $this->curl->setOptArray($this->options);
