@@ -14,9 +14,22 @@ declare(strict_types=1);
 namespace Chevere\xrDebug\PHP;
 
 use Chevere\xrDebug\PHP\Interfaces\InspectorInterface;
-use Chevere\xrDebug\PHP\Traits\InspectorNullTrait;
 
-final class InspectorNull implements InspectorInterface
+class InspectorNull implements InspectorInterface
 {
-    use InspectorNullTrait;
+    public function pause(
+        string $e = '',
+        string $t = '',
+        int $f = 0,
+    ): void {
+        // null
+    }
+
+    public function memory(
+        string $e = '',
+        string $t = '',
+        int $f = 0,
+    ): void {
+        // null
+    }
 }
