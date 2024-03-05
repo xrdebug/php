@@ -15,7 +15,6 @@ use Chevere\ThrowableHandler\ThrowableHandler;
 use Chevere\Writer\StreamWriter;
 use Chevere\Writer\Writers;
 use Chevere\Writer\WritersInstance;
-use RuntimeException;
 use function Chevere\Writer\streamFor;
 use function Chevere\xrDebug\PHP\registerThrowableHandler;
 
@@ -47,9 +46,10 @@ set_error_handler(
 register_shutdown_function(
     ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION
 );
-set_exception_handler(
-    ThrowableHandler::CONSOLE
-);
+// Uncomment to also use the console handler
+// set_exception_handler(
+//     ThrowableHandler::CONSOLE
+// );
 registerThrowableHandler(true);
 
 throw new RuntimeException(

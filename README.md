@@ -18,7 +18,11 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=sqale_index)](https://sonarcloud.io/dashboard?id=xrdebug_php)
 [![CodeFactor](https://www.codefactor.io/repository/github/xrdebug/php/badge)](https://www.codefactor.io/repository/github/xrdebug/php)
 
-PHP client library for [xrDebug](https://xrdebug.com/).
+## Summary
+
+PHP client library for [xrDebug](https://xrdebug.com/). This library provides a set of functions to dump variables, send raw messages, and interact with the inspector.
+
+VarDump functionality is provided by the [VarDump](https://chevere.org/packages/var-dump) package and throwable handling by the [ThrowableHandler](https://chevere.org/packages/throwable-handler) package.
 
 ## Quick start
 
@@ -43,15 +47,34 @@ add_action('plugins_loaded', function () {
 });
 ```
 
+## Demo
+
+There's a interactive demo of this library in the `./demo` directory. To use the demo execute `xrdebug` server with default settings.
+
+Execute the following command to start the demo, it sends messages to the xrDebug server explaining you the debugger user interface.
+
+```php
+php demo/welcome.php
+```
+
+Execute the following command to see how xrDebug [handles errors](#error-handling).
+
+```php
+php demo/error-handling.php
+```
+
 ## Debug Helpers
 
-This xrDebug PHP client provides the following helper functions in the root namespace.
+This xrDebug PHP client provides the following helper functions in the root namespace. Use these anywhere in your code.
 
-| Function    | Purpose                      |
-| ----------- | ---------------------------- |
-| [xr](#xr)   | Dump one or more variables   |
-| [xrr](#xrr) | Dump raw message argument    |
-| [xri](#xri) | Dump inspector (pauses, etc) |
+| Function    | Purpose                           |
+| ----------- | --------------------------------- |
+| [xr](#xr)   | Dump one or more variables        |
+| [xrr](#xrr) | Dump raw message                  |
+| [xri](#xri) | Dump inspector (pauses, etc)      |
+| [vd](#vd)   | VarDump to output stream          |
+| [vdd](#vdd) | VarDump to output stream  and die |
+
 
 ### xr
 
@@ -108,6 +131,24 @@ Use `memory` to send memory usage information.
 xri()->memory();
 ```
 
+### vd
+
+Function `vd` is a drop-in replacement for `var_dump`, it is provided by the [VarDump](https://chevere.org/packages/var-dump) package. It prints information about one or more variables to the output stream.
+
+```php
+vd($var1, $var2,);
+// more code
+```
+
+### vdd
+
+Function `vdd` does same as vd, but with die(0) which halts further execution.
+
+```php
+vdd($var);
+// does exit();
+```
+
 ## Configuring
 
 ### Code-based configuration
@@ -130,7 +171,7 @@ xrConfig(
 | isHttps   | bool   | Controls use of https                    |
 | host      | string | The host where xrDebug server is running |
 | port      | int    | The Port to connect to the `host`        |
-| key       | string | Private key                              |
+| key       | string | Private key (signed requests)            |
 
 ### File-based configuration
 
