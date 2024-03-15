@@ -18,14 +18,7 @@ use Chevere\Writer\WritersInstance;
 use function Chevere\Writer\streamFor;
 use function Chevere\xrDebug\PHP\registerThrowableHandler;
 
-foreach (['/../', '/../../../../'] as $path) {
-    $autoload = __DIR__ . $path . 'vendor/autoload.php';
-    if (stream_resolve_include_path($autoload)) {
-        require $autoload;
-
-        break;
-    }
-}
+require 'autoload.php';
 
 new WritersInstance(
     (new Writers())
@@ -46,10 +39,9 @@ set_error_handler(
 register_shutdown_function(
     ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION
 );
-// Uncomment to also use the console handler
-// set_exception_handler(
-//     ThrowableHandler::CONSOLE
-// );
+set_exception_handler(
+    ThrowableHandler::CONSOLE
+);
 registerThrowableHandler(true);
 
 throw new RuntimeException(

@@ -11,14 +11,8 @@
 
 declare(strict_types=1);
 
-foreach (['/../', '/../../../../'] as $path) {
-    $autoload = __DIR__ . $path . 'vendor/autoload.php';
-    if (stream_resolve_include_path($autoload)) {
-        require $autoload;
+require_once 'autoload.php';
 
-        break;
-    }
-}
 xrr('👋 Welcome to xrDebug!');
 xri()->pause();
 xr(
@@ -53,7 +47,7 @@ xr(
 );
 sleep(5);
 xr(
-    👇: 'Copy caller file path by clicking on ' . basename(__FILE__) . ':' . (string) (__LINE__ + 2) . ' here below.',
+    👇: 'Open caller file path by clicking on ' . basename(__FILE__) . ':' . (string) (__LINE__ - 1) . ' here below.',
     t: 'how-to',
     e: '📎'
 );
