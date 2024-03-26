@@ -1,12 +1,13 @@
 {
     "name": "xrdebug/php",
-    "description": "Lightweight debug utility",
+    "description": "PHP client library for xrDebug",
     "homepage": "https://github.com/xrdebug/php",
     "keywords": [
         "chevere",
         "dump",
         "debug",
-        "debugging"
+        "debugging",
+        "xrdebug"
     ],
     "license": "Apache-2.0",
     "authors": [
