@@ -25,7 +25,7 @@
         "chevere/message": "^1.0.0",
         "chevere/throwable-handler": "^0.12.x-dev",
         "chevere/trace": "^1.0.0",
-        "chevere/var-dump": "^1.0.0",
+        "chevere/var-dump": "^1.0.x-dev",
         "phpseclib/phpseclib": "~3.0",
         "ramsey/uuid": "^4.7"
     },
