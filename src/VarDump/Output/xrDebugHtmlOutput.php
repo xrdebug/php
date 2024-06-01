@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Chevere\xrDebug\PHP\VarDump\Output;
 
-use Chevere\VarDump\Interfaces\FormatInterface as VarDumpFormatInterface;
+use Chevere\VarDump\Interfaces\FormatInterface;
 use Chevere\VarDump\Outputs\Output;
 
-final class XrVarDumpHtmlOutput extends Output
+final class xrDebugHtmlOutput extends Output
 {
     public function tearDown(): void
     {
@@ -28,7 +28,7 @@ final class XrVarDumpHtmlOutput extends Output
         $this->writer()->write('<pre>');
     }
 
-    public function writeCallerFile(VarDumpFormatInterface $formatter): void
+    public function writeCallerFile(FormatInterface $format): void
     {
         // null override
     }

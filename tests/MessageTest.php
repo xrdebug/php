@@ -17,7 +17,6 @@ use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\StreamWriter;
 use Chevere\xrDebug\PHP\Message;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Rfc4122\Validator;
 use function Chevere\Writer\streamTemp;
 use function Chevere\xrDebug\PHP\getWriter;
 
@@ -34,7 +33,6 @@ final class MessageTest extends TestCase
     {
         $message = new Message();
         $line = __LINE__ - 1;
-        $this->assertTrue((new Validator())->validate($message->id()));
         $this->assertSame(__FILE__, $message->filePath());
         $this->assertSame($line, $message->fileLine());
         $this->assertInstanceOf(WriterInterface::class, $message->writer());

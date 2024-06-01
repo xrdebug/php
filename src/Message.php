@@ -20,9 +20,8 @@ use Chevere\VarDump\VarDump;
 use Chevere\Writer\Interfaces\WriterInterface;
 use Chevere\Writer\NullWriter;
 use Chevere\xrDebug\PHP\Interfaces\MessageInterface;
-use Chevere\xrDebug\PHP\VarDump\Output\XrVarDumpHtmlOutput;
-use Ramsey\Uuid\Provider\Node\RandomNodeProvider;
-use Ramsey\Uuid\Uuid;
+use Chevere\xrDebug\PHP\VarDump\Output\xrDebugHtmlOutput;
+use function Chevere\Standard\uuidV4;
 
 final class Message implements MessageInterface
 {
@@ -63,8 +62,7 @@ final class Message implements MessageInterface
         $line = $this->backtrace[0]['line'] ?? 0;
         $this->filePath = strval($file);
         $this->fileLine = intval($line);
-        $node = (new RandomNodeProvider())->getNode();
-        $this->id = Uuid::uuid1($node)->__toString();
+        $this->id = uuidV4();
     }
 
     public function body(): string
@@ -184,7 +182,7 @@ final class Message implements MessageInterface
         }
         (new VarDump(
             new VarDumpHtmlFormat(),
-            new XrVarDumpHtmlOutput()
+            new xrDebugHtmlOutput()
         ))
             ->withVariables(...$this->vars)
             ->process($this->writer);
