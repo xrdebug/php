@@ -24,9 +24,9 @@
         "chevere/filesystem": "^1.0.0",
         "chevere/message": "^1.0.0",
         "chevere/standard": "^1.0.1",
-        "chevere/throwable-handler": "^0.12.0",
-        "chevere/trace": "^1.0.0",
-        "chevere/var-dump": "^1.1.x-dev",
+        "chevere/throwable-handler": "^1.0.0",
+        "chevere/trace": "^2.0.0",
+        "chevere/var-dump": "^2.0.0",
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {

@@ -75,7 +75,6 @@ This xrDebug PHP client provides the following helper functions in the root name
 | [vd](#vd)   | VarDump to output stream          |
 | [vdd](#vdd) | VarDump to output stream  and die |
 
-
 ### xr
 
 Use function `xr($var1, $var2,...)` to dump one or more variable(s).

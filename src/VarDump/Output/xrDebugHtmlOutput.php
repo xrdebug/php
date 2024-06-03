@@ -18,7 +18,7 @@ use Chevere\VarDump\Outputs\Output;
 
 final class xrDebugHtmlOutput extends Output
 {
-    public function tearDown(): void
+    public function finalize(): void
     {
         $this->writer()->write('</pre>');
     }

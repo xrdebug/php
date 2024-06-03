@@ -30,8 +30,10 @@ final class FunctionsTest extends TestCase
         $length = strlen($var);
         xr($var, t: 'Topic', e: '😎', f: XR_BACKTRACE);
         $this->assertSame(
-            '<pre>
-Arg#1 <span style="color:#ff8700">string</span> ' . $var . ' <em><span style="color:rgb(108 108 108 / 65%);">(length=' . $length . ')</span></em></pre>',
+            <<<HTML
+            <pre>
+            Arg#1 <span class="chv-dump-string">string</span> {$var} <em><span class="chv-dump-emphasis">(length={$length})</span></em></pre>
+            HTML,
             $writer->__toString()
         );
         new WriterInstance($previousWriter);
