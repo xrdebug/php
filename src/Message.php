@@ -191,7 +191,7 @@ final class Message implements MessageInterface
             return;
         }
         $this->body .= <<<HTML
-        <div class="dump">{$dump}</div>
+        <div class="xrdebug-dump">{$dump}</div>
         HTML;
     }
 
