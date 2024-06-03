@@ -172,7 +172,7 @@ final class MessageTest extends TestCase
         $withBacktraceFlag = $message->withFlags(XR_BACKTRACE);
         $this->assertNotSame($message, $withBacktraceFlag);
         $this->assertTrue($withBacktraceFlag->isEnableBacktrace());
-        $expected = $body . '<div class="backtrace">';
+        $expected = $body . '<div class="xrdebug-backtrace">';
         $this->assertStringContainsString(
             $expected,
             $withBacktraceFlag->toArray()['body']

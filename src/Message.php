@@ -205,7 +205,7 @@ final class Message implements MessageInterface
             new ThrowableHandlerHtmlFormat()
         );
         $this->body .= <<<HTML
-        <div class="backtrace">{$trace->__toString()}</div>
+        <div class="xrdebug-backtrace">{$trace->__toString()}</div>
         HTML;
     }
 }
