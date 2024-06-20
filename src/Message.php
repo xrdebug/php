@@ -204,8 +204,9 @@ final class Message implements MessageInterface
             $this->backtrace,
             new ThrowableHandlerHtmlFormat()
         );
+        $count = count($trace->toArray());
         $this->body .= <<<HTML
-        <div class="xrdebug-backtrace">{$trace->__toString()}</div>
+        <div class="xrdebug-backtrace" data-count="{$count}">{$trace->__toString()}</div>
         HTML;
     }
 }

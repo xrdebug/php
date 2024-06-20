@@ -88,7 +88,7 @@ final class ThrowableParserTest extends TestCase
         $body = strip_tags($parser->body());
         $this->assertStringContainsString(
             <<<PLAIN
-            #0 {$file}:{$line}
+            0 {$file}:{$line}
             {main}()
             PLAIN,
             $body
