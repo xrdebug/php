@@ -32,7 +32,7 @@ final class ThrowableParser
             <div class="throwable-code">%code%</div>
             <div class="throwable-message">%message%</div>
             %extra%
-            <div class="throwable-backtrace backtrace">%trace%</div>
+            <div data-count="%trace_count%" class="throwable-backtrace xrdebug-backtrace">%trace%</div>
         </div>
     HTML;
 
@@ -115,6 +115,7 @@ final class ThrowableParser
                 ? $this->extra
                 : '',
             '%trace%' => $traceDocument->__toString(),
+            '%trace_count%' => (string) count($trace),
         ];
         $this->appendBodyLine(
             strtr(static::ITEM_TEMPLATE, $translate)
