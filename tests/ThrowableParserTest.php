@@ -53,7 +53,7 @@ final class ThrowableParserTest extends TestCase
         $trace = (string) $trace;
         $this->assertStringContainsString(
             <<<HTML
-            <div class="throwable-backtrace xrdebug-backtrace">{$trace}</div>
+            <div data-count="13" class="throwable-backtrace xrdebug-backtrace">{$trace}</div>
             HTML,
             $parser->body()
         );
