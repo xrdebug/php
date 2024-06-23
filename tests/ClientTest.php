@@ -60,6 +60,7 @@ final class ClientTest extends TestCase
             ->method('setOptArray')
             ->with($options);
         $client = new Client(curl: $curl, port: $port, host: $host, isHttps: $isHttps);
+        $this->assertSame($curl, $client->curl());
         $client->sendMessage($message);
         $this->assertSame($options, $client->options());
         $client->sendMessage($message);

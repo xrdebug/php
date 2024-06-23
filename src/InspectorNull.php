@@ -15,6 +15,9 @@ namespace Chevere\xrDebug\PHP;
 
 use Chevere\xrDebug\PHP\Interfaces\InspectorInterface;
 
+/**
+ * @codeCoverageIgnore
+ */
 class InspectorNull implements InspectorInterface
 {
     public function pause(

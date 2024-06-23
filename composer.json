@@ -24,7 +24,7 @@
         "chevere/filesystem": "^1.0.0",
         "chevere/message": "^1.0.0",
         "chevere/standard": "^1.0.1",
-        "chevere/throwable-handler": "^1.0.0",
+        "chevere/throwable-handler": "^1.0.2",
         "chevere/trace": "^2.0.0",
         "chevere/var-dump": "^2.0.0",
         "phpseclib/phpseclib": "~3.0"
@@ -74,7 +74,9 @@
             "vendor/bin/phpunit -c phpunit-coverage.xml"
         ],
         "cs-update": "mkdir -p .ecs && cd .ecs && curl -O https://raw.githubusercontent.com/chevere/code-style/main/.ecs/ecs-chevere.php",
-        "cs-fix": "vendor/bin/ecs --config='.ecs/ecs.php' check src --fix"
+        "cs-fix": "vendor/bin/ecs --config='.ecs/ecs.php' check src --fix",
+        "open-coverage": "open build/logs/html/index.html",
+        "open-infection": "open build/logs/html/infection.html"
     },
     "scripts-descriptions": {
         "all": "Runs all checks",
@@ -84,6 +86,8 @@
         "test": "Run test suite",
         "test-coverage": "Run test suite (coverage)",
         "cs-update": "Update Chevere code style definition",
-        "cs-fix": "Update Chevere code style definition"
+        "cs-fix": "Update Chevere code style definition",
+        "open-coverage": "Open code coverage report",
+        "open-infection": "Open infection report"
     }
 }

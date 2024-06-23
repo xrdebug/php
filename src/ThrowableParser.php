@@ -115,7 +115,7 @@ final class ThrowableParser
                 ? $this->extra
                 : '',
             '%trace%' => $traceDocument->__toString(),
-            '%trace_count%' => (string) count($trace),
+            '%trace_count%' => count($trace),
         ];
         $this->appendBodyLine(
             strtr(static::ITEM_TEMPLATE, $translate)

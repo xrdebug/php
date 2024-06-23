@@ -15,7 +15,6 @@ namespace Chevere\xrDebug\PHP;
 
 use Chevere\Filesystem\Interfaces\DirectoryInterface;
 use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
-use Chevere\xrDebug\PHP\Interfaces\CurlInterface;
 use Chevere\xrDebug\PHP\Interfaces\XrInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
 use phpseclib3\Crypt\PublicKeyLoader;
@@ -35,8 +34,6 @@ final class Xr implements XrInterface
      */
     private array $configNames = ['xr.php'];
 
-    private CurlInterface $curl;
-
     private ?PrivateKey $privateKey = null;
 
     public function __construct(
@@ -45,9 +42,7 @@ final class Xr implements XrInterface
         private string $host = 'localhost',
         private int $port = 27420,
         private string $key = '',
-        ?CurlInterface $curl = null
     ) {
-        $this->curl = $curl ?? new Curl();
         $this->setClient();
     }
 
@@ -148,7 +143,6 @@ final class Xr implements XrInterface
             $this->privateKey = $loadKey;
         }
         $this->client = new Client(
-            curl: $this->curl,
             host: $this->host,
             port: $this->port,
             isHttps: $this->isHttps,

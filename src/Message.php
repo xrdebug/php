@@ -187,9 +187,6 @@ final class Message implements MessageInterface
             ->withVariables(...$this->vars)
             ->process($this->writer);
         $dump = $this->writer->__toString();
-        if ($dump === '') {
-            return;
-        }
         $this->body .= <<<HTML
         <div class="xrdebug-dump">{$dump}</div>
         HTML;

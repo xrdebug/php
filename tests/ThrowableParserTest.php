@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Chevere\Tests;
 
+use Chevere\Tests\src\TestException;
 use Chevere\ThrowableHandler\Formats\HtmlFormat;
 use Chevere\ThrowableHandler\Formats\PlainFormat;
 use Chevere\ThrowableHandler\ThrowableRead;
@@ -26,12 +27,12 @@ final class ThrowableParserTest extends TestCase
 {
     public function testTopLevel(): void
     {
-        $throwable = new Exception('foo');
+        $throwable = new TestException('foo');
         $read = new ThrowableRead($throwable);
         $parser = new ThrowableParser($read);
-        $this->assertSame(Exception::class, $parser->topic());
+        $this->assertSame('TestException', $parser->topic());
         $this->assertSame(
-            Exception::class,
+            $throwable::class,
             $parser->throwableRead()->className()
         );
         $this->assertStringStartsWith(
