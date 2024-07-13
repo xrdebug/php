@@ -158,7 +158,7 @@ final class MessageTest extends TestCase
         );
         $expected = $body . <<<HTML
         <div class="xrdebug-dump"><pre>
-        Arg#1 <span class="chv-dump-string">string</span> {$variable} <em><span class="chv-dump-emphasis">(length={$length})</span></em></pre></div>
+        1: <span class="chv-dump-string">string</span> {$variable} <em><span class="chv-dump-emphasis">(length={$length})</span></em></pre></div>
         HTML;
         $this->assertSame($expected, $withVariables->toArray()['body']);
     }

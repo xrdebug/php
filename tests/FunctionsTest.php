@@ -32,7 +32,7 @@ final class FunctionsTest extends TestCase
         $this->assertSame(
             <<<HTML
             <pre>
-            Arg#1 <span class="chv-dump-string">string</span> {$var} <em><span class="chv-dump-emphasis">(length={$length})</span></em></pre>
+            1: <span class="chv-dump-string">string</span> {$var} <em><span class="chv-dump-emphasis">(length={$length})</span></em></pre>
             HTML,
             $writer->__toString()
         );
