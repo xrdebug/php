@@ -35,7 +35,7 @@ trait CurlTrait
     /**
      * @codeCoverageIgnore
      */
-    public function __construct(string $url = null)
+    public function __construct(?string $url = null)
     {
         $this->assertCurl();
         $this->handle = curl_init($url)
