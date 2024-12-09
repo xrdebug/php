@@ -31,7 +31,7 @@
     },
     "require-dev": {
         "dg/bypass-finals": "^1.4",
-        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "^11.1"
     },
