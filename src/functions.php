@@ -21,7 +21,7 @@ namespace Chevere\xrDebug\PHP {
     use Throwable;
     use function Chevere\Filesystem\directoryForPath;
     use function Chevere\Writer\streamTemp;
-    use function Safe\getcwd;
+    use function getcwd;
 
     /**
      * @codeCoverageIgnore
@@ -40,11 +40,13 @@ namespace Chevere\xrDebug\PHP {
         try {
             return XrInstance::get();
         } catch (LogicException) {
+            $cwd = getcwd();
+            if ($cwd === false) {
+                throw new LogicException('Unable to get current working directory');
+            }
             $xr = (new Xr())
                 ->withConfigDir(
-                    directoryForPath(
-                        getcwd()
-                    )
+                    directoryForPath($cwd)
                 );
 
             return (new XrInstance($xr))::get();
