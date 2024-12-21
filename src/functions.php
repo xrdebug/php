@@ -140,6 +140,19 @@ namespace Chevere\xrDebug\PHP {
 
         return base64_encode($signature);
     }
+
+    /**
+     * @param array<string, mixed> $data
+     * @return string Serialized data (key-value pairs concatenated)
+     */
+    function serialize(array $data): string
+    {
+        return array_reduce(
+            array_keys($data),
+            fn ($acc, $key) => $acc . $key . $data[$key],
+            ''
+        );
+    }
 }
 
 namespace {
