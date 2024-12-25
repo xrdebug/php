@@ -130,7 +130,7 @@ namespace Chevere\xrDebug\PHP {
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, string> $data
      */
     function sign(PrivateKey $privateKey, array $data): string
     {
@@ -142,7 +142,7 @@ namespace Chevere\xrDebug\PHP {
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, string> $data
      * @return string Serialized data (key-value pairs concatenated)
      */
     function serialize(array $data): string
