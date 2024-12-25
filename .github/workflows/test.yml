@@ -43,6 +43,7 @@ jobs:
       - name: Tests (PHPUnit)
         run: vendor/bin/phpunit --coverage-xml=build/logs/xml-coverage --log-junit=build/logs/junit.xml
       - name: Mutation testing (Infection)
+        if: matrix.php != '8.1'
         env:
           INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
         run: infection --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github --only-covered
