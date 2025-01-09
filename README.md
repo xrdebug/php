@@ -2,11 +2,11 @@
 
 <a href="https://xrdebug.com"><img alt="xrDebug" src="xr.svg" width="40%"></a>
 
-[![Build](https://img.shields.io/github/actions/workflow/status/xrdebug/php/test.yml?branch=2.0&style=flat-square)](https://github.com/xrdebug/php/actions)
+[![Build](https://img.shields.io/github/actions/workflow/status/xrdebug/php/test.yml?branch=3.0&style=flat-square)](https://github.com/xrdebug/php/actions)
 ![Code size](https://img.shields.io/github/languages/code-size/xrdebug/php?style=flat-square)
 [![Apache-2.0](https://img.shields.io/github/license/xrdebug/php?style=flat-square)](LICENSE)
 [![PHPStan](https://img.shields.io/badge/PHPStan-level%209-blueviolet?style=flat-square)](https://phpstan.org/)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fxrdebug%2Fphp%2F2.0)](https://dashboard.stryker-mutator.io/reports/github.com/xrdebug/php/2.0)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fxrdebug%2Fphp%2F3.0)](https://dashboard.stryker-mutator.io/reports/github.com/xrdebug/php/3.0)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=alert_status)](https://sonarcloud.io/dashboard?id=xrdebug_php)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=xrdebug_php&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=xrdebug_php)
@@ -18,9 +18,7 @@
 
 ## Summary
 
-PHP client library for [xrDebug](https://xrdebug.com/). This library provides a set of functions to dump variables, send raw messages, and interact with the inspector.
-
-VarDump functionality is provided by the [VarDump](https://chevere.org/packages/var-dump) package and throwable handling by the [ThrowableHandler](https://chevere.org/packages/throwable-handler) package.
+PHP client library for [xrDebug](https://xrdebug.com/). This library provides a set of functions to dump variables, send raw messages, and interact with the inspector from your codebase.
 
 ## Quick start
 
@@ -30,48 +28,102 @@ Install using [Composer](https://packagist.org/packages/xrdebug/php).
 composer require --dev xrdebug/php
 ```
 
-Make sure to load the Composer `autoload.php` file in your project's entry point file, usually at `index.php`.
+Use `xr()` directly in your code to dump any variable. For example:
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
+
+// ...
+xr('Hello, world!');
 ```
 
-Use `xr()` directly in your code to dump any variable. For example for a WordPress plugin:
+## Configuring
+
+This xrDebug PHP client uses the following default configuration.
+
+> Skip this section if running from the xrDebug binary and on the same machine.
 
 ```php
-add_action('plugins_loaded', function () {
-    $userCanManageOptions = current_user_can('manage_options');
-    xr($userCanManageOptions);
-});
+[
+    'isEnabled' => true,
+    'isHttps' => false,
+    'host' => 'localhost',
+    'port' => 27420,
+    'key' => '',
+]
 ```
 
-## Demo
+| Property  | Type   | Effect                                    |
+| --------- | ------ | ----------------------------------------- |
+| isEnabled | bool   | Controls sending messages to the server   |
+| isHttps   | bool   | Controls use of https                     |
+| host      | string | The host where xrDebug server is running  |
+| port      | int    | The Port to connect to the `host`         |
+| key       | string | Private key (ed25519) for signed requests |
 
-There's a interactive demo of this library in the `./demo` directory. To use the demo execute `xrdebug` server with default settings.
+> `host` The hostname or IP. When running xrDebug on Docker use `host.docker.internal`.
 
-Execute the following command to start the demo, it sends messages to the xrDebug server explaining you the debugger user interface.
+### File-based config
 
-```php
-php demo/welcome.php
-```
+Configure the client by placing a `xr.php` file in project's root directory. Need to define only the properties that override the default config.
 
-Execute the following command to see how xrDebug [handles errors](#error-handling).
+We recommend adding `xr.php` to your `.gitignore`.
 
-```php
-php demo/error-handling.php
-```
+Here some examples of `xr.php`:
 
-## Debug Helpers
+- Run with Docker at a `27980` port:
+
+  ```php
+  <?php
+
+  return [
+      'host' => 'host.docker.internal',
+      'port' => 27980,
+  ];
+  ```
+
+- Run with sign verification:
+
+  ```php
+  <?php
+
+  return [
+      'key' => file_get_contents('private.key'),
+  ];
+  ```
+
+### Code-based config
+
+Use function `xrConfig()` to configure the xrDebug server connection directly in your logic. Need to define only the properties that override the default config.
+
+Here some examples of `xrConfig()`:
+
+- Run with Docker at a `27980` port:
+
+  ```php
+   xrConfig(
+      host: 'host.docker.internal',
+      port: 27980,
+  );
+  ```
+
+- Run with sign verification:
+
+  ```php
+   xrConfig(
+      key: file_get_contents('private.key'),
+  );
+  ```
+
+## Debug helpers
 
 This xrDebug PHP client provides the following helper functions in the root namespace. Use these anywhere in your code.
 
-| Function    | Purpose                           |
-| ----------- | --------------------------------- |
-| [xr](#xr)   | Dump one or more variables        |
-| [xrr](#xrr) | Dump raw message                  |
-| [xri](#xri) | Dump inspector (pauses, etc)      |
-| [vd](#vd)   | VarDump to output stream          |
-| [vdd](#vdd) | VarDump to output stream  and die |
+| Function    | Purpose                      |
+| ----------- | ---------------------------- |
+| [xr](#xr)   | Dump one or more variables   |
+| [xrr](#xrr) | Dump raw message             |
+| [xri](#xri) | Dump inspector (pauses, etc) |
 
 ### xr
 
@@ -95,7 +147,7 @@ xr($var, e: '😎');
 
 Pass bitwise flags to trigger special behavior.
 
-* `f: XR_BACKTRACE` to include debug backtrace.
+- `f: XR_BACKTRACE` to include debug backtrace.
 
 ```php
 xr($var, f: XR_BACKTRACE);
@@ -128,9 +180,18 @@ Use `memory` to send memory usage information.
 xri()->memory();
 ```
 
+### Debug helpers (VarDump)
+
+This xrDebug PHP client also provides the following helper functions provided by the [VarDump](https://chevere.org/packages/var-dump) package.
+
+| Function    | Purpose                           |
+| ----------- | --------------------------------- |
+| [vd](#vd)   | VarDump to output stream          |
+| [vdd](#vdd) | VarDump to output stream  and die |
+
 ### vd
 
-Function `vd` is a drop-in replacement for `var_dump`, it is provided by the [VarDump](https://chevere.org/packages/var-dump) package. It prints information about one or more variables to the output stream.
+Function `vd` is a drop-in replacement for `var_dump`. It prints information about one or more variables to the output stream.
 
 ```php
 vd($var1, $var2,);
@@ -144,63 +205,6 @@ Function `vdd` does same as vd, but with die(0) which halts further execution.
 ```php
 vdd($var);
 // does exit();
-```
-
-## Configuring
-
-### Code-based configuration
-
-Use `xrConfig()` to configure the xrDebug server connection.
-
-```php
-xrConfig(
-    isEnabled: true,
-    isHttps: false,
-    host: 'localhost',
-    port: 27420,
-    key: file_get_contents('private.key')
-);
-```
-
-| Property  | Type   | Effect                                   |
-| --------- | ------ | ---------------------------------------- |
-| isEnabled | bool   | Controls sending messages to the server  |
-| isHttps   | bool   | Controls use of https                    |
-| host      | string | The host where xrDebug server is running |
-| port      | int    | The Port to connect to the `host`        |
-| key       | string | Private key (signed requests)            |
-
-### File-based configuration
-
-Configure the client by placing a `xr.php` file in project's root directory.
-
-> We recommend adding `xr.php` to your `.gitignore`.
-
-```php
-<?php
-
-return [
-    'isEnabled' => true,
-    'isHttps' => false,
-    'host' => 'localhost',
-    'port' => 27420,
-    'key' => file_get_contents('private.key'),
-];
-```
-
-## Error handling
-
-To handle errors with xrDebug you will require to configure your project to handle errors as exceptions and register a shutdown function:
-
-```php
-use Chevere\ThrowableHandler\ThrowableHandler;
-
-set_error_handler(
-    ThrowableHandler::ERROR_AS_EXCEPTION
-);
-register_shutdown_function(
-    ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION
-);
 ```
 
 ## Exception handling
@@ -218,6 +222,21 @@ use Chevere\xrDebug\PHP\registerThrowableHandler;
 // True append xrDebug to your existing handler
 // False use only xrDebug handler
 registerThrowableHandler(true);
+```
+
+## Error handling
+
+To handle errors with xrDebug you will require to configure your project to handle errors as exceptions and register a shutdown function:
+
+```php
+use Chevere\ThrowableHandler\ThrowableHandler;
+
+set_error_handler(
+    ThrowableHandler::ERROR_AS_EXCEPTION
+);
+register_shutdown_function(
+    ThrowableHandler::SHUTDOWN_ERROR_AS_EXCEPTION
+);
 ```
 
 ### Triggered handler
