@@ -49,13 +49,14 @@ trait CurlTrait
 
     public function __destruct()
     {
-        if (isset($this->handle)) {
+        if ($this->handle()) {
             $this->close();
         }
     }
 
     public function handle(): ?CurlHandle
     {
+        // @phpstan-ignore-next-line
         return isset($this->handle) ? $this->handle : null;
     }
 

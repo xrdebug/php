@@ -18,6 +18,7 @@ use Chevere\xrDebug\PHP\WriterInstance;
 use PHPUnit\Framework\TestCase;
 use function Chevere\Writer\streamTemp;
 use function Chevere\xrDebug\PHP\getWriter;
+use function Chevere\xrDebug\PHP\serialize;
 
 final class FunctionsTest extends TestCase
 {
@@ -50,5 +51,18 @@ final class FunctionsTest extends TestCase
         $this->expectNotToPerformAssertions();
         xri()->memory();
         xri()->pause();
+    }
+
+    public function testSerialize(): void
+    {
+        $data = [
+            'b' => '1',
+            'a' => '2',
+        ];
+        $serialize = serialize($data);
+        $this->assertSame(
+            'a2b1',
+            $serialize
+        );
     }
 }

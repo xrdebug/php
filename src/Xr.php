@@ -103,6 +103,7 @@ final class Xr implements XrInterface
             /** @var array<string, string|int|bool> $return */
             $return = filePhpReturnForPath($this->configFile)->cast()->array();
             foreach (static::CONFIG_NAMES as $prop) {
+                // @phpstan-ignore-next-line
                 $this->{$prop} = $return[$prop] ?? $this->{$prop};
             }
         }
