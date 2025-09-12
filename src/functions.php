@@ -147,11 +147,13 @@ namespace Chevere\xrDebug\PHP {
      */
     function serialize(array $data): string
     {
-        return array_reduce(
-            array_keys($data),
-            fn ($acc, $key) => $acc . $key . $data[$key],
-            ''
-        );
+        $result = '';
+        ksort($data);
+        foreach ($data as $key => $value) {
+            $result .= $key . $value;
+        }
+
+        return $result;
     }
 }
 
