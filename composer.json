@@ -22,7 +22,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "chevere/message": "^1.0.0",
-        "chevere/parameter": "^2.0.x-dev",
+        "chevere/parameter": "^1.0|^2.0.x-dev",
         "chevere/standard": "^1.0.1",
         "chevere/throwable-handler": "^1.0.7",
         "chevere/trace": "^2.0.2",
