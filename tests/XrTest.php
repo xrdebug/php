@@ -19,7 +19,6 @@ use Chevere\xrDebug\PHP\Xr;
 use phpseclib3\Crypt\EC;
 use phpseclib3\Crypt\PublicKeyLoader;
 use PHPUnit\Framework\TestCase;
-use function Chevere\Filesystem\directoryForPath;
 
 final class XrTest extends TestCase
 {
@@ -57,9 +56,7 @@ final class XrTest extends TestCase
     public function testConstructWithoutSettingsFileSubfolder(): void
     {
         $xr = new Xr();
-        $with = $xr->withConfigDir(
-            directoryForPath(__DIR__ . '/_empty/_empty/')
-        );
+        $with = $xr->withConfigDir(__DIR__ . '/_empty/_empty/');
         $this->assertNotSame($xr, $with);
         $this->assertSame(true, $with->isEnabled());
         $this->assertEquals(new Client(), $with->client());
@@ -67,17 +64,15 @@ final class XrTest extends TestCase
 
     public function testConstructWithDirNotExists(): void
     {
-        $xr = (new Xr())->withConfigDir(
-            directoryForPath(__DIR__ . '/_not-found/')
-        );
+        $xr = (new Xr())->withConfigDir(__DIR__ . '/_not-found/');
         $this->assertSame(true, $xr->isEnabled());
         $this->assertEquals(new Client(), $xr->client());
     }
 
     public function testConstructWithSettingsFile(): void
     {
-        $configDir = directoryForPath(__DIR__ . '/src/');
-        $return = include $configDir->path()->getChild('xr.php')->__toString();
+        $configDir = __DIR__ . '/src/';
+        $return = include "{$configDir}/xr.php";
         $xr = (new Xr())->withConfigDir($configDir);
         $this->assertSame($return['isEnabled'], $xr->isEnabled());
         $return['privateKey'] = PublicKeyLoader::load($return['key']);

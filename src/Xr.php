@@ -13,19 +13,21 @@ declare(strict_types=1);
 
 namespace Chevere\xrDebug\PHP;
 
-use Chevere\Filesystem\Interfaces\DirectoryInterface;
 use Chevere\xrDebug\PHP\Interfaces\ClientInterface;
 use Chevere\xrDebug\PHP\Interfaces\XrInterface;
 use phpseclib3\Crypt\EC\PrivateKey;
 use phpseclib3\Crypt\PublicKeyLoader;
 use Throwable;
-use function Chevere\Filesystem\filePhpReturnForPath;
+use function Chevere\Parameter\arrayp;
+use function Chevere\Parameter\bool;
+use function Chevere\Parameter\int;
+use function Chevere\Parameter\string;
 
 final class Xr implements XrInterface
 {
     private ClientInterface $client;
 
-    private DirectoryInterface $directory;
+    private string $directory;
 
     private string $configFile = '';
 
@@ -46,7 +48,7 @@ final class Xr implements XrInterface
         $this->setClient();
     }
 
-    public function withConfigDir(DirectoryInterface $config): XrInterface
+    public function withConfigDir(string $config): XrInterface
     {
         $new = clone $this;
         $new->directory = $config;
@@ -99,9 +101,17 @@ final class Xr implements XrInterface
 
     private function setConfigFromFile(): void
     {
+        $arrayp = arrayp(
+            isEnabled: bool(),
+            isHttps: bool(),
+            host: string(),
+            port: int(),
+            key: string(),
+        )->withMakeOptional();
+
         try {
             /** @var array<string, string|int|bool> $return */
-            $return = filePhpReturnForPath($this->configFile)->cast()->array();
+            $return = $arrayp(require $this->configFile);
             foreach (static::CONFIG_NAMES as $prop) {
                 // @phpstan-ignore-next-line
                 $this->{$prop} = $return[$prop] ?? $this->{$prop};
@@ -116,7 +126,7 @@ final class Xr implements XrInterface
 
     private function getConfigFile(): string
     {
-        $configDirectory = $this->directory->path()->__toString();
+        $configDirectory = $this->directory;
         while (is_dir($configDirectory)) {
             foreach ($this->configNames as $configName) {
                 $configFullPath = $configDirectory . $configName;

@@ -21,12 +21,12 @@
         "php": "^8.1",
         "ext-curl": "*",
         "ext-json": "*",
-        "chevere/filesystem": "^1.0.3",
         "chevere/message": "^1.0.0",
+        "chevere/parameter": "^2.0.x-dev",
         "chevere/standard": "^1.0.1",
         "chevere/throwable-handler": "^1.0.7",
         "chevere/trace": "^2.0.2",
-        "chevere/var-dump": "^2.0.6",
+        "chevere/var-dump": "^2.0.x-dev",
         "phpseclib/phpseclib": "~3.0"
     },
     "require-dev": {
@@ -61,7 +61,7 @@
         ],
         "infection": [
             "Composer\\Config::disableProcessTimeout",
-            "infection --only-covered -j10"
+            "infection -j10"
         ],
         "infection-filter": "sh -c 'sh -c \"composer infection -- --filter=$0 --test-framework-options=--filter=$0\"' $1",
         "phpstan": "vendor/bin/phpstan analyze src/ --memory-limit 512M --level 9",

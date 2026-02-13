@@ -19,7 +19,6 @@ namespace Chevere\xrDebug\PHP {
     use LogicException;
     use phpseclib3\Crypt\EC\PrivateKey;
     use Throwable;
-    use function Chevere\Filesystem\directoryForPath;
     use function Chevere\Writer\streamTemp;
     use function getcwd;
 
@@ -44,10 +43,7 @@ namespace Chevere\xrDebug\PHP {
             if ($cwd === false) {
                 throw new LogicException('Unable to get current working directory');
             }
-            $xr = (new Xr())
-                ->withConfigDir(
-                    directoryForPath($cwd)
-                );
+            $xr = (new Xr())->withConfigDir($cwd);
 
             return (new XrInstance($xr))::get();
         }

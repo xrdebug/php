@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Chevere\xrDebug\PHP\Interfaces;
 
-use Chevere\Filesystem\Interfaces\DirectoryInterface;
-
 /**
  * Describes the component in charge of defining XR.
  */
@@ -22,7 +20,7 @@ interface XrInterface
 {
     public const CONFIG_NAMES = ['isEnabled', 'isHttps', 'host', 'port', 'key'];
 
-    public function withConfigDir(DirectoryInterface $config): self;
+    public function withConfigDir(string $config): self;
 
     public function isEnabled(): bool;
 
