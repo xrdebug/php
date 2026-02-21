@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-24.04]
-        php: ["8.1", "8.2", "8.3", "8.4"]
+        php: ["8.1", "8.2", "8.3", "8.4", "8.5"]
         include:
           - php: "8.1"
             infection: "0.29.9"
@@ -16,6 +16,9 @@ jobs:
             infection: "latest"
           - php: "8.4"
             infection: "latest"
+          - php: "8.5"
+            infection: "latest"
+            skip-mutation: true
     env:
       tools: composer, phpstan, infection:${{ matrix.infection }}
       ini-values: default_charset='UTF-8'
@@ -52,11 +55,8 @@ jobs:
       - name: Tests (PHPUnit)
         run: vendor/bin/phpunit --coverage-xml=build/logs/xml-coverage --log-junit=build/logs/junit.xml
       - name: Mutation testing (Infection)
+        if: ${{ matrix.skip-mutation != true }}
         env:
           INFECTION_BADGE_API_KEY: ${{ secrets.INFECTION_BADGE_API_KEY }}
         run: |
-          if [ "${{ matrix.php }}" = "8.1" ]; then
-            infection --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github --only-covered
-          else
-            infection --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github
-          fi
+          infection --coverage=build/logs --min-covered-msi=90 --threads=$(nproc) --logger-github
