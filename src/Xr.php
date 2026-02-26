@@ -44,6 +44,8 @@ final class Xr implements XrInterface
         private string $host = 'localhost',
         private int $port = 27420,
         private string $key = '',
+        private string $localPath = '',
+        private string $remotePath = '',
     ) {
         $this->setClient();
     }
@@ -158,6 +160,8 @@ final class Xr implements XrInterface
             port: $this->port,
             isHttps: $this->isHttps,
             privateKey: $this->privateKey,
+            localPath: $this->localPath,
+            remotePath: $this->remotePath,
         );
     }
 }

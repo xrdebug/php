@@ -110,7 +110,7 @@ final class Message implements MessageInterface
         return $this->writer;
     }
 
-    public function withBody(string $body): self
+    public function withBody(string $body): static
     {
         $new = clone $this;
         $new->body = $body;
@@ -118,7 +118,7 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withTopic(string $topic): self
+    public function withTopic(string $topic): static
     {
         $new = clone $this;
         $new->topic = $topic;
@@ -126,7 +126,7 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withEmote(string $emote): self
+    public function withEmote(string $emote): static
     {
         $new = clone $this;
         $new->emote = $emote;
@@ -134,7 +134,7 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withWriter(WriterInterface $writer): self
+    public function withWriter(WriterInterface $writer): static
     {
         $new = clone $this;
         $new->writer = $writer;
@@ -142,7 +142,7 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withVariables(mixed ...$variables): self
+    public function withVariables(mixed ...$variables): static
     {
         $new = clone $this;
         $new->vars = $variables;
@@ -150,12 +150,20 @@ final class Message implements MessageInterface
         return $new;
     }
 
-    public function withFlags(int $flags): self
+    public function withFlags(int $flags): static
     {
         $new = clone $this;
         if ($flags & XR_BACKTRACE) {
             $new->isFlagBacktrace = true;
         }
+
+        return $new;
+    }
+
+    public function withPath(string $path): static
+    {
+        $new = clone $this;
+        $new->filePath = $path;
 
         return $new;
     }

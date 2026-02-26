@@ -126,4 +126,32 @@ final class ClientTest extends TestCase
             $client->isPaused($message->id())
         );
     }
+
+    /**
+     * @dataProvider providerSendWithPathMapping
+     */
+    public function testClientWithPathMapping(string $method): void
+    {
+        $curl = new CurlError();
+        $client = new Client(
+            curl: $curl,
+            localPath: '/app',
+            remotePath: __DIR__
+        );
+        $message = new Message();
+        $client->{$method}($message);
+        parse_str($client->options()[CURLOPT_POSTFIELDS], $postFields);
+        $this->assertSame(
+            '/app/' . basename(__FILE__),
+            $postFields['file_path']
+        );
+    }
+
+    public static function providerSendWithPathMapping(): array
+    {
+        return [
+            ['sendMessage'],
+            ['sendPause'],
+        ];
+    }
 }

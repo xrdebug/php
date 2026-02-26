@@ -41,17 +41,19 @@ interface MessageInterface
 
     public function writer(): WriterInterface;
 
-    public function withBody(string $body): self;
+    public function withBody(string $body): static;
 
-    public function withTopic(string $topic): self;
+    public function withTopic(string $topic): static;
 
-    public function withEmote(string $emote): self;
+    public function withEmote(string $emote): static;
 
-    public function withWriter(WriterInterface $writer): self;
+    public function withWriter(WriterInterface $writer): static;
 
-    public function withVariables(mixed ...$variables): self;
+    public function withVariables(mixed ...$variables): static;
 
-    public function withFlags(int $flags): self;
+    public function withFlags(int $flags): static;
+
+    public function withPath(string $path): static;
 
     /**
      * @return array<string, string>

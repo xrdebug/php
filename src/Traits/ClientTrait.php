@@ -37,6 +37,8 @@ trait ClientTrait
         private int $port = 27420,
         bool $isHttps = false,
         private ?PrivateKey $privateKey = null,
+        private string $localPath = '',
+        private string $remotePath = '',
         ?CurlInterface $curl = null,
     ) {
         $this->curl = $curl ?? new Curl();
@@ -57,6 +59,8 @@ trait ClientTrait
 
     public function sendMessage(MessageInterface $message): void
     {
+        $message = $this->getMessageWithPathMapping($message);
+
         try {
             $curl = $this->getCurlHandle(
                 'POST',
@@ -71,6 +75,8 @@ trait ClientTrait
 
     public function sendPause(MessageInterface $message): void
     {
+        $message = $this->getMessageWithPathMapping($message);
+
         try {
             $curl = $this->getCurlHandle(
                 'POST',
@@ -166,5 +172,16 @@ trait ClientTrait
                 'X-Signature: ' . $signatureDisplay,
             ];
         }
+    }
+
+    private function getMessageWithPathMapping(MessageInterface $message): MessageInterface
+    {
+        if ($this->localPath === '' || $this->remotePath === '') {
+            return $message;
+        }
+
+        return $message->withPath(
+            str_replace($this->remotePath, $this->localPath, $message->filePath())
+        );
     }
 }

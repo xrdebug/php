@@ -284,6 +284,8 @@ namespace {
             string $host = 'localhost',
             int $port = 27420,
             string $key = '',
+            string $localPath = '',
+            string $remotePath = '',
         ): void {
             new XrInstance(
                 new Xr(
@@ -291,7 +293,9 @@ namespace {
                     isHttps: $isHttps,
                     host: $host,
                     port: $port,
-                    key: $key
+                    key: $key,
+                    localPath: $localPath,
+                    remotePath: $remotePath
                 )
             );
         }

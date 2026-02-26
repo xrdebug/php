@@ -50,18 +50,22 @@ This xrDebug PHP client uses the following default configuration.
     'host' => 'localhost',
     'port' => 27420,
     'key' => '',
+    'localPath' => '/Users/<name>/Code', # C:\Users\<name>\Documents\Code on Windows
+    'remotePath' => '/home/vagrant/Code',
 ]
 ```
 
-| Property  | Type   | Effect                                    |
-| --------- | ------ | ----------------------------------------- |
-| isEnabled | bool   | Controls sending messages to the server   |
-| isHttps   | bool   | Controls use of https                     |
-| host      | string | The host where xrDebug server is running  |
-| port      | int    | The Port to connect to the `host`         |
-| key       | string | Private key (ed25519) for signed requests |
+| Property   | Type   | Effect                                    |
+| ---------- | ------ | ----------------------------------------- |
+| isEnabled  | bool   | Controls sending messages to the server   |
+| isHttps    | bool   | Controls use of https                     |
+| host       | string | The host where xrDebug server is running  |
+| port       | int    | The Port to connect to the `host`         |
+| key        | string | Private key (ed25519) for signed requests |
+| localPath  | string | Local path to project root                |
+| remotePath | string | Remote path to project root               |
 
-> `host` The hostname or IP. When running xrDebug on Docker use `host.docker.internal`.
+> `host`: The hostname or IP. When running xrDebug on Docker use `host.docker.internal`.
 
 ### File-based config
 
