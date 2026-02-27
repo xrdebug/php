@@ -50,8 +50,8 @@ This xrDebug PHP client uses the following default configuration.
     'host' => 'localhost',
     'port' => 27420,
     'key' => '',
-    'localPath' => '/Users/<name>/Code', # C:\Users\<name>\Documents\Code on Windows
-    'remotePath' => '/home/vagrant/Code',
+    'localPath' => '',
+    'remotePath' => '',
 ]
 ```
 
@@ -65,7 +65,13 @@ This xrDebug PHP client uses the following default configuration.
 | localPath  | string | Local path to project root                |
 | remotePath | string | Remote path to project root               |
 
-> `host`: The hostname or IP. When running xrDebug on Docker use `host.docker.internal`.
+- `host`: When running xrDebug on Docker use `host.docker.internal`.
+- `localPath` `remotePath`: When using xrDebug on a remote machine or Docker, set these properties to enable file links. `localPath` is the path to your project on your machine, while `remotePath` is the path to the same project on the remote machine or Docker.
+
+```php
+    'localPath' => '/Users/<name>/Code', # C:\Users\<name>\Documents\Code on Windows
+    'remotePath' => '/home/vagrant/Code',
+```
 
 ### File-based config
 
