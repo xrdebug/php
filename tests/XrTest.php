@@ -73,7 +73,7 @@ final class XrTest extends TestCase
     {
         $configDir = __DIR__ . '/src/';
         $return = include "{$configDir}/xr.php";
-        $xr = (new Xr())->withConfigDir($configDir);
+        $xr = (new Xr())->withConfigDir($configDir . 'config-dir-empty');
         $this->assertSame($return['isEnabled'], $xr->isEnabled());
         $return['privateKey'] = PublicKeyLoader::load($return['key']);
         unset($return['isEnabled'], $return['key']);

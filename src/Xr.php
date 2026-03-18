@@ -128,7 +128,7 @@ final class Xr implements XrInterface
 
     private function getConfigFile(): string
     {
-        $configDirectory = $this->directory;
+        $configDirectory = rtrim($this->directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         while (is_dir($configDirectory)) {
             foreach ($this->configNames as $configName) {
                 $configFullPath = $configDirectory . $configName;
