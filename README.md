@@ -20,7 +20,7 @@
 
 PHP client library for [xrDebug](https://xrdebug.com/). This library provides a set of functions to dump variables, send raw messages, and interact with the inspector from your codebase.
 
-## Quick start
+## Quickstart
 
 Install using [Composer](https://packagist.org/packages/xrdebug/php).
 
