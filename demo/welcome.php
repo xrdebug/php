@@ -35,7 +35,7 @@ xr(
 sleep(5);
 xr(
     ✅: 'Clicking a topic (how-to button) or emote (👻 emoji) will apply filtering.',
-    🤤: 'Filters will appear on top, click to remove.',
+    🤤: 'Filters will appear on bottom, select to toggle.',
     t: 'how-to',
     e: '👻'
 );
